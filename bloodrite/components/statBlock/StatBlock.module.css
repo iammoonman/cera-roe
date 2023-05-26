@@ -1,0 +1,27 @@
+.aspectSquare {
+    aspect-ratio: 1 / 1;
+    min-width: 140px;
+    min-height: 140px;
+    max-width: 140px;
+    max-height: 140px;
+}
+.hugetext {
+    font-size: 65px;
+    font-family: 'courier new', monospace;
+    line-height: 45px;
+    letter-spacing: -5px;
+    padding-right: 4px;
+}
+.titleadjust {
+    font-size: 26px;
+    white-space: nowrap;
+    line-height: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    color: #727272;
+}
+
+.mutetext {
+    color: grey;
+}
