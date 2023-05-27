@@ -1,6 +1,6 @@
 mod_name, version = 'Dawnglare', 1.003
 function onload(state)
-    WebRequest.get('https://raw.githubusercontent.com/iammoonman/cera/master/draftscript/main.lua', self, 'GetFreshVersion')
+    WebRequest.get('https://raw.githubusercontent.com/iammoonman/cera-roe/master/dawnglare/main.lua', self, 'GetFreshVersion')
     LocalBounds = self.getBounds()
     self.createButton({ label = "Create Bags", click_function = "onClickGetBags", function_owner = self, width = 680, rotation = { -90, 0, 0 }, position = { x = 0, y = -LocalBounds.size.y / 4, z = LocalBounds.size.z / 2 } })
     self.createButton({ label = "Reverse Order", click_function = "onClickReverse", function_owner = self, width = 680, rotation = { 0, 0, 0 }, position = { x = 0, y = LocalBounds.size.y / 2, z = 0.3 } })
@@ -73,7 +73,7 @@ function onClickGetBags()
                         Hands = false,
                         Bag = { Order = 1 },
                         LuaScript = [[
-                            function onLoad() WebRequest.get('https://raw.githubusercontent.com/iammoonman/cera/master/draftscript/bag.lua',self,'GetFreshScript') end
+                            function onLoad() WebRequest.get('https://raw.githubusercontent.com/iammoonman/cera-roe/master/dawnglare/bag.lua',self,'GetFreshScript') end
                             function GetFreshScript (wr) self.setLuaScript(wr.text) self.reload() end
                         ]],
                         LuaScriptState = "",
