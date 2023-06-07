@@ -1,11 +1,8 @@
 import React, { ReactElement } from 'react'
 import PlayerNames from '../../components/json/playerNames.json'
-import CardSwiper from '../../components/cardDisplay/cardSwiper'
 import DPSHeader from '../../components/dpsPlayerBlock/dpsHeader'
 import StatBlock from '../../components/statBlock/statBlock'
 import { Player } from '../../components/json/player'
-import styles from './PlayerPage.module.css'
-import { Col, Row } from 'react-bootstrap'
 import Error from 'next/error'
 import Layout from '../../components/layout/Layout'
 import Drafts from '../api/draft/drafts.json'
@@ -44,19 +41,19 @@ const DraftPlayerContainer = ({ errorCode, player }) => {
 
     return (
         <>
-            <div className={`container flex-shrink-0 pb-2`}>
-                <Row className={`justify-content-center`}>
-                    <div className={`d-flex flex flex-row justify-content-center flex-wrap ${styles.gaptool} ${styles.maxwidthutil} col-sm-12 col-md`}>
+            <div className="flex-shrink-0 pb-2">
+                <div className="justify-center flex flex-wrap gap-1">
+                    <div className="flex flex-row justify-center flex-wrap gap-2 flex-grow-0 w-max sm:w-full md:w-min">
                         {player.stats?.length > 0 ? player.stats.map((stat, index) => (
                             <StatBlock stat={stat} key={index} />
                         )) : <></>}
-                        {player.cards?.length > 0 ? <CardSwiper cardsList={player.cards} /> : <></>}
+                        {/* {player.cards?.length > 0 ? <CardSwiper cardsList={player.cards} /> : <></>} */}
                     </div>
-                    <Col className={`col-sm-12 col-md-6 d-flex flex-column gap-3`}>
+                    <div className="sm:w-full md:w-2/3 flex flex-col gap-3">
                         {player.dps ? <DPSHeader dps={player.dps} /> : <></>}
                         <EventScroller drfts={drfts.filter((d) => { return d.players.find((e) => e.playerID === player.playerID) })} />
-                    </Col>
-                </Row>
+                    </div>
+                </div>
             </div>
         </>
     )

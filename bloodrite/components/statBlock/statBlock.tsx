@@ -1,20 +1,18 @@
-import React from 'react'
-import styles from './StatBlock.module.css'
-import {Stat} from '../json/player'
+import React from "react";
+import { Stat } from "../json/player";
 interface Props {
-    stat: Stat
+	stat: Stat;
 }
 
-export default class StatBlock extends React.Component<Props>  {
-    render(): React.ReactNode {
-        return (
-            <div className={`${styles.aspectSquare} blockbg cardformatting`}>
-                <div className="d-flex align-items-center flexyclass">
-                    <div className={`${styles.titleadjust}`}>{ this.props.stat.abbr}</div>
-                    <div className={`${styles.hugetext}`}>{this.props.stat.statn}</div>
-                    {this.props.stat.desc ? <div className={`${styles.mutetext} cutoff d-none d-md-block`}>{this.props.stat.desc}</div> : ''}
-                </div>
-            </div>
-        )
-    }
-}
+const StatBlock = (props: Props) => {
+	return (
+		<div className="blockbg cardformatting aspect-square h-[140px] w-[140px]">
+			<div className="flex items-center flex-col justify-between h-full">
+				<div className="text-2xl">{props.stat.abbr}</div>
+				<div className="text-6xl pr-px leading-[55px] font-mono">{props.stat.statn}</div>
+				<div className="text-gray-500 text-[11px] text-center md:block">{props.stat.desc}</div>
+			</div>
+		</div>
+	);
+};
+export default StatBlock;
