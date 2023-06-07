@@ -36,7 +36,7 @@ const DraftContainer = (props: Props) => {
 					)}
 				</div>
 				<h6>{new Date(props.draft.date).toDateString()}</h6>
-				<h6 className={props.showExtras ? "description-cutoff" : "description-cutoff hidden"}>{props.draft.description}</h6>
+				<h6 className="">{props.draft.description}</h6>
 				{props.showRounds ? <DraftRoundGroup draft={props.draft} /> : <></>}
 				<DraftTable draft={props.draft} showExtras={props.showExtras || false} />
 			</div>

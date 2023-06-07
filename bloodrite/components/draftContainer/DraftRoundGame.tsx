@@ -22,14 +22,14 @@ const DraftRoundGame = (props: Props) => {
 	// Add a catch for games that didn't track who won which games in the match.
 	const context = useContext(PNContext);
 	return (
-		<div className="scoreboardBlock rounded-2xl relative mb-px" style={props.isLoser ? { background: "#a8a8a8" } : {}}>
+		<div className="game-block rounded-2xl relative mb-px" style={props.isLoser ? { background: "#a8a8a8" } : {}}>
 			<ul className="my-0 p-0">
 				{props.match.players.map((playerID: string | number, index: React.Key) => (
-					<li className="scoreboardLi flex border-solid px-1 max-h-8 justify-between" key={index}>
-						<div className="scoreboardName text-trick font-bold pl-1 text-lg align-bottom">
+					<li className="flex border-solid px-1 max-h-8 justify-between" key={index}>
+						<div className="text-trick font-bold pl-1 text-lg align-bottom translate-y-px">
 							<PlayerLink player={{ name: context[playerID], id: playerID }} />
 						</div>
-						<div className="scoreboardScore flex justify-end w-min p-0.5">{props.match.scores[index] === 2 ? <TwoMana /> : props.match.scores[index] === 1 ? <OneMana /> : <ZeroMana />}</div>
+						<div className="flex justify-end w-min p-0.5 min-w-[35px] mana-shadow">{props.match.scores[index] === 2 ? <TwoMana /> : props.match.scores[index] === 1 ? <OneMana /> : <ZeroMana />}</div>
 					</li>
 				))}
 			</ul>

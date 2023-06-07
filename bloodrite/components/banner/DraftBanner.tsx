@@ -18,8 +18,8 @@ const DraftBanner = (props: Props) => {
 	const handleClose = () => ref.current?.close();
 	return (
 		<>
-			<div className="flex banner">
-				<div className="crownbox mx-auto">
+			<div className="flex banner w-full flex-shrink-0 relative mt-0 bg-no-repeat bg-left-top sm:h-[200px] md:h-[200px] xl:h-[280px]">
+				<div className="w-1/2 mx-auto">
 					<div className="crownshadow">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 254 40" style={{ width: "100%" }}>
 							<title>Legend Crown</title>
@@ -154,22 +154,22 @@ const DraftBanner = (props: Props) => {
 				</div>
 			</div>
 			<nav className="flex justify-center w-full -mt-10 sticky top-3 flex-shrink mb-1 z-50 h-12">
-				<div className="undercut flex justify-center flex-wrap px-1 gap-3">
-					<span className="navitemtitle text-white whitespace-nowrap text-2xl">
+				<div className="undercut flex justify-center flex-nowrap px-1 pb-1 gap-3 rounded-2xl sm:w-full md:w-auto">
+					<span className="text-white whitespace-nowrap text-2xl">
 						<Link href={"/"}>
 							<a>Draft Group</a>
 						</Link>
 					</span>
-					<span className="navitemtitle text-white whitespace-nowrap text-2xl">――</span>
-					<span className="navitemtitle text-white whitespace-nowrap text-2xl">
+					<span className="text-white whitespace-nowrap text-2xl">――</span>
+					<span className="text-white whitespace-nowrap text-2xl">
 						<Link href={"/dps"}>
 							<a>DPS</a>
 						</Link>
 					</span>
-					<span className="navitemtitle text-white whitespace-nowrap text-2xl" onClick={handleShow}>
-						<a>Discord</a>
+					<span className="text-white whitespace-nowrap text-2xl" onClick={handleShow}>
+						<a className="cursor-pointer">Discord</a>
 					</span>
-					<span className="navitemtitle text-white whitespace-nowrap text-2xl">Fridays & Saturdays</span>
+					<span className="text-white whitespace-nowrap text-2xl">Fridays & Saturdays</span>
 				</div>
 			</nav>
 			<dialog ref={ref}>

@@ -25,7 +25,7 @@ const TagPage = () => {
 				<div className="w-full">
 					<div className="blockbg">
 						<div className="flex justify-between">
-							<div className="titleh1">Draft Progression Series</div>
+							<div className="text-5xl mb-2">Draft Progression Series</div>
 							<div className="tagsymbol cursor-pointer h-11"></div>
 						</div>
 						<p>Sat Jan 8 2021 - Sat Mar 26 2022</p>
