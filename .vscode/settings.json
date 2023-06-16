@@ -1,0 +1,16 @@
+{
+    "Lua.diagnostics.disable": [
+        "lowercase-global"
+    ],
+    "Lua.diagnostics.globals": [
+        "self",
+        "JSON",
+        "startLuaCoroutine",
+        "Player",
+        "printToColor",
+        "stringColorToRGB",
+        "log",
+        "getObjectFromGUID",
+        "Vector"
+    ]
+}
