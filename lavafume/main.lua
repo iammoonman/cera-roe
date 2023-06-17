@@ -8,7 +8,6 @@ function onLoad()
         scale = { x = 0.1, y = 0.1, z = 0.1 },
         width = 375,
         color = { r = 0.75, g = 0.75, b = 0.75 },
-        tooltip = "",
     })
     self.createButton({
         click_function = 'untap_red',
