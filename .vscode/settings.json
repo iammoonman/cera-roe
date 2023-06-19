@@ -11,6 +11,9 @@
         "stringColorToRGB",
         "log",
         "getObjectFromGUID",
-        "Vector"
+        "Vector",
+        "Wait",
+        "group",
+        "getObjectsWithTag"
     ]
 }
