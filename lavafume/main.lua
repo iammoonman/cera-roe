@@ -76,11 +76,11 @@ function g1(player, _, button_id)
         button_b = 'g1_y'
     end
     if self.UI.getAttribute(button_id, 'outline') ~= color then
-        self.UI.setAttributes(button_a, color)
-        self.UI.setAttributes(button_b, color)
+        self.UI.setAttribute(button_a, 'outline', color)
+        self.UI.setAttribute(button_b, 'outline', color)
     else
-        self.UI.setAttributes(button_a, '')
-        self.UI.setAttributes(button_b, '')
+        self.UI.setAttribute(button_a, 'outline', '')
+        self.UI.setAttribute(button_b, 'outline', '')
     end
 end
 
@@ -105,11 +105,11 @@ function g2(player, _, button_id)
         button_b = 'g2_y'
     end
     if self.UI.getAttribute(button_id, 'outline') ~= color then
-        self.UI.setAttributes(button_a, color)
-        self.UI.setAttributes(button_b, color)
+        self.UI.setAttribute(button_a, 'outline', color)
+        self.UI.setAttribute(button_b, 'outline', color)
     else
-        self.UI.setAttributes(button_a, '')
-        self.UI.setAttributes(button_b, '')
+        self.UI.setAttribute(button_a, 'outline', '')
+        self.UI.setAttribute(button_b, 'outline', '')
     end
 end
 
@@ -134,11 +134,11 @@ function g3(player, _, button_id)
         button_b = 'g3_y'
     end
     if self.UI.getAttribute(button_id, 'outline') ~= color then
-        self.UI.setAttributes(button_a, color)
-        self.UI.setAttributes(button_b, color)
+        self.UI.setAttribute(button_a, 'outline', color)
+        self.UI.setAttribute(button_b, 'outline', color)
     else
-        self.UI.setAttributes(button_a, '')
-        self.UI.setAttributes(button_b, '')
+        self.UI.setAttribute(button_a, 'outline', '')
+        self.UI.setAttribute(button_b, 'outline', '')
     end
 end
 
