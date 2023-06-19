@@ -21,7 +21,7 @@ end
 
 function GetFreshXML(wr)
     if wr == nil then return end
-    self.setXml(wr.text)
+    self.UI.setXml(wr.text)
 end
 
 function ping(player, _, button_id)
