@@ -11,6 +11,15 @@
         "stringColorToRGB",
         "log",
         "getObjectFromGUID",
-        "Vector"
+        "Vector",
+        "Wait",
+        "group",
+        "getObjectsWithTag",
+        "WebRequest",
+        "getObjects",
+        "spawnObjectData",
+        "destroyObject",
+        "broadcastToAll",
+        "broadcastToColor"
     ]
 }
