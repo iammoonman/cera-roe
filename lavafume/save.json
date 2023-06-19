@@ -1,0 +1,2237 @@
+{
+  "SaveName": "LAVAFUME",
+  "EpochTime": 1687189783,
+  "Date": "6/19/2023 11:49:43 AM",
+  "VersionNumber": "v13.2.2",
+  "GameMode": "LAVAFUME",
+  "GameType": "",
+  "GameComplexity": "",
+  "Tags": [],
+  "Gravity": 0.5,
+  "PlayArea": 0.5,
+  "Table": "Table_None",
+  "Sky": "Sky_Forest",
+  "Note": "",
+  "TabStates": {
+    "0": {
+      "title": "Rules",
+      "body": "",
+      "color": "Grey",
+      "visibleColor": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+      },
+      "id": 0
+    },
+    "1": {
+      "title": "White",
+      "body": "",
+      "color": "White",
+      "visibleColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "id": 1
+    },
+    "2": {
+      "title": "Brown",
+      "body": "",
+      "color": "Brown",
+      "visibleColor": {
+        "r": 0.443,
+        "g": 0.231,
+        "b": 0.09
+      },
+      "id": 2
+    },
+    "3": {
+      "title": "Red",
+      "body": "",
+      "color": "Red",
+      "visibleColor": {
+        "r": 0.856,
+        "g": 0.1,
+        "b": 0.094
+      },
+      "id": 3
+    },
+    "4": {
+      "title": "Orange",
+      "body": "",
+      "color": "Orange",
+      "visibleColor": {
+        "r": 0.956,
+        "g": 0.392,
+        "b": 0.113
+      },
+      "id": 4
+    },
+    "5": {
+      "title": "Yellow",
+      "body": "",
+      "color": "Yellow",
+      "visibleColor": {
+        "r": 0.905,
+        "g": 0.898,
+        "b": 0.172
+      },
+      "id": 5
+    },
+    "6": {
+      "title": "Green",
+      "body": "",
+      "color": "Green",
+      "visibleColor": {
+        "r": 0.192,
+        "g": 0.701,
+        "b": 0.168
+      },
+      "id": 6
+    },
+    "7": {
+      "title": "Blue",
+      "body": "",
+      "color": "Blue",
+      "visibleColor": {
+        "r": 0.118,
+        "g": 0.53,
+        "b": 1.0
+      },
+      "id": 7
+    },
+    "8": {
+      "title": "Teal",
+      "body": "",
+      "color": "Teal",
+      "visibleColor": {
+        "r": 0.129,
+        "g": 0.694,
+        "b": 0.607
+      },
+      "id": 8
+    },
+    "9": {
+      "title": "Purple",
+      "body": "",
+      "color": "Purple",
+      "visibleColor": {
+        "r": 0.627,
+        "g": 0.125,
+        "b": 0.941
+      },
+      "id": 9
+    },
+    "10": {
+      "title": "Pink",
+      "body": "",
+      "color": "Pink",
+      "visibleColor": {
+        "r": 0.96,
+        "g": 0.439,
+        "b": 0.807
+      },
+      "id": 10
+    },
+    "11": {
+      "title": "Black",
+      "body": "",
+      "color": "Black",
+      "visibleColor": {
+        "r": 0.25,
+        "g": 0.25,
+        "b": 0.25
+      },
+      "id": 11
+    }
+  },
+  "Grid": {
+    "Type": 0,
+    "Lines": false,
+    "Color": {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0
+    },
+    "Opacity": 0.75,
+    "ThickLines": false,
+    "Snapping": false,
+    "Offset": false,
+    "BothSnapping": false,
+    "xSize": 2.0,
+    "ySize": 2.0,
+    "PosOffset": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    }
+  },
+  "Lighting": {
+    "LightIntensity": 0.54,
+    "LightColor": {
+      "r": 1.0,
+      "g": 0.9804,
+      "b": 0.8902
+    },
+    "AmbientIntensity": 1.04399991,
+    "AmbientType": 0,
+    "AmbientSkyColor": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "AmbientEquatorColor": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "AmbientGroundColor": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "ReflectionIntensity": 1.0,
+    "LutIndex": 0,
+    "LutContribution": 1.0,
+    "LutURL": ""
+  },
+  "Hands": {
+    "Enable": true,
+    "DisableUnused": false,
+    "Hiding": 0
+  },
+  "ComponentTags": {
+    "labels": []
+  },
+  "Turns": {
+    "Enable": false,
+    "Type": 0,
+    "TurnOrder": [],
+    "Reverse": false,
+    "SkipEmpty": false,
+    "DisableInteractions": false,
+    "PassTurns": true,
+    "TurnColor": ""
+  },
+  "DecalPallet": [],
+  "LuaScript": "--[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]\n\n--[[ The onLoad event is called after the game save finishes loading. --]]\nfunction onLoad()\n    --[[ print('onLoad!') --]]\nend\n\n--[[ The onUpdate event is called once per frame. --]]\nfunction onUpdate()\n    --[[ print('onUpdate loop!') --]]\nend",
+  "LuaScriptState": "",
+  "XmlUI": "<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->",
+  "SnapPoints": [
+    {
+      "Position": {
+        "x": -7.117629,
+        "y": 6.25294161,
+        "z": 64.89322
+      },
+      "Rotation": {
+        "x": 1.2533518E-06,
+        "y": 269.985535,
+        "z": -4.506132E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -10.3235836,
+        "y": 6.25294161,
+        "z": 64.89656
+      },
+      "Rotation": {
+        "x": 3.159074E-07,
+        "y": 269.985535,
+        "z": 7.718039E-07
+      }
+    },
+    {
+      "Position": {
+        "x": -13.5764065,
+        "y": 6.25294161,
+        "z": 64.90353
+      },
+      "Rotation": {
+        "x": 1.0020274E-07,
+        "y": 269.985535,
+        "z": 9.870929E-07
+      }
+    },
+    {
+      "Position": {
+        "x": -13.5748215,
+        "y": 6.252941,
+        "z": 36.90322
+      },
+      "Rotation": {
+        "x": 3.44801E-07,
+        "y": 269.9856,
+        "z": 1.133351E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -10.3219986,
+        "y": 6.252941,
+        "z": 36.89625
+      },
+      "Rotation": {
+        "x": -8.11168661E-08,
+        "y": 269.9856,
+        "z": 6.70958E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -7.11604452,
+        "y": 6.252941,
+        "z": 36.8929062
+      },
+      "Rotation": {
+        "x": 2.40810238E-07,
+        "y": 269.9856,
+        "z": -3.31354113E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -7.10097837,
+        "y": 6.25294,
+        "z": 8.881216
+      },
+      "Rotation": {
+        "x": 2.39635881E-07,
+        "y": 269.9856,
+        "z": 1.06389246E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -10.3069334,
+        "y": 6.25294,
+        "z": 8.884562
+      },
+      "Rotation": {
+        "x": 1.96409275E-07,
+        "y": 269.9856,
+        "z": 1.29598288E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -13.5597563,
+        "y": 6.25294,
+        "z": 8.891531
+      },
+      "Rotation": {
+        "x": 2.205392E-07,
+        "y": 269.9856,
+        "z": 1.1158736E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -13.5765085,
+        "y": 6.2529397,
+        "z": -19.1023083
+      },
+      "Rotation": {
+        "x": 3.2220936E-07,
+        "y": 269.9856,
+        "z": 8.74379054E-07
+      }
+    },
+    {
+      "Position": {
+        "x": -10.3236856,
+        "y": 6.2529397,
+        "z": -19.1092815
+      },
+      "Rotation": {
+        "x": -2.33838864E-06,
+        "y": 269.9856,
+        "z": 3.9542083E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -7.117743,
+        "y": 6.2529397,
+        "z": -19.1126213
+      },
+      "Rotation": {
+        "x": 3.57103232E-07,
+        "y": 269.985626,
+        "z": 8.849313E-07
+      }
+    },
+    {
+      "Position": {
+        "x": -13.5624428,
+        "y": 6.252939,
+        "z": -47.09614
+      },
+      "Rotation": {
+        "x": 2.87993231E-07,
+        "y": 269.985535,
+        "z": 9.87609E-07
+      }
+    },
+    {
+      "Position": {
+        "x": -10.30962,
+        "y": 6.252939,
+        "z": -47.1031151
+      },
+      "Rotation": {
+        "x": 1.316282E-07,
+        "y": 269.9856,
+        "z": 8.6900377E-07
+      }
+    },
+    {
+      "Position": {
+        "x": -7.10367,
+        "y": 6.252939,
+        "z": -47.1064529
+      },
+      "Rotation": {
+        "x": 1.86893871E-07,
+        "y": 269.985657,
+        "z": 1.33402887E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 22.6166878,
+        "y": 6.25293875,
+        "z": -71.89652
+      },
+      "Rotation": {
+        "x": -2.42648639E-07,
+        "y": 90.00001,
+        "z": -1.430445E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 19.3638649,
+        "y": 6.25293875,
+        "z": -71.88955
+      },
+      "Rotation": {
+        "x": -2.71616472E-07,
+        "y": 90.01446,
+        "z": -1.502937E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 16.157917,
+        "y": 6.25293875,
+        "z": -71.8862152
+      },
+      "Rotation": {
+        "x": -3.04639428E-07,
+        "y": 90.0145,
+        "z": -1.25664781E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 16.1597767,
+        "y": 6.252939,
+        "z": -43.8920479
+      },
+      "Rotation": {
+        "x": -2.39122357E-07,
+        "y": 90.01455,
+        "z": -1.52537655E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 19.3657246,
+        "y": 6.252939,
+        "z": -43.8953819
+      },
+      "Rotation": {
+        "x": -2.98008473E-07,
+        "y": 90.01446,
+        "z": -1.36296853E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 22.6185474,
+        "y": 6.252939,
+        "z": -43.9023552
+      },
+      "Rotation": {
+        "x": -2.62208943E-07,
+        "y": 90.00001,
+        "z": -1.37383654E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 16.1644859,
+        "y": 6.25294,
+        "z": -15.8897314
+      },
+      "Rotation": {
+        "x": -2.49986272E-07,
+        "y": 90.014534,
+        "z": -1.5121434E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 19.3704338,
+        "y": 6.25294,
+        "z": -15.8930655
+      },
+      "Rotation": {
+        "x": -3.01590177E-07,
+        "y": 90.01446,
+        "z": -1.32195044E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 22.6232567,
+        "y": 6.25294,
+        "z": -15.9000387
+      },
+      "Rotation": {
+        "x": -2.28942028E-07,
+        "y": 90.0000153,
+        "z": -1.43532E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 16.1584244,
+        "y": 6.25294065,
+        "z": 12.12189
+      },
+      "Rotation": {
+        "x": -3.57483771E-07,
+        "y": 90.01453,
+        "z": -1.29478008E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 19.3643723,
+        "y": 6.25294065,
+        "z": 12.118556
+      },
+      "Rotation": {
+        "x": -2.70751E-07,
+        "y": 90.01444,
+        "z": -1.50061214E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 22.6171951,
+        "y": 6.25294065,
+        "z": 12.1115828
+      },
+      "Rotation": {
+        "x": -1.432643E-07,
+        "y": 90.00001,
+        "z": -1.54134909E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 16.1527176,
+        "y": 6.252941,
+        "z": 40.113472
+      },
+      "Rotation": {
+        "x": -3.89429829E-07,
+        "y": 90.01455,
+        "z": -1.29917851E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 19.3586655,
+        "y": 6.252941,
+        "z": 40.1101379
+      },
+      "Rotation": {
+        "x": -2.46231167E-07,
+        "y": 90.0144348,
+        "z": -1.28468866E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 22.6114883,
+        "y": 6.252941,
+        "z": 40.1031647
+      },
+      "Rotation": {
+        "x": -3.2832952E-07,
+        "y": 90.0,
+        "z": -1.3079275E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -17.8352585,
+        "y": 6.25294161,
+        "z": 64.90549
+      },
+      "Rotation": {
+        "x": 2.8737395E-07,
+        "y": 269.985535,
+        "z": 1.191439E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -17.8410511,
+        "y": 6.252941,
+        "z": 36.895443
+      },
+      "Rotation": {
+        "x": 2.31273148E-07,
+        "y": 269.985535,
+        "z": 1.25935537E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -17.8395882,
+        "y": 6.25294,
+        "z": 8.899973
+      },
+      "Rotation": {
+        "x": 2.752357E-07,
+        "y": 269.985535,
+        "z": 1.15049932E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -17.84741,
+        "y": 6.2529397,
+        "z": -19.1087246
+      },
+      "Rotation": {
+        "x": 3.40581278E-06,
+        "y": 269.985626,
+        "z": 1.21669245E-06
+      }
+    },
+    {
+      "Position": {
+        "x": -17.8188076,
+        "y": 6.252939,
+        "z": -47.1130943
+      },
+      "Rotation": {
+        "x": 2.13028613E-07,
+        "y": 269.985657,
+        "z": 1.08129348E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 26.8789215,
+        "y": 6.25293875,
+        "z": -71.8992538
+      },
+      "Rotation": {
+        "x": -2.33574283E-07,
+        "y": 89.9855042,
+        "z": -1.16371473E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 26.8928471,
+        "y": 6.252939,
+        "z": -43.88681
+      },
+      "Rotation": {
+        "x": -3.14220642E-07,
+        "y": 89.9857,
+        "z": -1.30089916E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 26.8963184,
+        "y": 6.25294,
+        "z": -15.8747921
+      },
+      "Rotation": {
+        "x": -3.05343883E-06,
+        "y": 89.97953,
+        "z": 1.28067722E-06
+      }
+    },
+    {
+      "Position": {
+        "x": 26.8883858,
+        "y": 6.25294065,
+        "z": 12.1162634
+      },
+      "Rotation": {
+        "x": -3.607757E-06,
+        "y": 89.9852142,
+        "z": 4.720918E-07
+      }
+    },
+    {
+      "Position": {
+        "x": 26.89198,
+        "y": 6.252941,
+        "z": 40.1210365
+      },
+      "Rotation": {
+        "x": -3.28245818E-07,
+        "y": 89.98253,
+        "z": -1.15941168E-06
+      }
+    }
+  ],
+  "ObjectStates": [
+    {
+      "GUID": "372be3",
+      "Name": "Custom_Model",
+      "Transform": {
+        "posX": -6.355669,
+        "posY": 1.0,
+        "posZ": -3.564311,
+        "rotX": -1.209916E-06,
+        "rotY": 0.0,
+        "rotZ": 2.71678516E-07,
+        "scaleX": 30.0,
+        "scaleY": 30.0,
+        "scaleZ": 30.0
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomMesh": {
+        "MeshURL": "file:///C:\\Users\\moon\\Desktop\\table\\shorttable.obj",
+        "DiffuseURL": "file:///C:\\Users\\moon\\Desktop\\table\\shorttabletexture.png",
+        "NormalURL": "",
+        "ColliderURL": "",
+        "Convex": true,
+        "MaterialIndex": 3,
+        "TypeIndex": 0,
+        "CustomShader": {
+          "SpecularColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0
+          },
+          "SpecularIntensity": 0.0,
+          "SpecularSharpness": 2.0,
+          "FresnelStrength": 0.0
+        },
+        "CastShadows": true
+      },
+      "LuaScript": "mod_name, version = 'Lavafume', 0.1\r\ngh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'\r\nreload_deb        = nil\r\n\r\nfunction onLoad()\r\n    self.interactable = false;\r\n    WebRequest.get(gh_script, self, 'GetFreshScript')\r\nend\r\n\r\nfunction GetFreshScript(wr)\r\n    local v = wr.text:match('mod_name, version = \\'Lavafume\\', (%d+%p%d+)')\r\n    log('GITHUB Version ' .. v)\r\n    if v then v = tonumber(v) else v = version end\r\n    if version < v then\r\n        self.setLuaScript(wr.text)\r\n        self.reload()\r\n    end\r\n    WebRequest.get(gh_ui, self, 'GetFreshXML')\r\nend\r\n\r\nfunction GetFreshXML(wr)\r\n    self.setXml(wr.text)\r\nend\r\n\r\nfunction ping(player, _, button_id)\r\n    local color = IDToColor(button_id)\r\n    for i, p in ipairs(Player.getPlayers()) do\r\n        if p.host then p.broadcast(color .. ' needs assistance.') end\r\n    end\r\nend\r\n\r\nfunction untap(player, _, button_id)\r\n    local color = IDToColor(button_id)\r\n    local guid = '5a1314'\r\n    local plane_rotation = 270\r\n    if color == 'Pink' then guid = '3a1115' plane_rotation = 90 end\r\n    if color == 'White' then guid = '1a6ae3' plane_rotation = 90 end\r\n    if color == 'Brown' then guid = 'dc830e' plane_rotation = 90 end\r\n    if color == 'Red' then guid = 'd26b1c' plane_rotation = 90 end\r\n    if color == 'Orange' then guid = '180cb4' plane_rotation = 90 end\r\n    if color == 'Yellow' then guid = '16498f' plane_rotation = 270 end\r\n    if color == 'Green' then guid = '428abc' plane_rotation = 270 end\r\n    if color == 'Teal' then guid = 'ad990b' plane_rotation = 270 end\r\n    if color == 'Blue' then guid = '2e1be7' plane_rotation = 270 end\r\n    if color == 'Purple' then guid = '5a1314' plane_rotation = 270 end\r\n    local zone = getObjectFromGUID(guid)\r\n    for _, occupyingObject in ipairs(zone.getObjects(true)) do\r\n        if occupyingObject.type == \"Card\" then\r\n            local rotation = occupyingObject.getRotation()\r\n            local flip_angle = rotation.z\r\n            occupyingObject.setRotation({ x = 0, y = plane_rotation, z = flip_angle })\r\n        end\r\n    end\r\nend\r\n\r\nfunction g1(player, _, button_id)\r\n    local button_a = 'g1_p'\r\n    local button_b = 'g1_k'\r\n    local color = IDToColor(button_id)\r\n    if button_id == 'g1_p' or button_id == 'g1_k' then\r\n        button_a = 'g1_k'\r\n        button_b = 'g1_p'\r\n    elseif button_id == 'g1_w' or button_id == 'g1_u' then\r\n        button_a = 'g1_w'\r\n        button_b = 'g1_u'\r\n    elseif button_id == 'g1_b' or button_id == 'g1_t' then\r\n        button_a = 'g1_b'\r\n        button_b = 'g1_t'\r\n    elseif button_id == 'g1_r' or button_id == 'g1_g' then\r\n        button_a = 'g1_r'\r\n        button_b = 'g1_g'\r\n    elseif button_id == 'g1_o' or button_id == 'g1_y' then\r\n        button_a = 'g1_o'\r\n        button_b = 'g1_y'\r\n    end\r\n    if self.UI.getAttribute(button_id, 'outline') ~= color then\r\n        self.UI.setAttributes(button_a, color)\r\n        self.UI.setAttributes(button_b, color)\r\n    else\r\n        self.UI.setAttributes(button_a, '')\r\n        self.UI.setAttributes(button_b, '')\r\n    end\r\nend\r\n\r\nfunction g2(player, _, button_id)\r\n    local button_a = 'g2_p'\r\n    local button_b = 'g2_k'\r\n    local color = IDToColor(button_id)\r\n    if button_id == 'g2_p' or button_id == 'g2_k' then\r\n        button_a = 'g2_k'\r\n        button_b = 'g2_p'\r\n    elseif button_id == 'g2_w' or button_id == 'g2_u' then\r\n        button_a = 'g2_w'\r\n        button_b = 'g2_u'\r\n    elseif button_id == 'g2_b' or button_id == 'g2_t' then\r\n        button_a = 'g2_b'\r\n        button_b = 'g2_t'\r\n    elseif button_id == 'g2_r' or button_id == 'g2_g' then\r\n        button_a = 'g2_r'\r\n        button_b = 'g2_g'\r\n    elseif button_id == 'g2_o' or button_id == 'g2_y' then\r\n        button_a = 'g2_o'\r\n        button_b = 'g2_y'\r\n    end\r\n    if self.UI.getAttribute(button_id, 'outline') ~= color then\r\n        self.UI.setAttributes(button_a, color)\r\n        self.UI.setAttributes(button_b, color)\r\n    else\r\n        self.UI.setAttributes(button_a, '')\r\n        self.UI.setAttributes(button_b, '')\r\n    end\r\nend\r\n\r\nfunction g3(player, _, button_id)\r\n    local button_a = 'g3_p'\r\n    local button_b = 'g3_k'\r\n    local color = IDToColor(button_id)\r\n    if button_id == 'g3_p' or button_id == 'g3_k' then\r\n        button_a = 'g3_k'\r\n        button_b = 'g3_p'\r\n    elseif button_id == 'g3_w' or button_id == 'g3_u' then\r\n        button_a = 'g3_w'\r\n        button_b = 'g3_u'\r\n    elseif button_id == 'g3_b' or button_id == 'g1_t' then\r\n        button_a = 'g3_b'\r\n        button_b = 'g3_t'\r\n    elseif button_id == 'g3_r' or button_id == 'g3_g' then\r\n        button_a = 'g3_r'\r\n        button_b = 'g3_g'\r\n    elseif button_id == 'g3_o' or button_id == 'g3_y' then\r\n        button_a = 'g3_o'\r\n        button_b = 'g3_y'\r\n    end\r\n    if self.UI.getAttribute(button_id, 'outline') ~= color then\r\n        self.UI.setAttributes(button_a, color)\r\n        self.UI.setAttributes(button_b, color)\r\n    else\r\n        self.UI.setAttributes(button_a, '')\r\n        self.UI.setAttributes(button_b, '')\r\n    end\r\nend\r\n\r\nfunction flip(player, _, button_id)\r\n    local color = IDToColor(button_id)\r\n    local result = 'Tails'\r\n    if math.random(0, 100) > 50 then\r\n        result = 'Heads'\r\n    end\r\n    broadcastToAll(color .. \" flipped \" .. result .. '.', color)\r\nend\r\n\r\nfunction roll(player, _, button_id)\r\n    local color = IDToColor(button_id)\r\n    local result = math.random(1, 6)\r\n    broadcastToAll(color .. \" rolled a d6 and got \" .. result .. '.', color)\r\nend\r\n\r\nfunction IDToColor(id)\r\n    local id = id:match('_(%l)')\r\n    if id == 'k' then return 'Pink' end\r\n    if id == 'w' then return 'White' end\r\n    if id == 'b' then return 'Brown' end\r\n    if id == 'r' then return 'Red' end\r\n    if id == 'o' then return 'Orange' end\r\n    if id == 'y' then return 'Yellow' end\r\n    if id == 'g' then return 'Green' end\r\n    if id == 't' then return 'Teal' end\r\n    if id == 'u' then return 'Blue' end\r\n    if id == 'p' then return 'Purple' end\r\n    return ''\r\nend\r\n",
+      "LuaScriptState": "",
+      "XmlUI": "<Panel position=\"35 0 -18\" rotation=\"0 0 90\">\r\n    <Panel position=\"226.5 8.5 0\" scale=\"0.03 0.03 0.03\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_p\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_p\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_p\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_p\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_p\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_p\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_p\"></Button>\r\n    </Panel>\r\n    <Panel position=\"133.3 8.5 0\" scale=\"0.03 0.03 0.03\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_u\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_u\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_u\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_u\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_u\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_u\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_u\"></Button>\r\n    </Panel>\r\n    <Panel position=\"40 8.5 0\" scale=\"0.03 0.03 0.03\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_t\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_t\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_t\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_t\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_t\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_t\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_t\"></Button>\r\n    </Panel>\r\n    <Panel position=\"-53.3 8.5 0\" scale=\"0.03 0.03 0.03\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_g\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_g\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_g\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_g\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_g\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_g\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_g\"></Button>\r\n    </Panel>\r\n    <Panel position=\"-146.5 8.5 0\" scale=\"0.03 0.03 0.03\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_y\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_y\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_y\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_y\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_y\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_y\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_y\"></Button>\r\n    </Panel>\r\n    <Panel position=\"-226.3 -10.5 0\" scale=\"0.03 0.03 0.03\" rotation=\"0 0 180\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_o\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_o\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_o\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_o\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_o\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_o\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_o\"></Button>\r\n    </Panel>\r\n    <Panel position=\"-133 -10.5 0\" scale=\"0.03 0.03 0.03\" rotation=\"0 0 180\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_r\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_r\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_r\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_r\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_r\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_r\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_r\"></Button>\r\n    </Panel>\r\n    <Panel position=\"-39.6 -10.5 0\" scale=\"0.03 0.03 0.03\" rotation=\"0 0 180\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_b\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_b\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_b\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_b\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_b\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_b\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_b\"></Button>\r\n    </Panel>\r\n    <Panel position=\"53.8 -10.5 0\" scale=\"0.03 0.03 0.03\" rotation=\"0 0 180\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_w\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_w\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_w\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_w\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_w\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_w\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_w\"></Button>\r\n    </Panel>\r\n    <Panel position=\"147 -10.5 0\" scale=\"0.03 0.03 0.03\" rotation=\"0 0 180\">\r\n        <Button icon=\"ping\" scale=\"0.01 0.01 0.01\" position=\"160 0 0\" rotation=\"0 0 180\" id=\"ping_k\"></Button>\r\n        <Button icon=\"untap\" scale=\"0.021 0.021 0.021\" rotation=\"0 0 180\" id=\"untap_k\"></Button>\r\n        <Button icon=\"g1\" scale=\"0.01 0.01 0.01\" position=\"160 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g1_k\"></Button>\r\n        <Button icon=\"g2\" scale=\"0.01 0.01 0.01\" position=\"50 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g2_k\"></Button>\r\n        <Button icon=\"g3\" scale=\"0.01 0.01 0.01\" position=\"-60 160 0\" rotation=\"0 0 180\" outline=\"\"\r\n            outlineSize=\"1400 1400\" id=\"g3_k\"></Button>\r\n        <Button icon=\"flip\" scale=\"0.015 0.015 0.015\" position=\"130 290 0\" rotation=\"0 0 180\" id=\"flip_k\"></Button>\r\n        <Button icon=\"roll\" scale=\"0.015 0.015 0.015\" position=\"-30 290 0\" rotation=\"0 0 180\" id=\"roll_k\"></Button>\r\n    </Panel>\r\n</Panel>",
+      "CustomUIAssets": [
+        {
+          "Type": 0,
+          "Name": "untap",
+          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\anticlockwise-rotation.png"
+        },
+        {
+          "Type": 0,
+          "Name": "ping",
+          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\extra-lucid.png"
+        },
+        {
+          "Type": 0,
+          "Name": "g1",
+          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\dice-six-faces-one.png"
+        },
+        {
+          "Type": 0,
+          "Name": "g2",
+          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\dice-six-faces-two.png"
+        },
+        {
+          "Type": 0,
+          "Name": "g3",
+          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\dice-six-faces-three.png"
+        },
+        {
+          "Type": 0,
+          "Name": "flip",
+          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\coinflip.png"
+        },
+        {
+          "Type": 0,
+          "Name": "roll",
+          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\rolling-dices.png"
+        }
+      ]
+    },
+    {
+      "GUID": "c8139b",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": -35.769455,
+        "posY": 7.36166,
+        "posZ": 52.48485,
+        "rotX": 0.0,
+        "rotY": 89.96341,
+        "rotZ": 0.0,
+        "scaleX": 27.6139412,
+        "scaleY": 2.34809875,
+        "scaleZ": 25.0975685
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.627,
+        "g": 0.124999978,
+        "b": 0.941,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Purple",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "ca97c2",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": -18.4534454,
+        "posY": 7.4,
+        "posZ": 50.9833031,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.627,
+        "g": 0.124999978,
+        "b": 0.941,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Purple",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "5a1314",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": -6.57401133,
+        "posY": 8.802941,
+        "posZ": 50.9711227,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.7058029,
+        "scaleY": 5.1,
+        "scaleZ": 18.254631
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "2e1be7",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": -6.5508604,
+        "posY": 8.802941,
+        "posZ": 22.96141,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.73149,
+        "scaleY": 5.1,
+        "scaleZ": 18.23256
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "ad990b",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": -6.5682,
+        "posY": 8.80294,
+        "posZ": -5.02113056,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.7556133,
+        "scaleY": 5.1,
+        "scaleZ": 18.3107872
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "428abc",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": -6.59164429,
+        "posY": 8.802939,
+        "posZ": -33.0238571,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.7913685,
+        "scaleY": 5.1,
+        "scaleZ": 18.2824078
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "16498f",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": -6.536332,
+        "posY": 8.802939,
+        "posZ": -61.0507622,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.757103,
+        "scaleY": 5.1,
+        "scaleZ": 18.31776
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "180cb4",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": 15.5605478,
+        "posY": 8.802938,
+        "posZ": -57.9620247,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.7623367,
+        "scaleY": 5.1,
+        "scaleZ": 18.2773342
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "d26b1c",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": 15.5602579,
+        "posY": 8.802939,
+        "posZ": -29.93486,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.7283955,
+        "scaleY": 5.1,
+        "scaleZ": 18.2402782
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "dc830e",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": 15.5784807,
+        "posY": 8.80294,
+        "posZ": -1.93828869,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.8102531,
+        "scaleY": 5.1,
+        "scaleZ": 18.3519955
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "1a6ae3",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": 15.5568905,
+        "posY": 8.80294,
+        "posZ": 26.0420647,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6831055,
+        "scaleY": 5.1,
+        "scaleZ": 18.2446327
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "3a1115",
+      "Name": "ScriptingTrigger",
+      "Transform": {
+        "posX": 15.5687361,
+        "posY": 8.802941,
+        "posZ": 53.994606,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.67337,
+        "scaleY": 5.1,
+        "scaleZ": 18.3059635
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.509803951
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "d4edb7",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": -35.7937241,
+        "posY": 7.389639,
+        "posZ": 24.5231056,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.68772,
+        "scaleY": 2.27339554,
+        "scaleZ": 25.1064281
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.117999978,
+        "g": 0.53,
+        "b": 1.0,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Blue",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "024851",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": -35.7730751,
+        "posY": 7.432668,
+        "posZ": -3.51684284,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.7414951,
+        "scaleY": 2.35945559,
+        "scaleZ": 25.1554317
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.128999949,
+        "g": 0.694,
+        "b": 0.606999934,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Teal",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "5b823b",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": -35.8136,
+        "posY": 7.4387455,
+        "posZ": -31.4928036,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.65568,
+        "scaleY": 2.37161255,
+        "scaleZ": 25.1372757
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.191999972,
+        "g": 0.701,
+        "b": 0.167999953,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Green",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "3153d1",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": -35.7743759,
+        "posY": 7.427863,
+        "posZ": -59.5019531,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.6687851,
+        "scaleY": 2.34984779,
+        "scaleZ": 25.18265
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.905,
+        "g": 0.898,
+        "b": 0.171999961,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Yellow",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "d4097f",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": 44.76332,
+        "posY": 7.553621,
+        "posZ": -59.4906845,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.69146,
+        "scaleY": 2.60136461,
+        "scaleZ": 25.1366673
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.9559999,
+        "g": 0.39199996,
+        "b": 0.112999953,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Orange",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "21f47c",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": 44.7698059,
+        "posY": 7.530389,
+        "posZ": -31.4864788,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.6838245,
+        "scaleY": 2.55489922,
+        "scaleZ": 24.9913559
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.856,
+        "g": 0.09999997,
+        "b": 0.09399996,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Red",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "a3c7e3",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": 44.74019,
+        "posY": 7.51832628,
+        "posZ": -3.51554966,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.6524677,
+        "scaleY": 2.53077173,
+        "scaleZ": 25.0929337
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.442999959,
+        "g": 0.230999947,
+        "b": 0.0899999961,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Brown",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "dc2681",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": 44.75983,
+        "posY": 7.53368044,
+        "posZ": 24.5237656,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.66302,
+        "scaleY": 2.56147981,
+        "scaleZ": 25.0208054
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "White",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "506a18",
+      "Name": "FogOfWarTrigger",
+      "Transform": {
+        "posX": 44.76793,
+        "posY": 7.51191139,
+        "posZ": 52.5114822,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 27.5579052,
+        "scaleY": 2.51794052,
+        "scaleZ": 25.1360664
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.96,
+        "g": 0.438999981,
+        "b": 0.807,
+        "a": 0.04807711
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Pink",
+      "FogHidePointers": false,
+      "FogReverseHiding": false,
+      "FogSeethrough": true,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "cf0821",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": -18.45,
+        "posY": 7.4,
+        "posZ": 22.9595852,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.117999978,
+        "g": 0.53,
+        "b": 1.0,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Blue",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "2f4a7a",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": -18.45,
+        "posY": 7.4,
+        "posZ": -5.036788,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.128999949,
+        "g": 0.694,
+        "b": 0.606999934,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Teal",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "620a21",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": 27.43555,
+        "posY": 7.374357,
+        "posZ": 54.0590134,
+        "rotX": 0.0,
+        "rotY": 270.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.96,
+        "g": 0.438999981,
+        "b": 0.807,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Pink",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "79bf53",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": 27.44,
+        "posY": 7.37,
+        "posZ": 26.0579624,
+        "rotX": 0.0,
+        "rotY": 270.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "White",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "a6d921",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": 27.44,
+        "posY": 7.37,
+        "posZ": -1.95685887,
+        "rotX": 0.0,
+        "rotY": 270.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.442999959,
+        "g": 0.230999947,
+        "b": 0.0899999961,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Brown",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "113fe1",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": 27.44,
+        "posY": 7.37,
+        "posZ": -29.955286,
+        "rotX": 0.0,
+        "rotY": 270.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.856,
+        "g": 0.09999997,
+        "b": 0.09399996,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Red",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "bb9a6b",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": -18.45,
+        "posY": 7.4,
+        "posZ": -33.02,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.191999972,
+        "g": 0.701,
+        "b": 0.167999953,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Green",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "af0199",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": -18.4491253,
+        "posY": 7.4,
+        "posZ": -61.098,
+        "rotX": 0.0,
+        "rotY": 90.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.905,
+        "g": 0.898,
+        "b": 0.171999961,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Yellow",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "20e303",
+      "Name": "HandTrigger",
+      "Transform": {
+        "posX": 27.44,
+        "posY": 7.37,
+        "posZ": -57.9605446,
+        "rotX": 0.0,
+        "rotY": 270.0,
+        "rotZ": 0.0,
+        "scaleX": 24.6709347,
+        "scaleY": 2.27954769,
+        "scaleZ": 4.98959064
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.9559999,
+        "g": 0.39199996,
+        "b": 0.112999953,
+        "a": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "FogColor": "Orange",
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    }
+  ]
+}
