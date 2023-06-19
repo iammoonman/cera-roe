@@ -743,8 +743,8 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomMesh": {
-        "MeshURL": "file:///C:\\Users\\moon\\Desktop\\table\\shorttable.obj",
-        "DiffuseURL": "file:///C:\\Users\\moon\\Desktop\\table\\shorttabletexture.png",
+        "MeshURL": "https://github.com/iammoonman/cera-roe/raw/main/lavafume/table.obj",
+        "DiffuseURL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/texture.png?raw=true",
         "NormalURL": "",
         "ColliderURL": "",
         "Convex": true,
@@ -769,37 +769,37 @@
         {
           "Type": 0,
           "Name": "untap",
-          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\anticlockwise-rotation.png"
+          "URL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/anticlockwise-rotation.png?raw=true"
         },
         {
           "Type": 0,
           "Name": "ping",
-          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\extra-lucid.png"
+          "URL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/extra-lucid.png?raw=true"
         },
         {
           "Type": 0,
           "Name": "g1",
-          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\dice-six-faces-one.png"
+          "URL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/dice-six-faces-one.png?raw=true"
         },
         {
           "Type": 0,
           "Name": "g2",
-          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\dice-six-faces-two.png"
+          "URL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/dice-six-faces-two.png?raw=true"
         },
         {
           "Type": 0,
           "Name": "g3",
-          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\dice-six-faces-three.png"
+          "URL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/dice-six-faces-three.png?raw=true"
         },
         {
           "Type": 0,
           "Name": "flip",
-          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\coinflip.png"
+          "URL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/coinflip.png?raw=true"
         },
         {
           "Type": 0,
           "Name": "roll",
-          "URL": "file:///C:\\Users\\moon\\Documents\\GitHub\\cera-roe\\lavafume\\rolling-dices.png"
+          "URL": "https://github.com/iammoonman/cera-roe/blob/main/lavafume/rolling-dices.png?raw=true"
         }
       ]
     },
