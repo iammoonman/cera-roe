@@ -1,6 +1,7 @@
 mod_name, version = 'Lavafume', 1.0
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 reload_deb        = nil
+IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 
 function onLoad()
     self.interactable = false;
@@ -25,14 +26,14 @@ function GetFreshXML(wr)
 end
 
 function ping(player, _, button_id)
-    local color = IDToColor(button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
     for i, p in ipairs(Player.getPlayers()) do
         if p.host then p.broadcast(color .. ' needs assistance.') end
     end
 end
 
 function untap(player, _, button_id)
-    local color = IDToColor(button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
     local guid = '5a1314'
     local plane_rotation = 270
     if color == 'Pink' then guid = '3a1115' plane_rotation = 90 end
@@ -58,7 +59,7 @@ end
 function g1(player, _, button_id)
     local button_a = 'g1_k'
     local button_b = 'g1_p'
-    local color = IDToColor(button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
     if button_id == 'g1_p' or button_id == 'g1_k' then
         button_a = 'g1_k'
         button_b = 'g1_p'
@@ -87,8 +88,7 @@ end
 function g2(player, _, button_id)
     local button_a = 'g2_p'
     local button_b = 'g2_k'
-    local color = IDToColor(button_id)
-    log(color)
+    local color = IDToColor[button_id:match('_(%l)')]
     if button_id == 'g2_p' or button_id == 'g2_k' then
         button_a = 'g2_k'
         button_b = 'g2_p'
@@ -117,7 +117,7 @@ end
 function g3(player, _, button_id)
     local button_a = 'g3_p'
     local button_b = 'g3_k'
-    local color = IDToColor(button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
     if button_id == 'g3_p' or button_id == 'g3_k' then
         button_a = 'g3_k'
         button_b = 'g3_p'
@@ -144,7 +144,7 @@ function g3(player, _, button_id)
 end
 
 function flip(player, _, button_id)
-    local color = IDToColor(button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
     local result = 'Tails'
     if math.random(0, 100) > 50 then
         result = 'Heads'
@@ -153,22 +153,7 @@ function flip(player, _, button_id)
 end
 
 function roll(player, _, button_id)
-    local color = IDToColor(button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
     local result = math.random(1, 6)
     broadcastToAll(color .. " rolled a d6 and got " .. result .. '.', color)
-end
-
-function IDToColor(id_long)
-    local id = id_long:match('_(%l)')
-    if id == 'k' then return 'Pink' end
-    if id == 'w' then return 'White' end
-    if id == 'b' then return 'Brown' end
-    if id == 'r' then return 'Red' end
-    if id == 'o' then return 'Orange' end
-    if id == 'y' then return 'Yellow' end
-    if id == 'g' then return 'Green' end
-    if id == 't' then return 'Teal' end
-    if id == 'u' then return 'Blue' end
-    if id == 'p' then return 'Purple' end
-    return ''
 end
