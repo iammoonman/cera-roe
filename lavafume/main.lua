@@ -56,8 +56,8 @@ function untap(player, _, button_id)
 end
 
 function g1(player, _, button_id)
-    local button_a = 'g1_p'
-    local button_b = 'g1_k'
+    local button_a = 'g1_k'
+    local button_b = 'g1_p'
     local color = IDToColor(button_id)
     if button_id == 'g1_p' or button_id == 'g1_k' then
         button_a = 'g1_k'
@@ -88,6 +88,7 @@ function g2(player, _, button_id)
     local button_a = 'g2_p'
     local button_b = 'g2_k'
     local color = IDToColor(button_id)
+    log(color)
     if button_id == 'g2_p' or button_id == 'g2_k' then
         button_a = 'g2_k'
         button_b = 'g2_p'
@@ -157,8 +158,8 @@ function roll(player, _, button_id)
     broadcastToAll(color .. " rolled a d6 and got " .. result .. '.', color)
 end
 
-function IDToColor(id)
-    local id = id:match('_(%l)')
+function IDToColor(id_long)
+    local id = id_long:match('_(%l)')
     if id == 'k' then return 'Pink' end
     if id == 'w' then return 'White' end
     if id == 'b' then return 'Brown' end
