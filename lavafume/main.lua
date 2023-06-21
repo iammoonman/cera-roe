@@ -124,7 +124,7 @@ function g3(player, _, button_id)
     elseif button_id == 'g3_w' or button_id == 'g3_u' then
         button_a = 'g3_w'
         button_b = 'g3_u'
-    elseif button_id == 'g3_b' or button_id == 'g1_t' then
+    elseif button_id == 'g3_b' or button_id == 'g3_t' then
         button_a = 'g3_b'
         button_b = 'g3_t'
     elseif button_id == 'g3_r' or button_id == 'g3_g' then
