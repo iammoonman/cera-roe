@@ -86,7 +86,7 @@ function onObjectLeaveZone(zone, obj)
             for _, objectInHand in ipairs(zone.getObjects()) do
                 if objectInHand.getGMNotes() == 'operative_used' then
                     operativeInHand = true
-                    print(ThisColor .. ", remove the used Leovold's Operative from your hand. Return all other cards from this pack to it and pick once.")
+                    printToColor(ThisColor .. ", remove the used Leovold's Operative from your hand. Return all other cards from this pack to it and pick once.", ThisColor)
                 end
                 if not objectInHand.hasTag(TrackerTag) then StopCounting = true end
             end
@@ -138,7 +138,7 @@ function onObjectEnterZone(zone, obj)
             if not isOperative and not isCogwork then
                 -- Kind of a reminder to the player that the draft is still going.
                 obj.highlightOn('Red', 15)
-                print(ThisColor .. ", return all cards from your pack to your current hand and remove all other objects. If this is the last card in the pack, ignore this message.")
+                printToColor(ThisColor .. ", return all cards from your pack to your current hand and remove all other objects. If this is the last card in the pack, ignore this message.", ThisColor)
             end
             if isCogwork then
                 if not isOperative then TakenCount = TakenCount - 1 end
