@@ -156,3 +156,33 @@ function roll(player, _, button_id)
     local result = math.random(1, 6)
     broadcastToAll(color .. " rolled a d6 and got " .. result .. '.', color)
 end
+
+function rd20(player, _, button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
+    local result = math.random(1, 20)
+    broadcastToAll(color .. " rolled a d20 and got " .. result .. '.', color)
+end
+
+function swap(player, _, button_id)
+    local pId = button_id:match('_(%l)')
+    local color = IDToColor[pId]
+    local dir = button_id:match('s(%u)_%l') -- N or P
+    local curr = self.UI.getAttribute('btn_' .. color, 'onClick')
+    local nextFunc = {
+        ['roll'] = 'flip',
+        ['flip'] = 'rd20',
+        ['rd20'] = 'roll',
+    }
+    local prevFunc = {
+        ['roll'] = 'rd20',
+        ['flip'] = 'roll',
+        ['rd20'] = 'flip',
+    }
+    if dir == 'N' then
+        self.UI.setAttribute('btn_' .. color, 'onClick', nextFunc(curr))
+        self.UI.setAttribute('btn_' .. color, 'icon', nextFunc(curr))
+    else
+        self.UI.setAttribute('btn_' .. color, 'onClick', prevFunc(curr))
+        self.UI.setAttribute('btn_' .. color, 'icon', prevFunc(curr))
+    end
+end
