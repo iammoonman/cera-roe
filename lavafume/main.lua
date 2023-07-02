@@ -179,10 +179,10 @@ function swap(player, _, button_id)
         ['rd20'] = 'flip',
     }
     if dir == 'N' then
-        self.UI.setAttribute('btn_' .. color, 'onClick', nextFunc(curr))
-        self.UI.setAttribute('btn_' .. color, 'icon', nextFunc(curr))
+        self.UI.setAttribute('btn_' .. color, 'onClick', nextFunc[curr])
+        self.UI.setAttribute('btn_' .. color, 'icon', nextFunc[curr])
     else
-        self.UI.setAttribute('btn_' .. color, 'onClick', prevFunc(curr))
-        self.UI.setAttribute('btn_' .. color, 'icon', prevFunc(curr))
+        self.UI.setAttribute('btn_' .. color, 'onClick', prevFunc[curr])
+        self.UI.setAttribute('btn_' .. color, 'icon', prevFunc[curr])
     end
 end
