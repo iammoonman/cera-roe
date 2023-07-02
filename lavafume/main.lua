@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 1.03
+mod_name, version = 'Lavafume', 1.04
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 
@@ -165,9 +165,8 @@ end
 
 function swap(player, _, button_id)
     local pId = button_id:match('_(%l)')
-    local color = IDToColor[pId]
     local dir = button_id:match('s(%u)_%l') -- N or P
-    local curr = self.UI.getAttribute('btn_' .. color, 'onClick')
+    local curr = self.UI.getAttribute('btn_' .. pId, 'onClick')
     local nextFunc = {
         ['roll'] = 'flip',
         ['flip'] = 'rd20',
@@ -179,10 +178,10 @@ function swap(player, _, button_id)
         ['rd20'] = 'flip',
     }
     if dir == 'N' then
-        self.UI.setAttribute('btn_' .. color, 'onClick', nextFunc[curr])
-        self.UI.setAttribute('btn_' .. color, 'icon', nextFunc[curr])
+        self.UI.setAttribute('btn_' .. pId, 'onClick', nextFunc[curr])
+        self.UI.setAttribute('btn_' .. pId, 'icon', nextFunc[curr])
     else
-        self.UI.setAttribute('btn_' .. color, 'onClick', prevFunc[curr])
-        self.UI.setAttribute('btn_' .. color, 'icon', prevFunc[curr])
+        self.UI.setAttribute('btn_' .. pId, 'onClick', prevFunc[curr])
+        self.UI.setAttribute('btn_' .. pId, 'icon', prevFunc[curr])
     end
 end
