@@ -1,6 +1,5 @@
-mod_name, version = 'Lavafume', 1.01
+mod_name, version = 'Lavafume', 1.02
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
-reload_deb        = nil
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 
 function onLoad()
@@ -47,7 +46,7 @@ function untap(player, _, button_id)
     if color == 'Blue' then guid = '6180e9' plane_rotation = 270 end
     if color == 'Purple' then guid = '7058c4' plane_rotation = 270 end
     local zone = getObjectFromGUID(guid)
-    for _, occupyingObject in ipairs(zone.getObjects(true)) do
+    for _, occupyingObject in ipairs(zone.getObjects()) do
         if occupyingObject.type == "Card" then
             local rotation = occupyingObject.getRotation()
             local flip_angle = rotation.z

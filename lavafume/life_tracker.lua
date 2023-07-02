@@ -23,7 +23,7 @@ function click_changeValue(obj, color, val)
         local nextCount = count
         function clickCoroutine()
             if not countDelta then countDelta = previousCount end
-            updateCountDisplay(count, (count - countDelta))
+            updateCountDisplay(count, countDelta)
             wait(3)
             if countDelta and nextCount == count then
                 local gl = 'lost'
@@ -49,10 +49,14 @@ local lCheck = {
     ['double_my_life_'] = function(n, c) if c == owner then return count * 2 ^ n, 'doubled their life this many times' end end,
     ['set_life_'] = function(n, c) if c == owner then return n, 'Life total changed by ' .. math.abs(n - count) .. '. Setting it to' end end,
     ['drain_'] = function(n, c) if c == owner then return count + n, 'drained everyone for' else return count - n, false, true end end,
-    ['extort_'] = function(n, c) if c == owner then
+    ['extort_'] = function(n, c)
+        if c == owner then
             for _, p in pairs(Player.getPlayers()) do if p.seated and p.color ~= owner and subs[p.color] then count = count + n end end
             return count, 'extorted everyone for'
-        else return count - n, false, true end end,
+        else
+            return count - n, false, true
+        end
+    end,
     -- ['test_']=function(n,c)return count end,
 }
 
@@ -71,7 +75,7 @@ end
 -- Subscribe each other player on that turn counter to this's updates
 
 function printToSome(text, tint)
-    for _, c in ipairs({ 'White', 'Blue', 'Red', 'Purple', 'Pink', 'Green', 'Orange', 'Yellow', 'Teal', 'Brown' }) do if subs[c] then printToColor(text, c, tint) end end
+    for _, c in ipairs(Player.getColors()) do if subs[c] then printToColor(text, c, tint) end end
 end
 
 function onChat(msg, player)
@@ -112,7 +116,7 @@ function onload(s)
     if s ~= '' then
         local ld = JSON.decode(s); count = ld.c; subs = ld.subs
     else
-        count = 0; subs = { White = true, Blue = true, Red = true, Purple = true, Pink = true, Green = true, Orange = true, Yellow = true, Teal = true, Brown = true }
+        count = 0; subs = { White = owner == 'White' or owner == 'Blue', Blue = owner == 'White' or owner == 'Blue', Red = owner == 'Red' or owner == 'Green', Purple = owner == 'Purple' or owner == 'Pink', Pink = owner == 'Purple' or owner == 'Pink', Green = owner == 'Red' or owner == 'Green', Orange = owner == 'Orange' or owner == 'Yellow', Yellow = owner == 'Orange' or owner == 'Yellow', Teal = owner == 'Teal' or owner == 'Brown', Brown = owner == 'Teal' or owner == 'Brown' }
     end
     self.createButton({
         tooltip = 'Click to increase\nRight click to decrease',
