@@ -13,10 +13,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_p"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_p" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_p" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_p"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_p"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="206.75 9 0" scale="0.03 0.03 0.03">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_u"
@@ -32,10 +34,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_u"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_u" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_u" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_u"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_u"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="95 9 0" scale="0.03 0.03 0.03">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_t"
@@ -51,10 +55,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_t"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_t" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_t" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_t"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_t"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="-16.5 9 0" scale="0.03 0.03 0.03">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_g"
@@ -70,10 +76,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_g"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_g" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_g" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_g"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_g"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="-128 9 0" scale="0.03 0.03 0.03">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_y"
@@ -89,10 +97,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_y"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_y" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_y" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_y"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_y"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="-218 -10.5 0" scale="0.03 0.03 0.03" rotation="0 0 180">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_o"
@@ -108,10 +118,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_o"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_o" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_o" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_o"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_o"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="-106.25 -10.5 0" scale="0.03 0.03 0.03" rotation="0 0 180">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_r"
@@ -127,10 +139,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_r"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_r" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_r" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_r"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_r"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="5.5 -10.5 0" scale="0.03 0.03 0.03" rotation="0 0 180">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_b"
@@ -146,10 +160,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_b"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_b" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_b" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_b"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_b"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="117.25 -10.5 0" scale="0.03 0.03 0.03" rotation="0 0 180">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_w"
@@ -165,10 +181,12 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_w"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_w" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_w" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_w"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_w"
+            onClick="swap"></Button>
     </Panel>
     <Panel position="228.75 -10.5 0" scale="0.03 0.03 0.03" rotation="0 0 180">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_k"
@@ -184,9 +202,11 @@
         <Button icon="g3" scale="0.01 0.01 0.01" position="-60 160 0" rotation="0 0 180" outline=""
             onClick="g3"
             outlineSize="1400 1400" id="g3_k"></Button>
-        <Button icon="flip" scale="0.015 0.015 0.015" position="130 290 0" rotation="0 0 180"
-            id="flip_k" onClick="flip"></Button>
-        <Button icon="roll" scale="0.015 0.015 0.015" position="-30 290 0" rotation="0 0 180"
-            id="roll_k" onClick="roll"></Button>
+        <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_k"
+            onClick="swap"></Button>
+        <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
+            id="btn_p" onClick="flip"></Button>
+        <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_k"
+            onClick="swap"></Button>
     </Panel>
 </Panel>

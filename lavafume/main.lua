@@ -1,6 +1,5 @@
-mod_name, version = 'Lavafume', 1.01
+mod_name, version = 'Lavafume', 1.02
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
-reload_deb        = nil
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 
 function onLoad()
@@ -47,7 +46,7 @@ function untap(player, _, button_id)
     if color == 'Blue' then guid = '6180e9' plane_rotation = 270 end
     if color == 'Purple' then guid = '7058c4' plane_rotation = 270 end
     local zone = getObjectFromGUID(guid)
-    for _, occupyingObject in ipairs(zone.getObjects(true)) do
+    for _, occupyingObject in ipairs(zone.getObjects()) do
         if occupyingObject.type == "Card" then
             local rotation = occupyingObject.getRotation()
             local flip_angle = rotation.z
@@ -156,4 +155,34 @@ function roll(player, _, button_id)
     local color = IDToColor[button_id:match('_(%l)')]
     local result = math.random(1, 6)
     broadcastToAll(color .. " rolled a d6 and got " .. result .. '.', color)
+end
+
+function rd20(player, _, button_id)
+    local color = IDToColor[button_id:match('_(%l)')]
+    local result = math.random(1, 20)
+    broadcastToAll(color .. " rolled a d20 and got " .. result .. '.', color)
+end
+
+function swap(player, _, button_id)
+    local pId = button_id:match('_(%l)')
+    local color = IDToColor[pId]
+    local dir = button_id:match('s(%u)_%l') -- N or P
+    local curr = self.UI.getAttribute('btn_' .. color, 'onClick')
+    local nextFunc = {
+        ['roll'] = 'flip',
+        ['flip'] = 'rd20',
+        ['rd20'] = 'roll',
+    }
+    local prevFunc = {
+        ['roll'] = 'rd20',
+        ['flip'] = 'roll',
+        ['rd20'] = 'flip',
+    }
+    if dir == 'N' then
+        self.UI.setAttribute('btn_' .. color, 'onClick', nextFunc(curr))
+        self.UI.setAttribute('btn_' .. color, 'icon', nextFunc(curr))
+    else
+        self.UI.setAttribute('btn_' .. color, 'onClick', prevFunc(curr))
+        self.UI.setAttribute('btn_' .. color, 'icon', prevFunc(curr))
+    end
 end
