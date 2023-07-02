@@ -1,6 +1,6 @@
 --By Amuzet
 --Adapted by Moon
-mod_name, version, url = 'Life_Tracker', 1, ''
+mod_name, version, url = 'Life_Tracker', 1.01, ''
 function updateSave() self.script_state = JSON.encode({ ['c'] = count, ['subs'] = subs }) end
 
 function wait(t)
@@ -8,7 +8,7 @@ function wait(t)
     repeat coroutine.yield(0) until os.time() > s + t
 end
 
-function updateCountDisplay(l, n) self.editButton({ index = 0, label = '\n' .. l .. '\n' .. (n or '') }) end
+function updateCountDisplay(l, n) self.editButton({ index = 0, label = '\n' .. l .. '\n' .. (n and n > 0 and '+' .. n or n or '') }) end
 
 function option(o, c, a)
     local n = 1
@@ -18,26 +18,35 @@ end
 
 function click_changeValue(obj, color, val)
     if color == owner or Player[color].admin then
-        local previousCount = count
-        count = count + val
-        local nextCount = count
-        function clickCoroutine()
-            if not countDelta then countDelta = previousCount end
-            updateCountDisplay(count, countDelta)
-            wait(3)
-            if countDelta and nextCount == count then
-                local gl = 'lost'
-                if nextCount > countDelta then gl = 'gained' end
-                updateCountDisplay(count)
-                local t = txt:format(gl, math.abs(count - countDelta), count)
-                printToSome(t, self.getColorTint())
-                log(t)
-                countDelta = nil
-            end
-            return 1
+        if previousCount == nil then
+            previousCount = count
         end
-
-        startLuaCoroutine(self, 'clickCoroutine')
+        count = count + val
+        updateCountDisplay(previousCount, count - previousCount)
+        if debUpdate == nil then
+            debUpdate = Wait.time(function()
+                updateCountDisplay(count)
+                if previousCount > count then
+                    printToSome(txt:format('lost', math.abs(count - previousCount), count), self.getColorTint())
+                else
+                    printToSome(txt:format('gained', math.abs(count - previousCount), count), self.getColorTint())
+                end
+                debUpdate = nil
+                previousCount = nil
+            end, 3)
+        else
+            Wait.stop(debUpdate)
+            debUpdate = Wait.time(function()
+                updateCountDisplay(count)
+                if previousCount > count then
+                    printToSome(txt:format('lost', math.abs(count - previousCount), count), self.getColorTint())
+                else
+                    printToSome(txt:format('gained', math.abs(count - previousCount), count), self.getColorTint())
+                end
+                debUpdate = nil
+                previousCount = nil
+            end, 3)
+        end
         updateSave()
     end
 end
@@ -75,7 +84,7 @@ end
 -- Subscribe each other player on that turn counter to this's updates
 
 function printToSome(text, tint)
-    for _, c in ipairs(Player.getColors()) do if subs[c] then printToColor(text, c, tint) end end
+    for _, c in ipairs(Player.getColors()) do if subs[c] then pcall(function() printToColor(text, c, tint) end) end end
 end
 
 function onChat(msg, player)
@@ -88,7 +97,7 @@ function onChat(msg, player)
             if m:find(k .. '%d+') then
                 a, t, sl = f(n, player.color)
                 if a then
-                    if sl then updateCountDisplay(count, n) end
+                    if sl then updateCountDisplay(count) end
                     count = a
                     break
                 else
@@ -100,7 +109,7 @@ function onChat(msg, player)
         updateSave()
         if t and t ~= '' then
             printToSome(player.color .. '[999999] ' .. t .. ' [-]' .. n, self.getColorTint())
-            updateCountDisplay(count, count - JSON.decode(self.script_state).c)
+            updateCountDisplay(count) -- , count - JSON.decode(self.script_state).c)
             return false
         end
     end
@@ -159,4 +168,4 @@ function ipt(o, p, v, s)
     end
 end
 
-mode, ref_type, owner, x, y, z, g, countDelta = '', '', '', 1.1, 0.2, 0.7, { 0.1, 0.1, 0.1 }, nil
+mode, ref_type, owner, x, y, z, g, previousCount, debUpdate = '', '', '', 1.1, 0.2, 0.7, { 0.1, 0.1, 0.1 }, nil, nil
