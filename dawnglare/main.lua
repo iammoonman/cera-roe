@@ -11,7 +11,7 @@ function onload(state)
         self.addTag(self.getGUID())
     else
         local tags = {}
-        table.insert(tags, self.GUID())
+        table.insert(tags, self.getGUID())
         self.setTags(tags)
     end
     UpdateVariables()
