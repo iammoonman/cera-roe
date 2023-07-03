@@ -1,4 +1,4 @@
-mod_name, version = 'Dawnglare', 1.003
+mod_name, version = 'Dawnglare', 1.004
 function onload(state)
     WebRequest.get('https://raw.githubusercontent.com/iammoonman/cera-roe/master/dawnglare/main.lua', self, 'GetFreshVersion')
     LocalBounds = self.getBounds()
@@ -7,7 +7,13 @@ function onload(state)
     self.createButton({ label = "Highlight Bags", click_function = "onClickHighlightBags", function_owner = self, width = 680, rotation = { -90, 0, 0 }, position = { x = 0, y = LocalBounds.size.y / 4, z = LocalBounds.size.z / 2 } })
     self.createButton({ label = "Destroy Bags", click_function = "onClickDestroyBags", function_owner = self, width = 680, rotation = { 0, 0, 180 }, position = { x = 0, y = -LocalBounds.size.y / 2, z = 0 } })
     self.createButton({ label = "1", click_function = "onClickChangeTaken", function_owner = self, width = 400, rotation = { 0, 0, 0 }, position = { x = 0, y = LocalBounds.size.y / 2, z = -0.3 } })
-    if not self.hasAnyTag() then self.addTag(self.getGUID()) end
+    if not self.hasAnyTag() then
+        self.addTag(self.getGUID())
+    else
+        local tags = {}
+        table.insert(tags, self.getGUID())
+        self.setTags(tags)
+    end
     UpdateVariables()
 end
 
