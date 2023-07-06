@@ -1,0 +1,12 @@
+{
+  "name": "frostwind",
+  "version": "1.0.0",
+  "description": "A Tabletop Playground module for playing Magic: The Gathering.",
+  "scripts": {
+    "lint": "eslint ./dist --ext .js,.ts"
+  },
+  "devDependencies": {
+    "@tabletop-playground/api": "^0.36.0",
+    "typescript": "^5.1.6"
+  }
+}
