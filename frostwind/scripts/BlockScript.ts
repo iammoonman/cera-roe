@@ -1,5 +1,7 @@
-const { globalEvents } = require("@tabletop-playground/api");
-globalEvents.onChatMessage = (sender, message) => {
+import { Card, Player, globalEvents } from "@tabletop-playground/api";
+import type { ScryfallCard as ScryfallCard, ScryfallList } from "./Scryfall";
+
+globalEvents.onChatMessage.add((sender, message) => {
 	if (message.match(/^Frostwind\sfuzzy\s/g)) {
 		// Fuzzy search Scryfall for cards.
 		const [query] = message.match(/(?<=^Frostwind\sfuzzy\s).+/) ?? [null];
@@ -9,6 +11,7 @@ globalEvents.onChatMessage = (sender, message) => {
 					return r.json();
 				})
 				.then((v) => {
+					// @ts-expect-error
 					world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", sender.getCursorPosition()).setSavedData(v.id, "sf_id");
 				});
 		}
@@ -26,16 +29,16 @@ globalEvents.onChatMessage = (sender, message) => {
 			makeCubeCobraCube(cc_id, sender);
 		}
 	}
-};
+});
 
-function makeMoxfieldDeck(deck_id, player) {
+function makeMoxfieldDeck(deck_id: string, player: Player) {
 	fetch(`https://api2.moxfield.com/v2/decks/all/${deck_id}`)
 		.then((r) => r.json())
-		.then(async (v) => {
+		.then(async (v: MoxfieldResponse) => {
 			const position = player.getCursorPosition();
-			const main_deck = [];
-			const side_deck = [];
-			const comm_deck = [];
+			const main_deck: { scryfall_id: string }[] = [];
+			const side_deck: typeof main_deck = [];
+			const comm_deck: typeof main_deck = [];
 			// const comp_deck = []
 			// const attr_deck = []
 			// const sign_deck = []
@@ -46,21 +49,17 @@ function makeMoxfieldDeck(deck_id, player) {
 			Object.entries(mainboard).forEach(([k, v]) => (v.printingData === undefined ? main_deck.push(...Array(v.quantity).fill({ scryfall_id: v.card.scryfall_id })) : main_deck.push(...Array(v.printingData[0].quantity).fill({ scryfall_id: v.printingData[0].card.scryfall_id }), ...Array(v.printingData[1].quantity).fill({ scryfall_id: v.printingData[1].card.scryfall_id }))));
 			Object.entries(sideboard).forEach(([k, v]) => (v.printingData === undefined ? side_deck.push(...Array(v.quantity).fill({ scryfall_id: v.card.scryfall_id })) : side_deck.push(...Array(v.printingData[0].quantity).fill({ scryfall_id: v.printingData[0].card.scryfall_id }), ...Array(v.printingData[1].quantity).fill({ scryfall_id: v.printingData[1].card.scryfall_id }))));
 			Object.entries(commanders).forEach(([k, v]) => (v.printingData === undefined ? comm_deck.push(...Array(v.quantity).fill({ scryfall_id: v.card.scryfall_id })) : comm_deck.push(...Array(v.printingData[0].quantity).fill({ scryfall_id: v.printingData[0].card.scryfall_id }), ...Array(v.printingData[1].quantity).fill({ scryfall_id: v.printingData[1].card.scryfall_id }))));
-			// Object.entries(companions).forEach(([k, v]) => comp_deck.push(...Array(v.quantity).fill(v.card.scryfall_id)))
-			// Object.entries(attractions).forEach(([k, v]) => attr_deck.push(...Array(v.quantity).fill(v.card.scryfall_id)))
-			// Object.entries(signatureSpells).forEach(([k, v]) => sign_deck.push(...Array(v.quantity).fill(v.card.scryfall_id)))
-			// Object.entries(stickers).forEach(([k, v]) => stic_deck.push(...Array(v.quantity).fill(v.card.scryfall_id)))
-
-			async function create_stack(deck, transform) {
-				let main_stack = undefined;
-				let main_ls = [];
+			async function create_stack(deck: typeof main_deck, transform: [number, number, number]) {
+				let main_stack: Card | undefined = undefined;
+				let main_ls: string[] = [];
 				for (let index = 0; index < deck.length; index++) {
 					const element = deck[index];
 					if (index % 75 === 0 || index === deck.length - 1) {
 						if (main_stack === undefined) {
 							const c = await fetch(`https://api.scryfall.com/cards/${element.scryfall_id}`);
 							const j = await c.json();
-							const q = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
+							// @ts-expect-error
+							const q: Card = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
 							if (["normal", "adventure", "flip", "split", "meld", "leveler", "class", "saga", "planar", "vanguard", "token", "augment", "host"].includes(j.layout)) {
 								q.setTextureOverrideURL(j.image_uris.normal.concat(`&scryfall_id=${element.scryfall_id}&front_face=true`));
 							} else {
@@ -70,16 +69,18 @@ function makeMoxfieldDeck(deck_id, player) {
 						} else {
 							const collection = main_ls.map((c) => ({ id: c }));
 							collection.push({ id: element.scryfall_id });
-							const response = await fetch(`https://api.scryfall.com/cards/collection`, { method: "POST", body: { identifiers: collection } });
-							const j = await response.json();
+							const response = await fetch(`https://api.scryfall.com/cards/collection`, { method: "POST", body: JSON.stringify({ identifiers: collection }) });
+							const j: ScryfallList = await response.json();
 							j.data.forEach((c) => {
+								// @ts-expect-error
 								const q = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
 								if (["normal", "adventure", "flip", "split", "meld", "leveler", "class", "saga", "planar", "vanguard", "token", "augment", "host"].includes(c.layout)) {
 									q.setTextureOverrideURL(c.image_uris.normal.concat(`&scryfall_id=${c.id}&front_face=true`));
 								} else {
+									// @ts-expect-error
 									q.setTextureOverrideURL(c.card_faces[0].image_uris.normal.concat(`&scryfall_id=${c.id}&front_face=true`));
 								}
-								main_stack.addCards(q);
+								main_stack!.addCards(q);
 							});
 							main_ls = [];
 						}
@@ -95,13 +96,13 @@ function makeMoxfieldDeck(deck_id, player) {
 		});
 }
 
-function makeCubeCobraCube(cube_id, player) {
+function makeCubeCobraCube(cube_id: string, player: Player) {
 	fetch(`https://cubecobra.com/cube/api/cubeJSON/${cube_id}`)
 		.then((r) => r.json())
-		.then(async (v) => {
+		.then(async (v: CubeCobraResponse) => {
 			const position = player.getCursorPosition();
-			const main_board = [];
-			const maybe_board = [];
+			const main_board: { scryfall_id: string }[] = [];
+			const maybe_board: typeof main_board = [];
 
 			const {
 				cards: { mainboard, maybeboard },
@@ -110,35 +111,39 @@ function makeCubeCobraCube(cube_id, player) {
 			Object.entries(mainboard).forEach(([k, v]) => main_board.push({ scryfall_id: v.details.scryfall_id }));
 			Object.entries(maybeboard).forEach(([k, v]) => maybe_board.push({ scryfall_id: v.details.scryfall_id }));
 
-			async function create_stack(deck, transform) {
-				let main_stack = undefined;
+			async function create_stack(deck: typeof main_board, transform: [number, number, number]) {
+				let main_stack: Card | undefined = undefined;
 				let main_ls = [];
 				for (let index = 0; index < deck.length; index++) {
 					const element = deck[index];
 					if (index % 75 === 0 || index === deck.length - 1) {
 						if (main_stack === undefined) {
 							const c = await fetch(`https://api.scryfall.com/cards/${element.scryfall_id}`);
-							const j = await c.json();
-							const q = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
+							const j: ScryfallCard = await c.json();
+							// @ts-expect-error
+							const q: Card = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
 							if (["normal", "adventure", "flip", "split", "meld", "leveler", "class", "saga", "planar", "vanguard", "token", "augment", "host"].includes(j.layout)) {
 								q.setTextureOverrideURL(j.image_uris.normal.concat(`&scryfall_id=${element.scryfall_id}&front_face=true`));
 							} else {
+								// @ts-expect-error
 								q.setTextureOverrideURL(j.card_faces[0].image_uris.normal.concat(`&scryfall_id=${element.scryfall_id}&front_face=true`));
 							}
 							main_stack = q;
 						} else {
 							const collection = main_ls.map((c) => ({ id: c }));
 							collection.push({ id: element.scryfall_id });
-							const response = await fetch(`https://api.scryfall.com/cards/collection`, { method: "POST", body: { identifiers: collection } });
-							const j = await response.json();
+							const response = await fetch(`https://api.scryfall.com/cards/collection`, { method: "POST", body: JSON.stringify({ identifiers: collection }) });
+							const j: ScryfallList = await response.json();
 							j.data.forEach((c) => {
+								// @ts-expect-error
 								const q = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
 								if (["normal", "adventure", "flip", "split", "meld", "leveler", "class", "saga", "planar", "vanguard", "token", "augment", "host"].includes(c.layout)) {
 									q.setTextureOverrideURL(c.image_uris.normal.concat(`&scryfall_id=${c.id}&front_face=true`));
 								} else {
+									// @ts-expect-error
 									q.setTextureOverrideURL(c.card_faces[0].image_uris.normal.concat(`&scryfall_id=${c.id}&front_face=true`));
 								}
-								main_stack.addCards(q);
+								main_stack!.addCards(q);
 							});
 							main_ls = [];
 						}

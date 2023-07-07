@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "lib": ["ESNext", "DOM"],
+      "target": "ESNext",
+      "module": "CommonJS",
+      "strict": true,
+      "useUnknownInCatchVariables": false,
+      "outDir": "dist/scripts/"
+    },
+    "include": ["scripts/*"],
+  }
