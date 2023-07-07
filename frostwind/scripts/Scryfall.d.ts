@@ -8,16 +8,16 @@
  */
 
 // Card Layouts: https://scryfall.com/docs/api/layouts
-export type CardLayout = "normal" | "split" | "flip" | "transform" | "modal_dfc" | "meld" | "leveler" | "class" | "saga" | "adventure" | "battle" | "planar" | "scheme" | "vanguard" | "token" | "double_faced_token" | "emblem" | "augment" | "host" | "art_series" | "reversible_card";
+export type ScryfallCardLayout = "normal" | "split" | "flip" | "transform" | "modal_dfc" | "meld" | "leveler" | "class" | "saga" | "adventure" | "battle" | "planar" | "scheme" | "vanguard" | "token" | "double_faced_token" | "emblem" | "augment" | "host" | "art_series" | "reversible_card";
 
 // Set Types: https://scryfall.com/docs/api/sets#set-types
 export type SetType = "core" | "expansion" | "masters" | "alchemy" | "masterpiece" | "arsenal" | "from_the_vault" | "spellbook" | "premium_deck" | "duel_deck" | "draft_innovation" | "treasure_chest" | "commander" | "planechase" | "archenemy" | "vanguard" | "funny" | "starter" | "box" | "promo" | "token" | "memorabilia" | "minigame";
 
-export type Color = "W" | "U" | "B" | "R" | "G";
+export type ScryfallColor = "W" | "U" | "B" | "R" | "G";
 
 export type Rarity = "common" | "uncommon" | "rare" | "mythic" | "special" | "bonus";
 
-export type Format = "standard" | "future" | "historic" | "gladiator" | "pioneer" | "explorer" | "modern" | "legacy" | "pauper" | "vintage" | "penny" | "commander" | "oathbreaker" | "brawl" | "historicbrawl" | "alchemy" | "paupercommander" | "duel" | "oldschool" | "premodern" | "predh";
+export type ScryfallFormat = "standard" | "future" | "historic" | "gladiator" | "pioneer" | "explorer" | "modern" | "legacy" | "pauper" | "vintage" | "penny" | "commander" | "oathbreaker" | "brawl" | "historicbrawl" | "alchemy" | "paupercommander" | "duel" | "oldschool" | "premodern" | "predh";
 
 // export const formats = Object.values(Format);
 
@@ -35,7 +35,7 @@ export type ImageType = "small" | "normal" | "large" | "png" | "art_crop" | "bor
  * Attributes and combinations of attributes that can be used to uniquely
  * identify a card. Used in Scryfall's 'fetch collection' endpoint.
  */
-export type CardID = string | { id: string } | { mtgo_id: string } | { multiverse_id: string } | { oracle_id: string } | { illustration_id: string } | { name: string } | { name: string; set: string } | { set: string; collector_number: string };
+export type ScryfallCardID = string | { id: string } | { mtgo_id: string } | { multiverse_id: string } | { oracle_id: string } | { illustration_id: string } | { name: string } | { name: string; set: string } | { set: string; collector_number: string };
 
 /**
  * Attributes to identify a card either by name and optional set or id. This
@@ -44,17 +44,17 @@ export type CardID = string | { id: string } | { mtgo_id: string } | { multivers
  */
 export type FetchCardID = { name: string; set?: string; id?: string } | { name?: string; set?: string; id: string };
 
-export interface List {
+export interface ScryfallList {
 	object: "list";
-	not_found?: CardID[];
+	not_found?: ScryfallCardID[];
 	total_cards?: number;
 	has_more?: boolean;
 	next_page?: string;
-	data: Card[];
+	data: ScryfallCard[];
 }
 
 // Cards: https://scryfall.com/docs/api/cards
-export interface Card {
+export interface ScryfallCard {
 	object: "card";
 	id: string;
 	oracle_id: string;
@@ -69,7 +69,7 @@ export interface Card {
 	released_at: string;
 	uri: string;
 	scryfall_uri: string;
-	layout: CardLayout;
+	layout: ScryfallCardLayout;
 	highres_image: boolean;
 	image_status: "missing" | "placeholder" | "lowres" | "highres_scan";
 	image_uris: Record<ImageType, string>;
@@ -80,9 +80,9 @@ export interface Card {
 	power?: string;
 	toughness?: string;
 	loyalty?: string;
-	colors?: Color[];
-	color_indicator?: Color[];
-	color_identity: Color[];
+	colors?: ScryfallColor[];
+	color_indicator?: ScryfallColor[];
+	color_identity: ScryfallColor[];
 	keywords: string[];
 	all_parts?: {
 		object: "related_card" | string;
@@ -92,7 +92,7 @@ export interface Card {
 		type_line: string;
 		uri: string;
 	}[];
-	legalities: Record<Format, Legality>;
+	legalities: Record<ScryfallFormat, Legality>;
 	games: string[];
 	reserved: boolean;
 	foil: boolean;
@@ -116,7 +116,7 @@ export interface Card {
 	rarity: Rarity;
 	flavor_text?: string;
 	card_back_id: string;
-	card_faces?: [CardFace, CardFace];
+	card_faces?: [ScryfallCardFace, ScryfallCardFace];
 	artist: string;
 	artist_ids: string[];
 	illustration_id: string;
@@ -141,15 +141,15 @@ export interface Card {
 	purchase_uris: Record<string, string>;
 }
 
-export interface CardFace {
+export interface ScryfallCardFace {
 	object: "card_face";
 	name: string;
 	flavor_name?: string;
 	mana_cost: string;
 	type_line: string;
 	oracle_text: string;
-	colors: Color[];
-	color_indicator?: Color[];
+	colors: ScryfallColor[];
+	color_indicator?: ScryfallColor[];
 	power?: string;
 	toughness?: string;
 	defense?: string;
@@ -162,7 +162,7 @@ export interface CardFace {
 }
 
 // Sets: https://scryfall.com/docs/api/sets
-export interface Set {
+export interface ScryfallSet {
 	object: "set";
 	id: string;
 	code: string;
@@ -183,7 +183,7 @@ export interface Set {
 	icon_svg_uri: string;
 }
 
-export interface Error {
+export interface ScryfallError {
 	object: "error";
 	code: string;
 	status: number;

@@ -1,5 +1,5 @@
 import { Vector, Rotator, Border, RichText, Button, UIElement, VerticalBox, UIZoomVisibility, ImageButton, refPackageId, Card, refCard, world, MulticastDelegate, Player } from "@tabletop-playground/api";
-import type { CardFace, CardLayout, Card as ScryfallCard } from "./Scryfall";
+import type { ScryfallCardFace, ScryfallCardLayout, ScryfallCard } from "./Scryfall";
 
 const globalState: { loyalty: number | undefined; stats: number | undefined; loyaltyUI: Button | undefined; statsUI: Button | undefined } = {
 	loyalty: undefined,
@@ -96,7 +96,7 @@ const transformCard: (button: ImageButton, player: Player) => void = () => {
 	}
 };
 
-function makeDetailedDescription(layout: CardLayout, easy_face: Partial<ScryfallCard>, [front, back]: [CardFace?, CardFace?] = [], front_face = true) {
+function makeDetailedDescription(layout: ScryfallCardLayout, easy_face: Partial<ScryfallCard>, [front, back]: [ScryfallCardFace?, ScryfallCardFace?] = [], front_face = true) {
 	// Add ui elements
 	const RightSide = new UIElement();
 	RightSide.height = 1060;

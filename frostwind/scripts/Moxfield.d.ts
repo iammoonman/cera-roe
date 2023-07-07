@@ -29,10 +29,10 @@ type MoxfieldCard = {
     boardType: string;
     finish: string;
     card: MoxfieldSubScryfallObject;
-    printingData?: PrintingData[]
+    printingData?: MoxfieldPrintingData[]
 }
 
-type PrintingData = {
+type MoxfieldPrintingData = {
     id: string;
     imageCardId: string;
     quantity: number;

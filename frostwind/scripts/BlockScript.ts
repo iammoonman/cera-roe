@@ -1,5 +1,5 @@
 import { Card, Player, globalEvents } from "@tabletop-playground/api";
-import type { Card as ScryfallCard } from "./Scryfall";
+import type { ScryfallCard as ScryfallCard, ScryfallList } from "./Scryfall";
 
 globalEvents.onChatMessage.add((sender, message) => {
 	if (message.match(/^Frostwind\sfuzzy\s/g)) {
@@ -70,7 +70,7 @@ function makeMoxfieldDeck(deck_id: string, player: Player) {
 							const collection = main_ls.map((c) => ({ id: c }));
 							collection.push({ id: element.scryfall_id });
 							const response = await fetch(`https://api.scryfall.com/cards/collection`, { method: "POST", body: JSON.stringify({ identifiers: collection }) });
-							const j: { data: ScryfallCard[] } = await response.json();
+							const j: ScryfallList = await response.json();
 							j.data.forEach((c) => {
 								// @ts-expect-error
 								const q = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
@@ -133,7 +133,7 @@ function makeCubeCobraCube(cube_id: string, player: Player) {
 							const collection = main_ls.map((c) => ({ id: c }));
 							collection.push({ id: element.scryfall_id });
 							const response = await fetch(`https://api.scryfall.com/cards/collection`, { method: "POST", body: JSON.stringify({ identifiers: collection }) });
-							const j: { data: ScryfallCard[] } = await response.json();
+							const j: ScryfallList = await response.json();
 							j.data.forEach((c) => {
 								// @ts-expect-error
 								const q = world.createObjectFromTemplate("31E5DB224CB620FF0B35E79BB7BB8D02", position.add(transform));
