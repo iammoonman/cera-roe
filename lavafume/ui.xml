@@ -16,7 +16,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_p"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_p" onClick="flip"></Button>
+            id="btn_p" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_p"
             onClick="swap"></Button>
     </Panel>
@@ -37,7 +37,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_u"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_u" onClick="flip"></Button>
+            id="btn_u" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_u"
             onClick="swap"></Button>
     </Panel>
@@ -58,7 +58,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_t"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_t" onClick="flip"></Button>
+            id="btn_t" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_t"
             onClick="swap"></Button>
     </Panel>
@@ -79,7 +79,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_g"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_g" onClick="flip"></Button>
+            id="btn_g" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_g"
             onClick="swap"></Button>
     </Panel>
@@ -100,7 +100,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_y"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_y" onClick="flip"></Button>
+            id="btn_y" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_y"
             onClick="swap"></Button>
     </Panel>
@@ -121,7 +121,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_o"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_o" onClick="flip"></Button>
+            id="btn_o" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_o"
             onClick="swap"></Button>
     </Panel>
@@ -142,7 +142,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_r"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_r" onClick="flip"></Button>
+            id="btn_r" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_r"
             onClick="swap"></Button>
     </Panel>
@@ -163,7 +163,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_b"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_b" onClick="flip"></Button>
+            id="btn_b" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_b"
             onClick="swap"></Button>
     </Panel>
@@ -184,7 +184,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_w"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_w" onClick="flip"></Button>
+            id="btn_w" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_w"
             onClick="swap"></Button>
     </Panel>
@@ -205,7 +205,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_k"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_k" onClick="flip"></Button>
+            id="btn_k" onClick="flip" outlineSize="1400 1400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_k"
             onClick="swap"></Button>
     </Panel>
