@@ -16,7 +16,7 @@
         <Button icon="prev" scale="0.01 0.01 0.01" position="180 280 0" rotation="0 0 180" id="sP_p"
             onClick="swap"></Button>
         <Button icon="flip" scale="0.015 0.015 0.015" position="50 290 0" rotation="0 0 180"
-            id="btn_p" onClick="flip" outlineSize="1400 1400"></Button>
+            id="btn_p" onClick="flip" outlineSize="2400 2400"></Button>
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_p"
             onClick="swap"></Button>
     </Panel>
