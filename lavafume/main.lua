@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 1.04
+mod_name, version = 'Lavafume', 1.05
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 
@@ -35,16 +35,16 @@ function untap(player, _, button_id)
     local color = IDToColor[button_id:match('_(%l)')]
     local guid = '5a1314'
     local plane_rotation = 270
-    if color == 'Pink' then guid = '6b2479' plane_rotation = 90 end
-    if color == 'White' then guid = 'ed8834' plane_rotation = 90 end
-    if color == 'Brown' then guid = '1451b7' plane_rotation = 90 end
-    if color == 'Red' then guid = '2c271a' plane_rotation = 90 end
-    if color == 'Orange' then guid = '00a854' plane_rotation = 90 end
-    if color == 'Yellow' then guid = '6c87b2' plane_rotation = 270 end
-    if color == 'Green' then guid = 'fd020e' plane_rotation = 270 end
-    if color == 'Teal' then guid = '90ea3b' plane_rotation = 270 end
-    if color == 'Blue' then guid = '6180e9' plane_rotation = 270 end
-    if color == 'Purple' then guid = '7058c4' plane_rotation = 270 end
+    if color == 'Pink' then guid = '6b2479' plane_rotation = 0 end
+    if color == 'White' then guid = 'ed8834' plane_rotation = 0 end
+    if color == 'Brown' then guid = '1451b7' plane_rotation = 0 end
+    if color == 'Red' then guid = '2c271a' plane_rotation = 0 end
+    if color == 'Orange' then guid = '00a854' plane_rotation = 0 end
+    if color == 'Yellow' then guid = '6c87b2' plane_rotation = 180 end
+    if color == 'Green' then guid = 'fd020e' plane_rotation = 180 end
+    if color == 'Teal' then guid = '90ea3b' plane_rotation = 180 end
+    if color == 'Blue' then guid = '6180e9' plane_rotation = 180 end
+    if color == 'Purple' then guid = '7058c4' plane_rotation = 180 end
     local zone = getObjectFromGUID(guid)
     for _, occupyingObject in ipairs(zone.getObjects()) do
         if occupyingObject.type == "Card" then
