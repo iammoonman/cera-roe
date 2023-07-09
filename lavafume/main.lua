@@ -1,10 +1,21 @@
-mod_name, version = 'Lavafume', 1.05
+mod_name, version = 'Lavafume', 1.06
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
+mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
+dyntState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
 
-function onLoad()
+function onLoad(s)
     self.interactable = false;
     WebRequest.get(gh_script, self, 'GetFreshScript')
+    if s ~= '' then
+        local state = JSON.decode(s)
+        mnrcState = state.mnrcState
+        dyntState = state.dyntState
+    end
+end
+
+function onSave()
+    return JSON.encode({mnrcState = mnrcState, dyntState = dyntState})
 end
 
 function GetFreshScript(wr)
@@ -35,16 +46,16 @@ function untap(player, _, button_id)
     local color = IDToColor[button_id:match('_(%l)')]
     local guid = '5a1314'
     local plane_rotation = 270
-    if color == 'Pink' then guid = '6b2479' plane_rotation = 0 end
-    if color == 'White' then guid = 'ed8834' plane_rotation = 0 end
-    if color == 'Brown' then guid = '1451b7' plane_rotation = 0 end
-    if color == 'Red' then guid = '2c271a' plane_rotation = 0 end
-    if color == 'Orange' then guid = '00a854' plane_rotation = 0 end
-    if color == 'Yellow' then guid = '6c87b2' plane_rotation = 180 end
-    if color == 'Green' then guid = 'fd020e' plane_rotation = 180 end
-    if color == 'Teal' then guid = '90ea3b' plane_rotation = 180 end
-    if color == 'Blue' then guid = '6180e9' plane_rotation = 180 end
-    if color == 'Purple' then guid = '7058c4' plane_rotation = 180 end
+    if color == 'Pink' then guid = '6b2479' plane_rotation = 180 end
+    if color == 'White' then guid = 'ed8834' plane_rotation = 180 end
+    if color == 'Brown' then guid = '1451b7' plane_rotation = 180 end
+    if color == 'Red' then guid = '2c271a' plane_rotation = 180 end
+    if color == 'Orange' then guid = '00a854' plane_rotation = 180 end
+    if color == 'Yellow' then guid = '6c87b2' plane_rotation = 0 end
+    if color == 'Green' then guid = 'fd020e' plane_rotation = 0 end
+    if color == 'Teal' then guid = '90ea3b' plane_rotation = 0 end
+    if color == 'Blue' then guid = '6180e9' plane_rotation = 0 end
+    if color == 'Purple' then guid = '7058c4' plane_rotation = 0 end
     local zone = getObjectFromGUID(guid)
     for _, occupyingObject in ipairs(zone.getObjects()) do
         if occupyingObject.type == "Card" then
@@ -59,21 +70,11 @@ function g1(player, _, button_id)
     local button_a = 'g1_k'
     local button_b = 'g1_p'
     local color = IDToColor[button_id:match('_(%l)')]
-    if button_id == 'g1_p' or button_id == 'g1_k' then
-        button_a = 'g1_k'
-        button_b = 'g1_p'
-    elseif button_id == 'g1_w' or button_id == 'g1_u' then
-        button_a = 'g1_w'
-        button_b = 'g1_u'
-    elseif button_id == 'g1_b' or button_id == 'g1_t' then
-        button_a = 'g1_b'
-        button_b = 'g1_t'
-    elseif button_id == 'g1_r' or button_id == 'g1_g' then
-        button_a = 'g1_r'
-        button_b = 'g1_g'
-    elseif button_id == 'g1_o' or button_id == 'g1_y' then
-        button_a = 'g1_o'
-        button_b = 'g1_y'
+    if button_id == 'g1_p' or button_id == 'g1_k' then button_a = 'g1_k' button_b = 'g1_p'
+    elseif button_id == 'g1_w' or button_id == 'g1_u' then button_a = 'g1_w' button_b = 'g1_u'
+    elseif button_id == 'g1_b' or button_id == 'g1_t' then button_a = 'g1_b' button_b = 'g1_t'
+    elseif button_id == 'g1_r' or button_id == 'g1_g' then button_a = 'g1_r' button_b = 'g1_g'
+    elseif button_id == 'g1_o' or button_id == 'g1_y' then button_a = 'g1_o' button_b = 'g1_y'
     end
     if self.UI.getAttribute(button_id, 'outline') ~= color then
         self.UI.setAttribute(button_a, 'outline', color)
@@ -88,21 +89,11 @@ function g2(player, _, button_id)
     local button_a = 'g2_p'
     local button_b = 'g2_k'
     local color = IDToColor[button_id:match('_(%l)')]
-    if button_id == 'g2_p' or button_id == 'g2_k' then
-        button_a = 'g2_k'
-        button_b = 'g2_p'
-    elseif button_id == 'g2_w' or button_id == 'g2_u' then
-        button_a = 'g2_w'
-        button_b = 'g2_u'
-    elseif button_id == 'g2_b' or button_id == 'g2_t' then
-        button_a = 'g2_b'
-        button_b = 'g2_t'
-    elseif button_id == 'g2_r' or button_id == 'g2_g' then
-        button_a = 'g2_r'
-        button_b = 'g2_g'
-    elseif button_id == 'g2_o' or button_id == 'g2_y' then
-        button_a = 'g2_o'
-        button_b = 'g2_y'
+    if button_id == 'g2_p' or button_id == 'g2_k' then button_a = 'g2_k' button_b = 'g2_p'
+    elseif button_id == 'g2_w' or button_id == 'g2_u' then button_a = 'g2_w' button_b = 'g2_u'
+    elseif button_id == 'g2_b' or button_id == 'g2_t' then button_a = 'g2_b' button_b = 'g2_t'
+    elseif button_id == 'g2_r' or button_id == 'g2_g' then button_a = 'g2_r' button_b = 'g2_g'
+    elseif button_id == 'g2_o' or button_id == 'g2_y' then button_a = 'g2_o' button_b = 'g2_y'
     end
     if self.UI.getAttribute(button_id, 'outline') ~= color then
         self.UI.setAttribute(button_a, 'outline', color)
@@ -117,21 +108,11 @@ function g3(player, _, button_id)
     local button_a = 'g3_p'
     local button_b = 'g3_k'
     local color = IDToColor[button_id:match('_(%l)')]
-    if button_id == 'g3_p' or button_id == 'g3_k' then
-        button_a = 'g3_k'
-        button_b = 'g3_p'
-    elseif button_id == 'g3_w' or button_id == 'g3_u' then
-        button_a = 'g3_w'
-        button_b = 'g3_u'
-    elseif button_id == 'g3_b' or button_id == 'g3_t' then
-        button_a = 'g3_b'
-        button_b = 'g3_t'
-    elseif button_id == 'g3_r' or button_id == 'g3_g' then
-        button_a = 'g3_r'
-        button_b = 'g3_g'
-    elseif button_id == 'g3_o' or button_id == 'g3_y' then
-        button_a = 'g3_o'
-        button_b = 'g3_y'
+    if button_id == 'g3_p' or button_id == 'g3_k' then button_a = 'g3_k' button_b = 'g3_p'
+    elseif button_id == 'g3_w' or button_id == 'g3_u' then button_a = 'g3_w' button_b = 'g3_u'
+    elseif button_id == 'g3_b' or button_id == 'g3_t' then button_a = 'g3_b' button_b = 'g3_t'
+    elseif button_id == 'g3_r' or button_id == 'g3_g' then button_a = 'g3_r' button_b = 'g3_g'
+    elseif button_id == 'g3_o' or button_id == 'g3_y' then button_a = 'g3_o' button_b = 'g3_y'
     end
     if self.UI.getAttribute(button_id, 'outline') ~= color then
         self.UI.setAttribute(button_a, 'outline', color)
@@ -163,6 +144,66 @@ function rd20(player, _, button_id)
     broadcastToAll(color .. " rolled a d20 and got " .. result .. '.', color)
 end
 
+function mnrc(player, _, button_id)
+    local button_a = 'p'
+    local button_b = 'k'
+    local short = button_id:match('_(%l)')
+    local color = IDToColor[short]
+    if short == 'p' or short == 'k' then button_a = 'k' button_b = 'p'
+    elseif short == 'w' or short == 'u' then button_a = 'w' button_b = 'u'
+    elseif short == 'b' or short == 't' then button_a = 'b' button_b = 't'
+    elseif short == 'r' or short == 'g' then button_a = 'r' button_b = 'g'
+    elseif short == 'o' or short == 'y' then button_a = 'o' button_b = 'y'
+    end
+    if self.UI.getAttribute('btn_' .. short, 'outline') ~= color then
+        self.UI.setAttribute('btn_' .. button_a, 'outline', color)
+        self.UI.setAttribute('btn_' .. button_b, 'outline', color)
+        mnrcState[button_a] = color
+        mnrcState[button_b] = color
+    else
+        self.UI.setAttribute('btn_' .. button_a, 'outline', '')
+        self.UI.setAttribute('btn_' .. button_b, 'outline', '')
+        mnrcState[button_a] = ''
+        mnrcState[button_b] = ''
+    end
+end
+
+---@param player any
+---@param value '-1' | '-2'
+---@param button_id string
+function dynt(player, value, button_id)
+    local button_a = 'p'
+    local button_b = 'k'
+    local short = button_id:match('_(%l)')
+    if short == 'p' or short == 'k' then button_a = 'k' button_b = 'p'
+    elseif short == 'w' or short == 'u' then button_a = 'w' button_b = 'u'
+    elseif short == 'b' or short == 't' then button_a = 'b' button_b = 't'
+    elseif short == 'r' or short == 'g' then button_a = 'r' button_b = 'g'
+    elseif short == 'o' or short == 'y' then button_a = 'o' button_b = 'y'
+    end
+    if dyntState[short] == 'red' then
+        self.UI.setAttribute('btn_' .. button_a, 'outline', 'yellow')
+        self.UI.setAttribute('btn_' .. button_b, 'outline', 'yellow')
+        dyntState[button_a] = 'yellow'
+        dyntState[button_b] = 'yellow'
+    elseif dyntState[short] == 'yellow' then
+        self.UI.setAttribute('btn_' .. button_a, 'outline', 'red')
+        self.UI.setAttribute('btn_' .. button_b, 'outline', 'red')
+        dyntState[button_a] = 'red'
+        dyntState[button_b] = 'red'
+    elseif value == '-1' then
+        self.UI.setAttribute('btn_' .. button_a, 'outline', 'yellow')
+        self.UI.setAttribute('btn_' .. button_b, 'outline', 'yellow')
+        dyntState[button_a] = 'yellow'
+        dyntState[button_b] = 'yellow'
+    elseif value == '-2' then
+        self.UI.setAttribute('btn_' .. button_a, 'outline', '')
+        self.UI.setAttribute('btn_' .. button_b, 'outline', '')
+        dyntState[button_a] = ''
+        dyntState[button_b] = ''
+    end
+end
+
 function swap(player, _, button_id)
     local pId = button_id:match('_(%l)')
     local dir = button_id:match('s(%u)_%l') -- N or P
@@ -170,18 +211,28 @@ function swap(player, _, button_id)
     local nextFunc = {
         ['roll'] = 'flip',
         ['flip'] = 'rd20',
-        ['rd20'] = 'roll',
+        ['rd20'] = 'mnrc',
+        ['mnrc'] = 'dynt',
+        ['dynt'] = 'roll'
     }
     local prevFunc = {
-        ['roll'] = 'rd20',
+        ['roll'] = 'dynt',
         ['flip'] = 'roll',
         ['rd20'] = 'flip',
+        ['mnrc'] = 'rd20',
+        ['dynt'] = 'mnrc'
     }
+    local func = prevFunc
     if dir == 'N' then
-        self.UI.setAttribute('btn_' .. pId, 'onClick', nextFunc[curr])
-        self.UI.setAttribute('btn_' .. pId, 'icon', nextFunc[curr])
+        func = nextFunc
+    end
+    self.UI.setAttribute('btn_' .. pId, 'onClick', func[curr])
+    self.UI.setAttribute('btn_' .. pId, 'icon', func[curr])
+    if func[curr] == 'mnrc' then
+        self.UI.setAttribute('btn' .. pId, 'outline', mnrcState[pId])
+    elseif func[curr] == 'dynt' then
+        self.UI.setAttribute('btn' .. pId, 'outline', dyntState[pId])
     else
-        self.UI.setAttribute('btn_' .. pId, 'onClick', prevFunc[curr])
-        self.UI.setAttribute('btn_' .. pId, 'icon', prevFunc[curr])
+        self.UI.setAttribute('btn' .. pId, 'outline', '')
     end
 end
