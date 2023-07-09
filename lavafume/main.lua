@@ -1,8 +1,11 @@
-mod_name, version = 'Lavafume', 1.06
+mod_name, version = 'Lavafume', 1.07
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
 dyntState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
+dayColor          = 'Yellow'
+nightColor        = 'Red'
+noColor           = ''
 
 function onLoad(s)
     self.interactable = false;
@@ -80,8 +83,8 @@ function g1(player, _, button_id)
         self.UI.setAttribute(button_a, 'outline', color)
         self.UI.setAttribute(button_b, 'outline', color)
     else
-        self.UI.setAttribute(button_a, 'outline', '')
-        self.UI.setAttribute(button_b, 'outline', '')
+        self.UI.setAttribute(button_a, 'outline', noColor)
+        self.UI.setAttribute(button_b, 'outline', noColor)
     end
 end
 
@@ -99,8 +102,8 @@ function g2(player, _, button_id)
         self.UI.setAttribute(button_a, 'outline', color)
         self.UI.setAttribute(button_b, 'outline', color)
     else
-        self.UI.setAttribute(button_a, 'outline', '')
-        self.UI.setAttribute(button_b, 'outline', '')
+        self.UI.setAttribute(button_a, 'outline', noColor)
+        self.UI.setAttribute(button_b, 'outline', noColor)
     end
 end
 
@@ -118,8 +121,8 @@ function g3(player, _, button_id)
         self.UI.setAttribute(button_a, 'outline', color)
         self.UI.setAttribute(button_b, 'outline', color)
     else
-        self.UI.setAttribute(button_a, 'outline', '')
-        self.UI.setAttribute(button_b, 'outline', '')
+        self.UI.setAttribute(button_a, 'outline', noColor)
+        self.UI.setAttribute(button_b, 'outline', noColor)
     end
 end
 
@@ -156,15 +159,23 @@ function mnrc(player, _, button_id)
     elseif short == 'o' or short == 'y' then button_a = 'o' button_b = 'y'
     end
     if self.UI.getAttribute('btn_' .. short, 'outline') ~= color then
-        self.UI.setAttribute('btn_' .. button_a, 'outline', color)
-        self.UI.setAttribute('btn_' .. button_b, 'outline', color)
+        if self.UI.getAttribute('btn_' .. button_a, 'onClick') == 'mnrc' then
+            self.UI.setAttribute('btn_' .. button_a, 'outline', color)
+        end
+        if self.UI.getAttribute('btn_' .. button_b, 'onClick') == 'mnrc' then
+            self.UI.setAttribute('btn_' .. button_b, 'outline', color)
+        end
         mnrcState[button_a] = color
         mnrcState[button_b] = color
     else
-        self.UI.setAttribute('btn_' .. button_a, 'outline', '')
-        self.UI.setAttribute('btn_' .. button_b, 'outline', '')
-        mnrcState[button_a] = ''
-        mnrcState[button_b] = ''
+        if self.UI.getAttribute('btn_' .. button_a, 'onClick') == 'mnrc' then
+            self.UI.setAttribute('btn_' .. button_a, 'outline', noColor)
+        end
+        if self.UI.getAttribute('btn_' .. button_b, 'onClick') == 'mnrc' then
+            self.UI.setAttribute('btn_' .. button_b, 'outline', noColor)
+        end
+        mnrcState[button_a] = noColor
+        mnrcState[button_b] = noColor
     end
 end
 
@@ -181,26 +192,42 @@ function dynt(player, value, button_id)
     elseif short == 'r' or short == 'g' then button_a = 'r' button_b = 'g'
     elseif short == 'o' or short == 'y' then button_a = 'o' button_b = 'y'
     end
-    if dyntState[short] == 'red' then
-        self.UI.setAttribute('btn_' .. button_a, 'outline', 'yellow')
-        self.UI.setAttribute('btn_' .. button_b, 'outline', 'yellow')
-        dyntState[button_a] = 'yellow'
-        dyntState[button_b] = 'yellow'
-    elseif dyntState[short] == 'yellow' then
-        self.UI.setAttribute('btn_' .. button_a, 'outline', 'red')
-        self.UI.setAttribute('btn_' .. button_b, 'outline', 'red')
-        dyntState[button_a] = 'red'
-        dyntState[button_b] = 'red'
+    if dyntState[short] == nightColor then
+        if self.UI.getAttribute('btn_' .. button_a, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_a, 'outline', dayColor)
+        end
+        if self.UI.getAttribute('btn_' .. button_b, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_b, 'outline', dayColor)
+        end
+        dyntState[button_a] = dayColor
+        dyntState[button_b] = dayColor
+    elseif dyntState[short] == dayColor then
+        if self.UI.getAttribute('btn_' .. button_a, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_a, 'outline', nightColor)
+        end
+        if self.UI.getAttribute('btn_' .. button_b, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_b, 'outline', nightColor)
+        end
+        dyntState[button_a] = nightColor
+        dyntState[button_b] = nightColor
     elseif value == '-1' then
-        self.UI.setAttribute('btn_' .. button_a, 'outline', 'yellow')
-        self.UI.setAttribute('btn_' .. button_b, 'outline', 'yellow')
-        dyntState[button_a] = 'yellow'
-        dyntState[button_b] = 'yellow'
+        if self.UI.getAttribute('btn_' .. button_a, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_a, 'outline', dayColor)
+        end
+        if self.UI.getAttribute('btn_' .. button_b, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_b, 'outline', dayColor)
+        end
+        dyntState[button_a] = dayColor
+        dyntState[button_b] = dayColor
     elseif value == '-2' then
-        self.UI.setAttribute('btn_' .. button_a, 'outline', '')
-        self.UI.setAttribute('btn_' .. button_b, 'outline', '')
-        dyntState[button_a] = ''
-        dyntState[button_b] = ''
+        if self.UI.getAttribute('btn_' .. button_a, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_a, 'outline', noColor)
+        end
+        if self.UI.getAttribute('btn_' .. button_b, 'onClick') == 'dynt' then
+            self.UI.setAttribute('btn_' .. button_b, 'outline', noColor)
+        end
+        dyntState[button_a] = noColor
+        dyntState[button_b] = noColor
     end
 end
 
@@ -229,10 +256,10 @@ function swap(player, _, button_id)
     self.UI.setAttribute('btn_' .. pId, 'onClick', func[curr])
     self.UI.setAttribute('btn_' .. pId, 'icon', func[curr])
     if func[curr] == 'mnrc' then
-        self.UI.setAttribute('btn' .. pId, 'outline', mnrcState[pId])
+        self.UI.setAttribute('btn_' .. pId, 'outline', mnrcState[pId])
     elseif func[curr] == 'dynt' then
-        self.UI.setAttribute('btn' .. pId, 'outline', dyntState[pId])
+        self.UI.setAttribute('btn_' .. pId, 'outline', dyntState[pId])
     else
-        self.UI.setAttribute('btn' .. pId, 'outline', '')
+        self.UI.setAttribute('btn_' .. pId, 'outline', noColor)
     end
 end
