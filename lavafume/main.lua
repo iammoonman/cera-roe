@@ -240,14 +240,16 @@ function swap(player, _, button_id)
         ['flip'] = 'rd20',
         ['rd20'] = 'mnrc',
         ['mnrc'] = 'dynt',
-        ['dynt'] = 'roll'
+        ['dynt'] = 'layt',
+        ['layt'] = 'roll'
     }
     local prevFunc = {
-        ['roll'] = 'dynt',
+        ['roll'] = 'layt',
         ['flip'] = 'roll',
         ['rd20'] = 'flip',
         ['mnrc'] = 'rd20',
-        ['dynt'] = 'mnrc'
+        ['dynt'] = 'mnrc',
+        ['layt'] = 'dynt'
     }
     local func = prevFunc
     if dir == 'N' then
@@ -264,105 +266,94 @@ function swap(player, _, button_id)
     end
 end
 
-function layout(color)
-    function layout_routine()
-        local snaps = self.getSnapPoints()
-        local deck = nil
-        for _, y in ipairs(snaps) do
-            for _, a in ipairs(y.tags) do
-                if a:match('Layout_' .. color) then
-                    local hits = Physics.cast({ origin = y.position, type = 1, direction = { 0, 1, 0 }, max_distance = 1 })
-                    for _, h in ipairs(hits) do
-                        if h.hit_object.type == 'Deck' then
-                            deck = h.hit_object
-                        end
+function layt(color)
+    local snaps = self.getSnapPoints()
+    local deck = nil
+    for _, y in ipairs(snaps) do
+        for _, a in ipairs(y.tags) do
+            if a:match('Layout_' .. color) then
+                local hits = Physics.cast({ origin = y.position, type = 1, direction = { 0, 1, 0 }, max_distance = 1 })
+                for _, h in ipairs(hits) do
+                    if h.hit_object.type == 'Deck' then
+                        deck = h.hit_object
                     end
-                    break
                 end
+                break
             end
         end
-        if deck == nil then return end
-        local f = deck.is_face_down
-        local spacer = 0.2
-        local lastCard = nil
-        local heightOffset = 0
-        --Get size of cards (need x/z) and add the spacer to it
-        local size = deck.getBoundsNormalized().size
-        size = { x = size.x + spacer, y = size.y, z = size.z + spacer }
-        --Rotate the x/z to match the deck+tool's rotation
-        local angle = math.rad(deck.getRotation().y - self.getRotation().y) -- set per color
-        local x = math.abs(size.x * math.cos(angle)) + math.abs(size.z * math.sin(angle))
-        local z = math.abs(size.x * math.sin(angle)) + math.abs(size.z * math.cos(angle))
-        size.x = x
-        size.z = z
-        --Determine first card's location
-        local pos_starting = {
-            x = -size.x * (4 - 1) / 2,
-            y = 0 + heightOffset,
-            z = -size.z
-        }
-        --Create variables used in placement
-        local rowStep, colStep = 0, 0
+    end
+    if deck == nil then return end
+    local f = deck.is_face_down
+    local spacer = 0.2
+    local wid = deck.getBoundsNormalized().size.x + spacer
+    local hgt = deck.getBoundsNormalized().size.z + spacer
+    local lastCard = nil
+    --Determine first card's location
+    local pos_starting = { x = 0, y = 0, z = 0 }
+    local guid = '5a1314'
+    if color == 'k' then guid = '6b2479' end
+    if color == 'w' then guid = 'ed8834' end
+    if color == 'b' then guid = '1451b7' end
+    if color == 'r' then guid = '2c271a' end
+    if color == 'o' then guid = '00a854' end
+    if color == 'y' then guid = '6c87b2' end
+    if color == 'g' then guid = 'fd020e' end
+    if color == 't' then guid = '90ea3b' end
+    if color == 'u' then guid = '6180e9' end
+    if color == 'p' then guid = '7058c4' end
+    pos_starting = getObjectFromGUID(guid).getPosition()
+    --Create variables used in placement
+    local rowStep, colStep = 0, 0
 
-        --Gets the order of cards alphabetized
-        function findNextCardIndex()
-            local orderList = {}
-            for _, card in ipairs(deck.getObjects()) do
-                if card.nickname ~= "" then
-                    local insertTable = { name = card.nickname, index = card.index }
-                    table.insert(orderList, insertTable)
-                end
+    --Gets the order of cards alphabetized
+    function findNextCardIndex()
+        local orderList = {}
+        for _, card in ipairs(deck.getObjects()) do
+            if card.nickname ~= "" then
+                local insertTable = { name = card.nickname, index = card.index }
+                table.insert(orderList, insertTable)
             end
-            --Sort ordered list
-            local sort_func = function(a, b) return a["name"] > b["name"] end
-            table.sort(orderList, sort_func)
-            --Add no-names onto start
-            for _, card in ipairs(deck.getObjects()) do
-                if card.nickname == "" then
-                    local insertTable = { name = card.nickname, index = card.index }
-                    table.insert(orderList, 1, insertTable)
-                end
-            end
-            return orderList[1].index
         end
-
-        --Placement
-        for i = 1, 40 do
-            --Find position for card
-            local pos_local = {
-                x = pos_starting.x + size.x * colStep,
-                y = pos_starting.y,
-                z = pos_starting.z - size.z * rowStep,
-            }
-            local pos = self.positionToWorld(pos_local) -- set per color
-            --Set up next loop
-            colStep = colStep + 1
-            if colStep > 4 - 1 then
-                colStep = 0
-                rowStep = rowStep + 1
+        --Sort ordered list
+        local sort_func = function(a, b) return a["name"] > b["name"] end
+        table.sort(orderList, sort_func)
+        --Add no-names onto start
+        for _, card in ipairs(deck.getObjects()) do
+            if card.nickname == "" then
+                local insertTable = { name = card.nickname, index = card.index }
+                table.insert(orderList, 1, insertTable)
             end
-            --Apply action for position
-
-            --Places card
-            if lastCard == nil then
-                --Handles most cards
-                local nextIndex = findNextCardIndex()
-                deck.takeObject({ position = pos, flip = f, index = nextIndex })
-                lastCard = deck.remainder
-            else
-                --Handles the leftover card
-                lastCard.setPosition(pos)
-                if f then lastCard.flip() end
-            end
-
-            coroutine.yield(0)
-            --Kills loop if deck is exhausted
-            if deck == nil then break end
         end
-
-        self.setLock(false)
-        return 1
+        return orderList[1].index
     end
 
-    startLuaCoroutine(self, "layout_routine")
+    --Placement
+    for i = 1, 40 do
+        --Find position for card
+        local pos_local = {
+            x = pos_starting.x + wid * colStep,
+            y = pos_starting.y,
+            z = pos_starting.z - hgt * rowStep,
+        }
+        --Set up next loop
+        colStep = colStep + 1
+        if colStep > 3 then
+            colStep = 0
+            rowStep = rowStep + 1
+        end
+        --Places card
+        if lastCard == nil then
+            --Handles most cards
+            local nextIndex = findNextCardIndex()
+            deck.takeObject({ position = pos_local, flip = f, index = nextIndex })
+            lastCard = deck.remainder
+        else
+            --Handles the leftover card
+            lastCard.setPosition(pos_local)
+            if f then lastCard.flip() end
+        end
+
+        --Kills loop if deck is exhausted
+        if deck == nil then break end
+    end
 end
