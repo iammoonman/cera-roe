@@ -20,6 +20,8 @@
         "spawnObjectData",
         "destroyObject",
         "broadcastToAll",
-        "broadcastToColor"
+        "broadcastToColor",
+        "getObjectByGUID",
+        "Physics"
     ]
 }

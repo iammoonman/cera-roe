@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 1.07
+mod_name, version = 'Lavafume', 1.08
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
@@ -262,4 +262,107 @@ function swap(player, _, button_id)
     else
         self.UI.setAttribute('btn_' .. pId, 'outline', noColor)
     end
+end
+
+function layout(color)
+    function layout_routine()
+        local snaps = self.getSnapPoints()
+        local deck = nil
+        for _, y in ipairs(snaps) do
+            for _, a in ipairs(y.tags) do
+                if a:match('Layout_' .. color) then
+                    local hits = Physics.cast({ origin = y.position, type = 1, direction = { 0, 1, 0 }, max_distance = 1 })
+                    for _, h in ipairs(hits) do
+                        if h.hit_object.type == 'Deck' then
+                            deck = h.hit_object
+                        end
+                    end
+                    break
+                end
+            end
+        end
+        if deck == nil then return end
+        local f = deck.is_face_down
+        local spacer = 0.2
+        local lastCard = nil
+        local heightOffset = 0
+        --Get size of cards (need x/z) and add the spacer to it
+        local size = deck.getBoundsNormalized().size
+        size = { x = size.x + spacer, y = size.y, z = size.z + spacer }
+        --Rotate the x/z to match the deck+tool's rotation
+        local angle = math.rad(deck.getRotation().y - self.getRotation().y) -- set per color
+        local x = math.abs(size.x * math.cos(angle)) + math.abs(size.z * math.sin(angle))
+        local z = math.abs(size.x * math.sin(angle)) + math.abs(size.z * math.cos(angle))
+        size.x = x
+        size.z = z
+        --Determine first card's location
+        local pos_starting = {
+            x = -size.x * (4 - 1) / 2,
+            y = 0 + heightOffset,
+            z = -size.z
+        }
+        --Create variables used in placement
+        local rowStep, colStep = 0, 0
+
+        --Gets the order of cards alphabetized
+        function findNextCardIndex()
+            local orderList = {}
+            for _, card in ipairs(deck.getObjects()) do
+                if card.nickname ~= "" then
+                    local insertTable = { name = card.nickname, index = card.index }
+                    table.insert(orderList, insertTable)
+                end
+            end
+            --Sort ordered list
+            local sort_func = function(a, b) return a["name"] > b["name"] end
+            table.sort(orderList, sort_func)
+            --Add no-names onto start
+            for _, card in ipairs(deck.getObjects()) do
+                if card.nickname == "" then
+                    local insertTable = { name = card.nickname, index = card.index }
+                    table.insert(orderList, 1, insertTable)
+                end
+            end
+            return orderList[1].index
+        end
+
+        --Placement
+        for i = 1, 40 do
+            --Find position for card
+            local pos_local = {
+                x = pos_starting.x + size.x * colStep,
+                y = pos_starting.y,
+                z = pos_starting.z - size.z * rowStep,
+            }
+            local pos = self.positionToWorld(pos_local) -- set per color
+            --Set up next loop
+            colStep = colStep + 1
+            if colStep > 4 - 1 then
+                colStep = 0
+                rowStep = rowStep + 1
+            end
+            --Apply action for position
+
+            --Places card
+            if lastCard == nil then
+                --Handles most cards
+                local nextIndex = findNextCardIndex()
+                deck.takeObject({ position = pos, flip = f, index = nextIndex })
+                lastCard = deck.remainder
+            else
+                --Handles the leftover card
+                lastCard.setPosition(pos)
+                if f then lastCard.flip() end
+            end
+
+            coroutine.yield(0)
+            --Kills loop if deck is exhausted
+            if deck == nil then break end
+        end
+
+        self.setLock(false)
+        return 1
+    end
+
+    startLuaCoroutine(self, "layout_routine")
 end
