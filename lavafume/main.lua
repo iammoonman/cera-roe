@@ -64,7 +64,7 @@ function untap(player, _, button_id)
         if occupyingObject.type == "Card" then
             local rotation = occupyingObject.getRotation()
             local flip_angle = rotation.z
-            occupyingObject.setRotation({ x = 0, y = plane_rotation, z = flip_angle })
+            occupyingObject.setRotationSmooth({ x = 0, y = plane_rotation, z = flip_angle })
         end
     end
 end
@@ -266,42 +266,47 @@ function swap(player, _, button_id)
     end
 end
 
-function layt(color)
-    local snaps = self.getSnapPoints()
+function layt(player, value, button_id)
+    local pId = button_id:match('_(%l)')
+    -- hardcoded
+    local snaps = { p = { 64.02259, 4.377451, 13.24275 }, k = { 40.84833, 4.377451, -13.30888 }, w = { 12.9248, 4.377451, -13.32137 }, b = { -14.99426, 4.377451, -13.31943 }, r = { -42.91833, 4.377451, -13.3373 }, o = { -70.83037, 4.377451, -13.31797 }, y = { -47.63555, 4.377451, 13.2475 }, g = { -19.71588, 4.377451, 13.24803 }, t = { 8.197245, 4.377451, 13.26315 }, u = { 36.1164, 4.377451, 13.25679 } }
     local deck = nil
-    for _, y in ipairs(snaps) do
-        for _, a in ipairs(y.tags) do
-            if a:match('Layout_' .. color) then
-                local hits = Physics.cast({ origin = y.position, type = 1, direction = { 0, 1, 0 }, max_distance = 1 })
-                for _, h in ipairs(hits) do
-                    if h.hit_object.type == 'Deck' then
-                        deck = h.hit_object
-                    end
-                end
-                break
-            end
+    local hits = Physics.cast({ origin = snaps[pId], type = 1, direction = { 0, 3, 0 }, max_distance = 1, debug = true })
+    for _, h in ipairs(hits) do
+        if h.hit_object.type == 'Deck' then
+            deck = h.hit_object
         end
     end
-    if deck == nil then return end
+    if deck == nil then
+        log('fail to find')
+        return
+    end
     local f = deck.is_face_down
-    local spacer = 0.2
+    local spacer = 0.1
     local wid = deck.getBoundsNormalized().size.x + spacer
     local hgt = deck.getBoundsNormalized().size.z + spacer
     local lastCard = nil
     --Determine first card's location
     local pos_starting = { x = 0, y = 0, z = 0 }
     local guid = '5a1314'
-    if color == 'k' then guid = '6b2479' end
-    if color == 'w' then guid = 'ed8834' end
-    if color == 'b' then guid = '1451b7' end
-    if color == 'r' then guid = '2c271a' end
-    if color == 'o' then guid = '00a854' end
-    if color == 'y' then guid = '6c87b2' end
-    if color == 'g' then guid = 'fd020e' end
-    if color == 't' then guid = '90ea3b' end
-    if color == 'u' then guid = '6180e9' end
-    if color == 'p' then guid = '7058c4' end
-    pos_starting = getObjectFromGUID(guid).getPosition()
+    if pId == 'k' then guid = '6b2479' end
+    if pId == 'w' then guid = 'ed8834' end
+    if pId == 'b' then guid = '1451b7' end
+    if pId == 'r' then guid = '2c271a' end
+    if pId == 'o' then guid = '00a854' end
+    if pId == 'y' then guid = '6c87b2' end
+    if pId == 'g' then guid = 'fd020e' end
+    if pId == 't' then guid = '90ea3b' end
+    if pId == 'u' then guid = '6180e9' end
+    if pId == 'p' then guid = '7058c4' end
+    local zn = getObjectFromGUID(guid)
+    pos_starting = zn.getPosition()
+    pos_starting:setAt('x', pos_starting.x - 10.5)
+    if pId:match('p|u|t|g|y') then
+        pos_starting:setAt('z', pos_starting.z - 7)
+    else
+        pos_starting:setAt('z', pos_starting.z + 7)
+    end
     --Create variables used in placement
     local rowStep, colStep = 0, 0
 
@@ -328,7 +333,7 @@ function layt(color)
     end
 
     --Placement
-    for i = 1, 40 do
+    for i = 1, 50 do
         --Find position for card
         local pos_local = {
             x = pos_starting.x + wid * colStep,
@@ -337,7 +342,7 @@ function layt(color)
         }
         --Set up next loop
         colStep = colStep + 1
-        if colStep > 3 then
+        if colStep > 9 then
             colStep = 0
             rowStep = rowStep + 1
         end
