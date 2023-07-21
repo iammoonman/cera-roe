@@ -268,49 +268,41 @@ end
 
 function layt(player, value, button_id)
     local pId = button_id:match('_(%l)')
-    -- hardcoded
-    local snaps = { p = { 64.02259, 4.377451, 13.24275 }, k = { 40.84833, 4.377451, -13.30888 }, w = { 12.9248, 4.377451, -13.32137 }, b = { -14.99426, 4.377451, -13.31943 }, r = { -42.91833, 4.377451, -13.3373 }, o = { -70.83037, 4.377451, -13.31797 }, y = { -47.63555, 4.377451, 13.2475 }, g = { -19.71588, 4.377451, 13.24803 }, t = { 8.197245, 4.377451, 13.26315 }, u = { 36.1164, 4.377451, 13.25679 } }
+    -- Hardcoded positions of library zones
+    local libraries = { p = { 64.02259, 4.377451, 13.24275 }, k = { 40.84833, 4.377451, -13.30888 }, w = { 12.9248, 4.377451, -13.32137 }, b = { -14.99426, 4.377451, -13.31943 }, r = { -42.91833, 4.377451, -13.3373 }, o = { -70.83037, 4.377451, -13.31797 }, y = { -47.63555, 4.377451, 13.2475 }, g = { -19.71588, 4.377451, 13.24803 }, t = { 8.197245, 4.377451, 13.26315 }, u = { 36.1164, 4.377451, 13.25679 } }
     local deck = nil
-    local hits = Physics.cast({ origin = snaps[pId], type = 1, direction = { 0, 3, 0 }, max_distance = 1, debug = true })
+    local hits = Physics.cast({ origin = libraries[pId], type = 1, direction = { 0, 1, 0 }, max_distance = 3 })
     for _, h in ipairs(hits) do
         if h.hit_object.type == 'Deck' then
             deck = h.hit_object
         end
     end
     if deck == nil then
-        log('fail to find')
+        printToColor('Place a deck in your library slot.', player.color)
         return
     end
-    local f = deck.is_face_down
-    local spacer = 0.1
-    local wid = deck.getBoundsNormalized().size.x + spacer
-    local hgt = deck.getBoundsNormalized().size.z + spacer
-    local lastCard = nil
-    --Determine first card's location
     local pos_starting = { x = 0, y = 0, z = 0 }
-    local guid = '5a1314'
-    if pId == 'k' then guid = '6b2479' end
-    if pId == 'w' then guid = 'ed8834' end
-    if pId == 'b' then guid = '1451b7' end
-    if pId == 'r' then guid = '2c271a' end
-    if pId == 'o' then guid = '00a854' end
-    if pId == 'y' then guid = '6c87b2' end
-    if pId == 'g' then guid = 'fd020e' end
-    if pId == 't' then guid = '90ea3b' end
-    if pId == 'u' then guid = '6180e9' end
-    if pId == 'p' then guid = '7058c4' end
-    local zn = getObjectFromGUID(guid)
+    local zone_guid = '5a1314'
+    if pId == 'k' then zone_guid = '6b2479' end
+    if pId == 'w' then zone_guid = 'ed8834' end
+    if pId == 'b' then zone_guid = '1451b7' end
+    if pId == 'r' then zone_guid = '2c271a' end
+    if pId == 'o' then zone_guid = '00a854' end
+    if pId == 'y' then zone_guid = '6c87b2' end
+    if pId == 'g' then zone_guid = 'fd020e' end
+    if pId == 't' then zone_guid = '90ea3b' end
+    if pId == 'u' then zone_guid = '6180e9' end
+    if pId == 'p' then zone_guid = '7058c4' end
+    local zn = getObjectFromGUID(zone_guid)
     pos_starting = zn.getPosition()
-    pos_starting:setAt('x', pos_starting.x - 10.5)
+    pos_starting:setAt('x', pos_starting.x - 10.35)
     if pId:match('p|u|t|g|y') then
         pos_starting:setAt('z', pos_starting.z - 7)
     else
         pos_starting:setAt('z', pos_starting.z + 7)
     end
-    --Create variables used in placement
-    local rowStep, colStep = 0, 0
 
-    --Gets the order of cards alphabetized
+    -- Returns the first card alphabetically by name
     function findNextCardIndex()
         local orderList = {}
         for _, card in ipairs(deck.getObjects()) do
@@ -319,10 +311,10 @@ function layt(player, value, button_id)
                 table.insert(orderList, insertTable)
             end
         end
-        --Sort ordered list
+        -- Sort ordered list
         local sort_func = function(a, b) return a["name"] > b["name"] end
         table.sort(orderList, sort_func)
-        --Add no-names onto start
+        -- Add no-names onto start
         for _, card in ipairs(deck.getObjects()) do
             if card.nickname == "" then
                 local insertTable = { name = card.nickname, index = card.index }
@@ -332,33 +324,33 @@ function layt(player, value, button_id)
         return orderList[1].index
     end
 
-    --Placement
-    for i = 1, 50 do
-        --Find position for card
+    -- Placement
+    local face_down = deck.is_face_down
+    local wid = deck.getBoundsNormalized().size.x + 0.1
+    local hgt = deck.getBoundsNormalized().size.z + 0.1
+    local lastCard = nil
+    local rowStep, colStep = 0, 0
+    for _ = 1, 50 do
         local pos_local = {
             x = pos_starting.x + wid * colStep,
             y = pos_starting.y,
             z = pos_starting.z - hgt * rowStep,
         }
-        --Set up next loop
         colStep = colStep + 1
         if colStep > 9 then
             colStep = 0
             rowStep = rowStep + 1
         end
-        --Places card
         if lastCard == nil then
-            --Handles most cards
+            -- Handles most cards
             local nextIndex = findNextCardIndex()
-            deck.takeObject({ position = pos_local, flip = f, index = nextIndex })
+            deck.takeObject({ position = pos_local, flip = face_down, index = nextIndex })
             lastCard = deck.remainder
         else
-            --Handles the leftover card
+            -- Handles the leftover card
             lastCard.setPosition(pos_local)
-            if f then lastCard.flip() end
+            if face_down then lastCard.flip() end
         end
-
-        --Kills loop if deck is exhausted
         if deck == nil then break end
     end
 end
