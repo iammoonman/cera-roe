@@ -1,6 +1,6 @@
 --By Amuzet
 --Adapted by Moon
-mod_name, version, url = 'Life_Tracker', 1.01, ''
+mod_name, version, url = 'Life_Tracker', 1.02, ''
 function updateSave() self.script_state = JSON.encode({ ['c'] = count, ['subs'] = subs }) end
 
 function wait(t)
@@ -159,6 +159,10 @@ function onload(s)
         end)
     end
     self.addContextMenuItem('Toggle Life Alerts', toggleColorSubscribe, false)
+end
+
+function onNumberTyped()
+    return true
 end
 
 function ipt(o, p, v, s)

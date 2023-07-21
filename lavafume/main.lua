@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 1.07
+mod_name, version = 'Lavafume', 1.08
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
@@ -64,7 +64,7 @@ function untap(player, _, button_id)
         if occupyingObject.type == "Card" then
             local rotation = occupyingObject.getRotation()
             local flip_angle = rotation.z
-            occupyingObject.setRotation({ x = 0, y = plane_rotation, z = flip_angle })
+            occupyingObject.setRotationSmooth({ x = 0, y = plane_rotation, z = flip_angle })
         end
     end
 end
@@ -240,14 +240,16 @@ function swap(player, _, button_id)
         ['flip'] = 'rd20',
         ['rd20'] = 'mnrc',
         ['mnrc'] = 'dynt',
-        ['dynt'] = 'roll'
+        ['dynt'] = 'layt',
+        ['layt'] = 'roll'
     }
     local prevFunc = {
-        ['roll'] = 'dynt',
+        ['roll'] = 'layt',
         ['flip'] = 'roll',
         ['rd20'] = 'flip',
         ['mnrc'] = 'rd20',
-        ['dynt'] = 'mnrc'
+        ['dynt'] = 'mnrc',
+        ['layt'] = 'dynt'
     }
     local func = prevFunc
     if dir == 'N' then
@@ -261,5 +263,94 @@ function swap(player, _, button_id)
         self.UI.setAttribute('btn_' .. pId, 'outline', dyntState[pId])
     else
         self.UI.setAttribute('btn_' .. pId, 'outline', noColor)
+    end
+end
+
+function layt(player, value, button_id)
+    local pId = button_id:match('_(%l)')
+    -- Hardcoded positions of library zones
+    local libraries = { p = { 64.02259, 4.377451, 13.24275 }, k = { 40.84833, 4.377451, -13.30888 }, w = { 12.9248, 4.377451, -13.32137 }, b = { -14.99426, 4.377451, -13.31943 }, r = { -42.91833, 4.377451, -13.3373 }, o = { -70.83037, 4.377451, -13.31797 }, y = { -47.63555, 4.377451, 13.2475 }, g = { -19.71588, 4.377451, 13.24803 }, t = { 8.197245, 4.377451, 13.26315 }, u = { 36.1164, 4.377451, 13.25679 } }
+    local deck = nil
+    local hits = Physics.cast({ origin = libraries[pId], type = 1, direction = { 0, 1, 0 }, max_distance = 3 })
+    for _, h in ipairs(hits) do
+        if h.hit_object.type == 'Deck' then
+            deck = h.hit_object
+        end
+    end
+    if deck == nil then
+        printToColor('Place a deck in your library slot.', player.color)
+        return
+    end
+    local pos_starting = { x = 0, y = 0, z = 0 }
+    local zone_guid = '5a1314'
+    if pId == 'k' then zone_guid = '6b2479' end
+    if pId == 'w' then zone_guid = 'ed8834' end
+    if pId == 'b' then zone_guid = '1451b7' end
+    if pId == 'r' then zone_guid = '2c271a' end
+    if pId == 'o' then zone_guid = '00a854' end
+    if pId == 'y' then zone_guid = '6c87b2' end
+    if pId == 'g' then zone_guid = 'fd020e' end
+    if pId == 't' then zone_guid = '90ea3b' end
+    if pId == 'u' then zone_guid = '6180e9' end
+    if pId == 'p' then zone_guid = '7058c4' end
+    local zn = getObjectFromGUID(zone_guid)
+    pos_starting = zn.getPosition()
+    pos_starting:setAt('x', pos_starting.x - 10.35)
+    if pId:match('p|u|t|g|y') then
+        pos_starting:setAt('z', pos_starting.z - 7)
+    else
+        pos_starting:setAt('z', pos_starting.z + 7)
+    end
+
+    -- Returns the first card alphabetically by name
+    function findNextCardIndex()
+        local orderList = {}
+        for _, card in ipairs(deck.getObjects()) do
+            if card.nickname ~= "" then
+                local insertTable = { name = card.nickname, index = card.index }
+                table.insert(orderList, insertTable)
+            end
+        end
+        -- Sort ordered list
+        local sort_func = function(a, b) return a["name"] > b["name"] end
+        table.sort(orderList, sort_func)
+        -- Add no-names onto start
+        for _, card in ipairs(deck.getObjects()) do
+            if card.nickname == "" then
+                local insertTable = { name = card.nickname, index = card.index }
+                table.insert(orderList, 1, insertTable)
+            end
+        end
+        return orderList[1].index
+    end
+
+    -- Placement
+    local face_down = deck.is_face_down
+    local wid = deck.getBoundsNormalized().size.x + 0.1
+    local hgt = deck.getBoundsNormalized().size.z + 0.1
+    local lastCard = nil
+    local rowStep, colStep = 0, 0
+    for _ = 1, 50 do
+        local pos_local = {
+            x = pos_starting.x + wid * colStep,
+            y = pos_starting.y,
+            z = pos_starting.z - hgt * rowStep,
+        }
+        colStep = colStep + 1
+        if colStep > 9 then
+            colStep = 0
+            rowStep = rowStep + 1
+        end
+        if lastCard == nil then
+            -- Handles most cards
+            local nextIndex = findNextCardIndex()
+            deck.takeObject({ position = pos_local, flip = face_down, index = nextIndex })
+            lastCard = deck.remainder
+        else
+            -- Handles the leftover card
+            lastCard.setPosition(pos_local)
+            if face_down then lastCard.flip() end
+        end
+        if deck == nil then break end
     end
 end

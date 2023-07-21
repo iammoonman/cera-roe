@@ -1,5 +1,5 @@
 <Panel position="0 0 -18" rotation="0 0 270">
-    <Panel position="318.5 9 0" scale="0.03 0.03 0.03">
+    <Panel position="318.75 9 0" scale="0.03 0.03 0.03">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_p"
             onClick="ping"></Button>
         <Button icon="untap" scale="0.021 0.021 0.021" rotation="0 0 180" id="untap_p"
@@ -20,7 +20,7 @@
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_p"
             onClick="swap"></Button>
     </Panel>
-    <Panel position="206.75 9 0" scale="0.03 0.03 0.03">
+    <Panel position="207 9 0" scale="0.03 0.03 0.03">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_u"
             onClick="ping"></Button>
         <Button icon="untap" scale="0.021 0.021 0.021" rotation="0 0 180" id="untap_u"
@@ -41,7 +41,7 @@
         <Button icon="next" scale="0.01 0.01 0.01" position="-80 280 0" rotation="0 0 180" id="sN_u"
             onClick="swap"></Button>
     </Panel>
-    <Panel position="95 9 0" scale="0.03 0.03 0.03">
+    <Panel position="95.5 9 0" scale="0.03 0.03 0.03">
         <Button icon="ping" scale="0.01 0.01 0.01" position="160 0 0" rotation="0 0 180" id="ping_t"
             onClick="ping"></Button>
         <Button icon="untap" scale="0.021 0.021 0.021" rotation="0 0 180" id="untap_t"
