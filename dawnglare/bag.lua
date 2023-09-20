@@ -1,6 +1,7 @@
 TakenCount = 0
 PickTimerCount = 0
 NextBagGUID = nil -- This var is passed from the base red block.
+HandZoneGUID = nil
 CountToTake = 1
 DebouncePickTimer = nil
 DebouncePassing = nil
@@ -69,7 +70,7 @@ function onObjectEnterContainer(container, object)
                 if DebounceSkipping ~= nil then Wait.stop(DebounceSkipping) end
                 DebounceSkipping = Wait.time(SkipPack, 1, OperativePacksToPass)
             else
-                DealCardsToHand()
+                startLuaCoroutine(self, "DealCardsToHand")
             end
         end
     end
@@ -78,6 +79,7 @@ end
 -- These two update the taken counter.
 function onObjectLeaveZone(zone, obj)
     if ThisColor ~= zone.getValue() then return end
+    if HandZoneGUID == nil then HandZoneGUID = zone.getGUID() end
     if zone.type == 'Hand' and obj.type == 'Card' then
         if not AgentActive then
             local StopCounting = false
@@ -96,7 +98,7 @@ function onObjectLeaveZone(zone, obj)
             -- If the player has taken all the cards they needed, pass
             if TakenCount == (CountToTake + OperativePacksToPass) and NextBagGUID ~= nil then
                 if not AgentActive and obj.memo ~= AgentOfAcquisitions and not operativeInHand then
-                    PassCardsFromHand(zone)
+                    startLuaCoroutine(self, "PassCardsFromHand")
                 else
                     AgentActive = true
                     group(zone.getObjects())
@@ -105,10 +107,10 @@ function onObjectLeaveZone(zone, obj)
                     self.createButton({ click_function = "doAgent", function_owner = self, label = "Disable Agent", position = { x = 0, y = 1, z = 4 }, scale = { 2, 2, 2 }, width = 800 })
                 end
                 -- Stop the pick timer.
-                if (DebouncePickTimer ~= nil) then Wait.stop(DebouncePickTimer) end
+                if (DebouncePickTimer ~= nil) then Wait.stop(DebouncePickTimer) DebouncePickTimer = nil end
                 PickTimerCount = 0
             end
-            DealCardsToHand()
+            startLuaCoroutine(self, "DealCardsToHand")
         end
         obj.highlightOff('Red')
     end
@@ -153,11 +155,10 @@ function onObjectEnterZone(zone, obj)
             print(self.getGMNotes() .. ", take the deck of cards out of your hand before proceeding.")
             return
         end
-        obj.setLuaScript("function onObjectLeaveContainer(container, leave_object) if container.type == 'Deck' then leave_object.setTags(container.getTags()) end end")
-        obj.addTag(TrackerTag)
+        obj.setLuaScript("function onObjectLeaveContainer(container, leave_object) leave_object.addTag('"..TrackerTag.."') end")
         Wait.frames(function() obj.spread() end, 5)
         -- Start the pick timer.
-        if (DebouncePickTimer ~= nil) then Wait.stop(DebouncePickTimer) end
+        if (DebouncePickTimer ~= nil) then Wait.stop(DebouncePickTimer) DebouncePickTimer = nil end
         -- Count seconds
         PickTimerCount = 0
         DebouncePickTimer = Wait.time(function()
@@ -189,7 +190,8 @@ function doAgent(obj, playerColor, alt_click)
     end
 end
 
-function PassCardsFromHand(zone)
+function PassCardsFromHand()
+    local zone = getObjectFromGUID(HandZoneGUID)
     for _, ob in ipairs(getObjectsWithTag(TrackerTag)) do if ob.type == 'Card' then ob.removeTag(TrackerTag) end end
     local handObjects = zone.getObjects()
     local nextBag = getObjectFromGUID(NextBagGUID)
@@ -203,8 +205,9 @@ function PassCardsFromHand(zone)
         end
         -- Reset the timer and count, since we passed the cards.
         TakenCount = 0
-        if (DebouncePickTimer ~= nil) then Wait.stop(DebouncePickTimer) end
+        if (DebouncePickTimer ~= nil) then Wait.stop(DebouncePickTimer) DebouncePickTimer = nil end
     end
+    return 1
 end
 
 function DealCardsToHand()
@@ -216,6 +219,7 @@ function DealCardsToHand()
             self.deal(1, ThisColor)
         end
     end, 1)
+    return 1
 end
 
 function SkipPack()
@@ -231,4 +235,5 @@ function SkipPack()
         local nextBag = getObjectFromGUID(NextBagGUID)
         self.takeObject({ callback_function = function(object) nextBag.putObject(object) end })
     end
+    DebounceSkipping = nil
 end
