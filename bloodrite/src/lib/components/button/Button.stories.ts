@@ -12,10 +12,6 @@ const meta = {
 			control: { type: 'select' },
 			options: ['small', 'medium', 'large']
 		},
-		color: {
-			control: { type: 'select' },
-			options: ['colorless', 'white', 'blue', 'black', 'red', 'green', 'gold']
-		},
 		set_symbol: {}
 	}
 } satisfies Meta<Button>;

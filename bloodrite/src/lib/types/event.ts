@@ -1,6 +1,6 @@
 import type { Tag } from './server-specific';
 
-type DraftEvent = {
+export type DraftEvent = {
 	id: string;
 	meta?: {
 		date: string;
@@ -11,25 +11,24 @@ type DraftEvent = {
 		cube_id?: string;
 		set_code?: string;
 	};
-	[k: number]: Array<Round>;
+	[k: `${number}`]: Array<Match>;
 };
 
-type Round =
+type Match =
 	| {
 			players: [string, string];
-			games:
-				| [number | null]
-				| [number | null, number | null]
-				| [number | null, number | null, number | null];
+			games: [number | null] | [number | null, number | null] | [number | null, number | null, number | null];
+			scores?: never;
 	  }
-	| { players: [string]; games?: never };
+	| { players: [string]; games?: never; scores?: never }
+	| { players: [string, string]; games?: never; scores: [number, number] };
 
 const Test: DraftEvent = {
 	id: '',
 	meta: {
 		date: '',
 		title: '',
-		cube_id: 'fnf',
+		cube_id: 'fnf'
 	},
-	0: [{ players: ['x', 'y'], games: [0, 1, 1] }, { players: ['z'] }]
+	'0': [{ players: ['x', 'y'], games: [0, 1, 1] }, { players: ['z'] }]
 };
