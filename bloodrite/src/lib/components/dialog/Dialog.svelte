@@ -2,30 +2,38 @@
 	export let open: boolean = false;
 	let dialog: HTMLDialogElement;
 	$: {
+		if (!dialog) break $;
 		if (open) {
 			dialog?.showModal();
-		} else if (open === false) {
+		} else {
 			dialog?.close();
 		}
 	}
 </script>
 
-<svelte:window
-	on:click={(event) => {
-		if (event.target === dialog) {
-			dialog.close();
-			open = false;
-		}
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<dialog
+	bind:this={dialog}
+	on:cancel={() => {
+		open = false;
 	}}
-/>
-
-<dialog bind:this={dialog}>
+	on:click|self={() => {
+		open = false;
+	}}
+>
 	<slot />
 </dialog>
 
 <style>
 	dialog {
-		background: transparent;
 		border: none;
+		padding: 0;
+		overflow: visible;
+		background-color: transparent;
+	}
+	dialog::backdrop {
+		background-color: rgba(0, 0, 0, 0.3);
+		backdrop-filter: blur(0.2rem);
 	}
 </style>
