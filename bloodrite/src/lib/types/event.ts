@@ -7,8 +7,11 @@ export type DraftEvent = {
 		title: string;
 		description?: string;
 		tag?: Tag;
+		/** The Discord ID of the host. */
 		host?: string;
+		/** The CubeCobra ID of the cube played. */
 		cube_id?: string;
+		/** The set played. Use the first set of the block for a block draft. */
 		set_code?: string;
 	};
 	[k: `R_${number}`]: Array<Match>;

@@ -14,8 +14,8 @@
 		// Get all opponents, calculate OGP
 		const playerMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' }>>();
 		for (const prop in draft) {
-			if (prop === 'R_0' || prop === 'R_1' || prop === 'R_2') {
-				for (const match of draft[prop]) {
+			if (prop.startsWith('R_')) {
+				for (const match of draft[prop as `R_${number}`]) {
 					if (match.players.length === 1) {
 						playerMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'WIN' });
 					} else {

@@ -7,4 +7,4 @@
 /**
  *
  */
-export type Tag = 'dps' | 'ptm';
+export type Tag = 'dps' | 'ptm' | 'anti';
