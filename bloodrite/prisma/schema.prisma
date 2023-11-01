@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO")
+}
+
+type Round {
+  games   Int[]
+  players String[]
+  scores  Int[]
+}
+
+type EventMeta {
+  date        DateTime
+  description String?
+  tag         String?
+  title       String
+  host        String?
+  set_code    String?
+  cube_id     String?
+}
+
+model Event {
+  id   String
+  R_0  Round[]
+  R_1  Round[]
+  R_2  Round[]
+  id_  String    @id @default(auto()) @map("_id") @db.ObjectId
+  meta EventMeta
+}

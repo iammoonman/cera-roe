@@ -8,17 +8,13 @@
 		let newDates = [];
 		for (let i = 0; i > Math.floor(DateTime.fromFormat('May 19 2018', 'LLLL dd yyyy').startOf('week').diffNow('weeks').weeks + 2); i--) {
 			let date = DateTime.now()
-				.startOf('day')
+				.startOf('week')
 				.plus({ weeks: i + 2 });
-			newDates.push({
-				id: i,
-				weekNumber: date.weekNumber,
-				month: date.month,
-				year: date.year,
-				date
-			});
+			newDates.push({ id: i, date });
 		}
 		allDates = newDates;
+		const startDate = DateTime.fromObject({ weekYear: 2023, weekNumber: 12 }).startOf('week');
+		console.log(startDate.toJSDate());
 	});
 	// May 19, 2018
 	import VirtualScroll from 'svelte-virtual-scroll-list';
@@ -28,22 +24,22 @@
 <div class="scroll-root">
 	<VirtualScroll data={allDates} key="id" let:data>
 		<div class="week-block">
-			<div class="week-num">Week {data.weekNumber}</div>
-			{#each [0, 1, 2, 3, 4, 5, 6] as day}
-				<div
-					class={`month-${data.date.plus({ days: day }).month} dayblock`}
-					class:today={data.date.plus({ days: day }).startOf('day').equals(DateTime.now().startOf('day'))}
-				>
-					<span class="day-text">
-						{data.date.plus({ days: day }).toFormat('ccc, LLL dd, yyyy')}
-					</span>
-					{#await $event_store.getByWeek(data.weekNumber, data.year) then res}
-						{#each res as d}
+			{#await $event_store.getByWeek(data.date.year, data.date.weekNumber) then res}
+				<div class="week-num">Week {allDates.length + data.id}</div>
+				{#each [0, 1, 2, 3, 4, 5, 6] as day}
+					<div
+						class={`month-${data.date.plus({ days: day }).month} dayblock`}
+						class:today={data.date.plus({ days: day }).startOf('day').equals(DateTime.now().startOf('day'))}
+					>
+						<span class="day-text">
+							{data.date.plus({ days: day }).toFormat('ccc, LLL dd, yyyy')}
+						</span>
+						{#each res.filter((dr) => DateTime.fromISO(dr.meta?.date ?? '2022-02-27T18:30:00.000Z').startOf('day').weekday - 1 === day) as d}
 							<DraftButton draft={d} />
 						{/each}
-					{/await}
-				</div>
-			{/each}
+					</div>
+				{/each}
+			{/await}
 		</div>
 	</VirtualScroll>
 </div>
@@ -68,6 +64,7 @@
 		height: 200px;
 		gap: 5px;
 		padding: 2.5px;
+		position: relative;
 	}
 	.dayblock {
 		display: grid;
@@ -126,8 +123,5 @@
 		top: 0;
 		left: 7px;
 		font-size: xx-large;
-	}
-	.week-block {
-		position: relative;
 	}
 </style>

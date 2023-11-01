@@ -2,6 +2,7 @@
 	import type { DraftEvent } from '$lib/types/event';
 	import { onMount } from 'svelte';
 	import { player_access } from '$lib/stores/PlayerStore';
+	import { DateTime } from 'luxon';
 
 	export let draft: DraftEvent;
 	let players: { id: string; gwp: number; mp: number; omp?: number; ogp?: number }[] = [];
@@ -13,14 +14,14 @@
 		// Get all opponents, calculate OGP
 		const playerMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' }>>();
 		for (const prop in draft) {
-			if (prop === '0' || prop === '1' || prop === '2') {
+			if (prop === 'R_0' || prop === 'R_1' || prop === 'R_2') {
 				for (const match of draft[prop]) {
 					if (match.players.length === 1) {
 						playerMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'WIN' });
 					} else {
 						const p0_wins = match.games?.filter((v) => v === 0).length ?? match.scores?.at(0) ?? 0;
 						const p1_wins = match.games?.filter((v) => v === 1).length ?? match.scores?.at(1) ?? 0;
-						const ties = match.games?.filter((v) => v === null).length ?? 0;
+						const ties = match.games?.filter((v) => v === -1).length ?? 0;
 						const p0_result = p0_wins === 2 || (p0_wins === 1 && p1_wins === 0) ? 'WIN' : p0_wins === p1_wins ? 'TIE' : 'LOSE';
 						const p1_result = p1_wins === 2 || (p1_wins === 1 && p0_wins === 0) ? 'WIN' : p1_wins === p0_wins ? 'TIE' : 'LOSE';
 						if (playerMap.get(match.players[0])?.get(match.players[1])) {
@@ -104,7 +105,7 @@
 
 <div class="container">
 	<h3>{draft.meta?.title}</h3>
-	<p>{draft.meta?.date}</p>
+	<p>{DateTime.fromISO(draft.meta?.date ?? '2023-01-01T06:30:00.000-05:00').toLocaleString(DateTime.DATETIME_SHORT)}</p>
 	<div>IMAGE</div>
 	<div class="table">
 		{#each players as player}
