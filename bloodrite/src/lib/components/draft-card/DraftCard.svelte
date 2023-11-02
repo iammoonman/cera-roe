@@ -106,8 +106,8 @@
 </script>
 
 <div class="container">
-	<h3>{draft.meta?.title}</h3>
-	<p>{DateTime.fromISO(draft.meta?.date ?? '2023-01-01T06:30:00.000-05:00').toLocaleString(DateTime.DATETIME_SHORT)}</p>
+	<h3>{draft.meta.title}</h3>
+	<p>{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_SHORT)}</p>
 	<div>IMAGE</div>
 	<div class="table">
 		{#each players as player}

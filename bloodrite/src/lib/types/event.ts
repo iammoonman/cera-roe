@@ -2,7 +2,7 @@ import type { Tag } from './server-specific';
 
 export type DraftEvent = {
 	id: string;
-	meta?: {
+	meta: {
 		date: string;
 		title: string;
 		description?: string;

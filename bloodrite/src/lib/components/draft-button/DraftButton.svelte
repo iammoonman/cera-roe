@@ -8,7 +8,7 @@
 	let open: boolean = false;
 </script>
 
-<Button label={draft.meta?.title} size="medium" set_symbol={draft.meta?.set_code} on:click={() => (open = true)} />
+<Button label={draft.meta.title} size="medium" set_symbol={draft.meta.set_code} on:click={() => (open = true)} />
 
 <Dialog bind:open>
 	<DraftCard {draft} />

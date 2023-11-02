@@ -34,7 +34,7 @@
 						<span class="day-text">
 							{data.date.plus({ days: day }).toFormat('ccc, LLL dd, yyyy')}
 						</span>
-						{#each res.filter((dr) => DateTime.fromISO(dr.meta?.date ?? '2022-02-27T18:30:00.000Z').startOf('day').weekday - 1 === day) as d}
+						{#each res.filter((dr) => DateTime.fromISO(dr.meta.date).startOf('day').weekday - 1 === day) as d}
 							<DraftButton draft={d} />
 						{/each}
 					</div>
