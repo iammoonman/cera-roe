@@ -3,10 +3,13 @@
 	import { onMount } from 'svelte';
 	import { player_access } from '$lib/stores/PlayerStore';
 	import { DateTime } from 'luxon';
+	import { fly } from 'svelte/transition';
+	import defaultAvatar from '$lib/images/base-discord.png';
+	import PlayerButton from '../player-button/PlayerButton.svelte';
 
 	export let draft: DraftEvent;
 	let players: { id: string; gwp: number; mp: number; omp?: number; ogp?: number }[] = [];
-	let playerMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE' }>>();
+	let playerMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE'; rnd: number }>>();
 	onMount(() => {
 		// Add each player to the map, with the opponents and their scores against that player.
 		// Calculate GWP
@@ -17,7 +20,7 @@
 			if (prop.startsWith('R_')) {
 				for (const match of draft[prop as `R_${number}`]) {
 					if (match.players.length === 1) {
-						playerMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE' });
+						playerMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE', rnd: parseInt(prop.at(-1)!) });
 					} else {
 						const p0_wins = match.games?.filter((v) => v === 0).length ?? match.scores?.at(0) ?? 0;
 						const p1_wins = match.games?.filter((v) => v === 1).length ?? match.scores?.at(1) ?? 0;
@@ -29,33 +32,43 @@
 								gw: p0_wins,
 								gt: ties,
 								gl: p1_wins,
-								r: p0_result
+								r: p0_result,
+								rnd: parseInt(prop.at(-1)!)
 							});
 						} else if (
 							playerMap.get(match.players[0])?.set(match.players[1], {
 								gw: p0_wins,
 								gt: ties,
 								gl: p1_wins,
-								r: p0_result
+								r: p0_result,
+								rnd: parseInt(prop.at(-1)!)
 							}) === undefined
 						)
-							playerMap.set(match.players[0], new Map([[match.players[1], { gw: p0_wins, gl: p1_wins, gt: ties, r: p0_result }]]));
+							playerMap.set(
+								match.players[0],
+								new Map([[match.players[1], { gw: p0_wins, gl: p1_wins, gt: ties, r: p0_result, rnd: parseInt(prop.at(-1)!) }]])
+							);
 						if (playerMap.get(match.players[1])?.get(match.players[0])) {
 							playerMap.get(match.players[1])?.set(`REMATCH_${match.players[0]}`, {
 								gw: p1_wins,
 								gt: ties,
 								gl: p0_wins,
-								r: p1_result
+								r: p1_result,
+								rnd: parseInt(prop.at(-1)!)
 							});
 						} else if (
 							playerMap.get(match.players[1])?.set(match.players[0], {
 								gw: p1_wins,
 								gt: ties,
 								gl: p0_wins,
-								r: p1_result
+								r: p1_result,
+								rnd: parseInt(prop.at(-1)!)
 							}) === undefined
 						)
-							playerMap.set(match.players[1], new Map([[match.players[0], { gw: p1_wins, gl: p0_wins, gt: ties, r: p1_result }]]));
+							playerMap.set(
+								match.players[1],
+								new Map([[match.players[0], { gw: p1_wins, gl: p0_wins, gt: ties, r: p1_result, rnd: parseInt(prop.at(-1)!) }]])
+							);
 					}
 				}
 			}
@@ -106,69 +119,75 @@
 </script>
 
 <div class="container">
-	<h3>{draft.meta.title}</h3>
-	<p>{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_SHORT)}</p>
-	<div>IMAGE</div>
+	<div>
+		<h1 class="display-text">{draft.meta.title}</h1>
+		<p class="statistic-text date-text">{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATE_FULL)}</p>
+		<div class="subtitle-text">{draft.meta.description ?? ''}</div>
+	</div>
 	<div class="table">
 		{#each players as player}
-			<div class="table-row">
+			<button class="table-row username-text" on:click={() => (selectedPlayer !== player.id ? (selectedPlayer = player.id) : (selectedPlayer = ''))}>
 				{#await $player_access.get(player.id)}
 					Loading players...
 				{:then res}
 					{res?.global_name ?? res?.username ?? 'Unknown Player'}
-					<span>
-						{player.mp}
-						<button on:click={() => (selectedPlayer !== player.id ? (selectedPlayer = player.id) : (selectedPlayer = ''))}>></button>
-					</span>
 				{/await}
-			</div>
+				<span class="statistic-text">
+					{player.mp}
+				</span>
+			</button>
 		{/each}
 	</div>
-	{#if selectedPlayer !== ''}
-		<div class="bump-right">
-			<div class="bump-right-heading">
-				{#await $player_access.get(selectedPlayer)}
-					Loading...
-				{:then res}
-					<img class="player-avatar" src={`https://cdn.discordapp.com/avatars/${res?.id}/${res?.avatar ?? ''}.jpg`} alt="player avatar" />
-					<p>{res?.global_name ?? res?.username ?? 'Unknown Player'}</p>
-				{/await}
-			</div>
-			<div class="bump-right-stats">
-				<span>PTS:</span><span>{selectedPlayerStats?.mp}</span>
-				<span>GWP:</span><span>{selectedPlayerStats?.gwp.toFixed(2)}</span>
-				<span>OMW:</span><span>{selectedPlayerStats?.omp?.toFixed(2)}</span>
-				<span>OGP:</span><span>{selectedPlayerStats?.ogp?.toFixed(2)}</span>
-			</div>
-			<div class="bump-right-picture">
-				<img src="" alt="deckpic" />
-			</div>
-			<div class="bump-right-rounds">
-				{#each playerMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
-					<div class="round">
-						<span class="m-result">{m.gw}-{m.gl}</span>
-						{#await $player_access.get(id) then res}
-							{#if res === undefined}
-								<div>BYE</div>
+	{#each players as p}
+		{#if selectedPlayer === p.id}
+			<div class="bump-right" in:fly={{ x: -300 }} out:fly={{ x: -300 }}>
+				<div class="bump-right-heading display-text">
+					{#await $player_access.get(selectedPlayer)}
+						Loading...
+					{:then res}
+						{#if res !== undefined}
+							<PlayerButton {res} />
+						{/if}
+					{/await}
+				</div>
+				<div class="bump-right-stats statistic-text">
+					<div><span>PTS:</span><span>{selectedPlayerStats?.mp}</span></div>
+					<div><span>GWP:</span><span>{selectedPlayerStats?.gwp.toFixed(2)}</span></div>
+					<div><span>OMW:</span><span>{selectedPlayerStats?.omp?.toFixed(2)}</span></div>
+					<div><span>OGP:</span><span>{selectedPlayerStats?.ogp?.toFixed(2)}</span></div>
+				</div>
+				<div class="bump-right-picture">
+					<img src="" alt="" />
+				</div>
+				<div class="bump-right-rounds">
+					{#each playerMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
+						<div class="round">
+							<div class="statistic-text round-text">{m.rnd + 1}</div>
+							<span class="m-result statistic-text">
+								{#if id.startsWith('BYE')}BYE{:else}{m.gw}-{m.gl}{/if}
+							</span>
+							{#if id.startsWith('BYE')}
+								<PlayerButton small={true} />
 							{:else}
-								<img class="player-avatar sm" src={`https://cdn.discordapp.com/avatars/${res?.id}/${res?.avatar ?? ''}.jpg`} alt="player avatar" />
-								<span>{res?.global_name ?? res?.username ?? 'Unknown Player'}</span>
+								{#await $player_access.get(id.replace('REMATCH_', '')) then res}
+									<PlayerButton {res} small={true} />
+								{/await}
 							{/if}
-						{/await}
-					</div>
-				{/each}
+						</div>
+					{/each}
+				</div>
 			</div>
-		</div>
-	{/if}
+		{/if}
+	{/each}
 </div>
 
 <style>
 	.container {
-		background: white;
+		background: var(--background);
 		padding: 15px;
 		display: grid;
 		grid-template-columns: auto;
-		grid-template-rows: 30px 3rem auto auto;
+		grid-template-rows: auto auto;
 		gap: 5px;
 		position: relative;
 		height: 35rem;
@@ -185,17 +204,68 @@
 		box-shadow: 0px 5px 15px black;
 		z-index: -1;
 	}
+	.round-text {
+		position: absolute;
+		left: -23px;
+		background-color: var(--primary);
+		color: var(--secondary);
+		border-radius: 0 50% 50% 0;
+		width: 1.125rem;
+		text-align: right;
+		padding-right: 5px;
+		box-shadow: 0px 5px 15px black;
+	}
+	.subtitle-text {
+		text-align: start;
+	}
+	.display-text {
+		margin: 0;
+		font-size: 3.4em;
+	}
+	.date-text {
+		margin: 0;
+		font-size: small;
+		width: fit-content;
+		white-space: nowrap;
+		position: relative;
+		z-index: 0;
+	}
+	.table-row::after {
+		position: absolute;
+		bottom: 0;
+		left: -15px;
+		width: calc(100% + 30px);
+		height: 0px;
+		content: '';
+		background-color: var(--accent);
+		opacity: 0.75;
+		transform-origin: 50% 100%;
+		transition: height 200ms ease-in-out;
+		z-index: -1;
+	}
+	.table-row:hover::after {
+		height: 50%;
+	}
 	.table {
-		display: grid;
-		grid-template-rows: auto-fill;
+		display: flex;
+		flex-direction: column;
+		justify-content: end;
+		gap: 8px;
 	}
 	.table-row {
+		z-index: 0;
 		margin: 0;
-		height: 1.125rem;
+		font-size: large;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
 		justify-content: space-between;
+		appearance: none;
+		border: none;
+		background-color: transparent;
+		padding: 0;
+		cursor: pointer;
+		position: relative;
 	}
 	.bump-right {
 		position: absolute;
@@ -206,33 +276,29 @@
 		border-radius: 0 15px 15px 0;
 		top: 7.5%;
 		height: 80%;
-		background-color: white;
+		background-color: var(--background);
 		left: 100%;
 		width: 15rem;
 		z-index: -2;
 		box-shadow: 0px 4px 10px black;
+		overflow: clip;
 	}
 	.bump-right-heading {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		font-size: larger;
-		gap: 15px;
-	}
-	.player-avatar {
-		border-radius: 50%;
 		height: 80px;
-		box-shadow: 0 5px 15px black;
-	}
-	.player-avatar.sm {
-		height: 40px;
 	}
 	.bump-right-stats {
 		display: grid;
-		grid-template-columns: auto auto;
+		grid-template-columns: 100%;
+		font-size: smaller;
 	}
-	.bump-right-stats > span:nth-child(2n) {
+	.bump-right-stats > div > span:nth-child(2n) {
 		text-align: right;
+	}
+	.bump-right-stats > div {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		position: relative;
 	}
 	.bump-right-picture {
 		margin-top: auto;
@@ -243,6 +309,8 @@
 		flex-wrap: nowrap;
 		align-items: center;
 		gap: 15px;
+		position: relative;
+		max-height: 54px;
 	}
 	.m-result {
 		font-size: 40px;
