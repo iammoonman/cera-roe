@@ -29,13 +29,13 @@ const roles = new Map<string, Role>([
 
 /**
  * 
- * @param rank_ids List of rank ids from Discord.
+ * @param role_ids List of role ids from Discord.
  * @returns An object containing a label and color hex for the highest valued role.
  */
-export const getHighestRank = (rank_ids: string[]): Role => {
+export const getHighestRank = (role_ids: string[]): Role => {
 	let highest = '';
 	let val = 5;
-	for (let rank of rank_ids) {
+	for (let rank of role_ids) {
 		const r = roles.get(rank);
 		if (r === undefined) {
 			return { color: '', label: '', value: 9 };
