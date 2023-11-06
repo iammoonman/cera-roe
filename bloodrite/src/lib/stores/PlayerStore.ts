@@ -2,17 +2,12 @@ import { readable, readonly } from 'svelte/store';
 
 export type Member = {
 	id: string;
-	username: string;
+	nick?: string;
+	roles?: string[];
+	joined_at?: string;
+	name: string;
 	avatar: string | null;
-	discriminator: string;
-	public_flags: number;
-	premium_type: number;
-	flags: number;
-	banner: null;
-	accent_color: null;
-	global_name: string;
-	avatar_decoration_data: null;
-	banner_color: null;
+	accent_color: string | null;
 };
 
 class PlayerStore {

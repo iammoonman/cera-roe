@@ -1,22 +1,20 @@
 <script lang="ts">
 	import DraftButton from '$lib/components/draft-button/DraftButton.svelte';
 	import { event_store } from '$lib/stores/EventStore';
+	import { ServerStartDate } from '$lib/types/server-specific';
 	import { DateTime } from 'luxon';
 	import { onMount } from 'svelte';
 	$: allDates = [] as any[];
 	onMount(() => {
 		let newDates = [];
-		for (let i = 0; i > Math.floor(DateTime.fromFormat('May 19 2018', 'LLLL dd yyyy').startOf('week').diffNow('weeks').weeks + 2); i--) {
+		for (let i = 0; i > Math.floor(DateTime.fromFormat(ServerStartDate, 'LLLL dd yyyy').startOf('week').diffNow('weeks').weeks + 2); i--) {
 			let date = DateTime.now()
 				.startOf('week')
 				.plus({ weeks: i + 2 });
 			newDates.push({ id: i, date });
 		}
 		allDates = newDates;
-		const startDate = DateTime.fromObject({ weekYear: 2023, weekNumber: 12 }).startOf('week');
-		console.log(startDate.toJSDate());
 	});
-	// May 19, 2018
 	import VirtualScroll from 'svelte-virtual-scroll-list';
 </script>
 

@@ -1,136 +1,138 @@
 <script lang="ts">
 	import type { DraftEvent } from '$lib/types/event';
-	import { onMount } from 'svelte';
 	import { player_access } from '$lib/stores/PlayerStore';
 	import { DateTime } from 'luxon';
 	import { fly } from 'svelte/transition';
-	import defaultAvatar from '$lib/images/base-discord.png';
 	import PlayerButton from '../player-button/PlayerButton.svelte';
+	import Dps from '$lib/components/icons/dps.svelte';
+	import Ptm from '$lib/components/icons/ptm_symbol.svelte';
 
 	export let draft: DraftEvent;
-	let players: { id: string; gwp: number; mp: number; omp?: number; ogp?: number }[] = [];
-	let playerMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE'; rnd: number }>>();
-	onMount(() => {
-		// Add each player to the map, with the opponents and their scores against that player.
-		// Calculate GWP
-		// Calculate MWP
-		// Get all opponents, calculate OMP
-		// Get all opponents, calculate OGP
-		for (const prop in draft) {
-			if (prop.startsWith('R_')) {
-				for (const match of draft[prop as `R_${number}`]) {
-					if (match.players.length === 1) {
-						playerMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE', rnd: parseInt(prop.at(-1)!) });
-					} else {
-						const p0_wins = match.games?.filter((v) => v === 0).length ?? match.scores?.at(0) ?? 0;
-						const p1_wins = match.games?.filter((v) => v === 1).length ?? match.scores?.at(1) ?? 0;
-						const ties = match.games?.filter((v) => v === -1).length ?? 0;
-						const p0_result = p0_wins === 2 || (p0_wins === 1 && p1_wins === 0) ? 'WIN' : p0_wins === p1_wins ? 'TIE' : 'LOSE';
-						const p1_result = p1_wins === 2 || (p1_wins === 1 && p0_wins === 0) ? 'WIN' : p1_wins === p0_wins ? 'TIE' : 'LOSE';
-						if (playerMap.get(match.players[0])?.get(match.players[1])) {
-							playerMap.get(match.players[0])?.set(`REMATCH_${match.players[1]}`, {
-								gw: p0_wins,
-								gt: ties,
-								gl: p1_wins,
-								r: p0_result,
-								rnd: parseInt(prop.at(-1)!)
-							});
-						} else if (
-							playerMap.get(match.players[0])?.set(match.players[1], {
-								gw: p0_wins,
-								gt: ties,
-								gl: p1_wins,
-								r: p0_result,
-								rnd: parseInt(prop.at(-1)!)
-							}) === undefined
-						)
-							playerMap.set(
-								match.players[0],
-								new Map([[match.players[1], { gw: p0_wins, gl: p1_wins, gt: ties, r: p0_result, rnd: parseInt(prop.at(-1)!) }]])
-							);
-						if (playerMap.get(match.players[1])?.get(match.players[0])) {
-							playerMap.get(match.players[1])?.set(`REMATCH_${match.players[0]}`, {
-								gw: p1_wins,
-								gt: ties,
-								gl: p0_wins,
-								r: p1_result,
-								rnd: parseInt(prop.at(-1)!)
-							});
-						} else if (
-							playerMap.get(match.players[1])?.set(match.players[0], {
-								gw: p1_wins,
-								gt: ties,
-								gl: p0_wins,
-								r: p1_result,
-								rnd: parseInt(prop.at(-1)!)
-							}) === undefined
-						)
-							playerMap.set(
-								match.players[1],
-								new Map([[match.players[0], { gw: p1_wins, gl: p0_wins, gt: ties, r: p1_result, rnd: parseInt(prop.at(-1)!) }]])
-							);
-					}
-				}
-			}
-		}
-		const newPlayers: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
-		for (const [id, subMap] of playerMap) {
-			let total_mp = 0;
-			let total_gp = 0;
-			let total_games = 0;
-			let won_matches = 0;
-			for (const [subId, subScore] of subMap) {
-				if (subId.startsWith('BYE_')) {
-					total_mp = total_mp + 3;
+	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
+	let scoresMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE'; rnd: number }>>();
+	// Add each player to the map, with the opponents and their scores against that player.
+	// Calculate GWP
+	// Calculate MWP
+	// Get all opponents, calculate OMP
+	// Get all opponents, calculate OGP
+	for (const prop in draft) {
+		if (prop.startsWith('R_')) {
+			for (const match of draft[prop as `R_${number}`]) {
+				if (match.players.length === 1) {
+					scoresMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE', rnd: parseInt(prop.at(-1)!) });
 				} else {
-					total_mp = total_mp + (subScore.r === 'WIN' || subScore.r === 'BYE' ? 3 : subScore.r === 'LOSE' ? 0 : 1);
-					total_gp = total_gp + subScore.gw;
-					total_games = total_games + subScore.gt + subScore.gw + subScore.gl;
-					won_matches = won_matches + (subScore.r === 'WIN' ? 1 : 0);
+					const p0_wins = match.games?.filter((v) => v === 0).length ?? match.scores?.at(0) ?? 0;
+					const p1_wins = match.games?.filter((v) => v === 1).length ?? match.scores?.at(1) ?? 0;
+					const ties = match.games?.filter((v) => v === -1).length ?? 0;
+					const p0_result = p0_wins === 2 || (p0_wins === 1 && p1_wins === 0) ? 'WIN' : p0_wins === p1_wins ? 'TIE' : 'LOSE';
+					const p1_result = p1_wins === 2 || (p1_wins === 1 && p0_wins === 0) ? 'WIN' : p1_wins === p0_wins ? 'TIE' : 'LOSE';
+					if (scoresMap.get(match.players[0])?.get(match.players[1])) {
+						scoresMap.get(match.players[0])?.set(`REMATCH_${match.players[1]}`, {
+							gw: p0_wins,
+							gt: ties,
+							gl: p1_wins,
+							r: p0_result,
+							rnd: parseInt(prop.at(-1)!)
+						});
+					} else if (
+						scoresMap.get(match.players[0])?.set(match.players[1], {
+							gw: p0_wins,
+							gt: ties,
+							gl: p1_wins,
+							r: p0_result,
+							rnd: parseInt(prop.at(-1)!)
+						}) === undefined
+					)
+						scoresMap.set(
+							match.players[0],
+							new Map([[match.players[1], { gw: p0_wins, gl: p1_wins, gt: ties, r: p0_result, rnd: parseInt(prop.at(-1)!) }]])
+						);
+					if (scoresMap.get(match.players[1])?.get(match.players[0])) {
+						scoresMap.get(match.players[1])?.set(`REMATCH_${match.players[0]}`, {
+							gw: p1_wins,
+							gt: ties,
+							gl: p0_wins,
+							r: p1_result,
+							rnd: parseInt(prop.at(-1)!)
+						});
+					} else if (
+						scoresMap.get(match.players[1])?.set(match.players[0], {
+							gw: p1_wins,
+							gt: ties,
+							gl: p0_wins,
+							r: p1_result,
+							rnd: parseInt(prop.at(-1)!)
+						}) === undefined
+					)
+						scoresMap.set(
+							match.players[1],
+							new Map([[match.players[0], { gw: p1_wins, gl: p0_wins, gt: ties, r: p1_result, rnd: parseInt(prop.at(-1)!) }]])
+						);
 				}
 			}
-			newPlayers.set(id, { id, gwp: total_gp / total_games, mp: total_mp, mwp: won_matches / subMap.size });
 		}
-		for (const [id, subMap] of playerMap) {
-			let thisPlayer = newPlayers.get(id)!;
-			let gwpSum = 0;
-			let mpSum = 0;
-			for (const [subId, subScore] of subMap) {
-				gwpSum = gwpSum + (newPlayers.get(subId)?.gwp ?? 0);
-				mpSum = mpSum + (newPlayers.get(subId)?.mwp ?? 0);
+	}
+	for (const [id, subMap] of scoresMap) {
+		let total_mp = 0;
+		let total_gp = 0;
+		let total_games = 0;
+		let won_matches = 0;
+		for (const [subId, subScore] of subMap) {
+			if (subId.startsWith('BYE_')) {
+				total_mp = total_mp + 3;
+			} else {
+				total_mp = total_mp + (subScore.r === 'WIN' || subScore.r === 'BYE' ? 3 : subScore.r === 'LOSE' ? 0 : 1);
+				total_gp = total_gp + subScore.gw;
+				total_games = total_games + subScore.gt + subScore.gw + subScore.gl;
+				won_matches = won_matches + (subScore.r === 'WIN' ? 1 : 0);
 			}
-			newPlayers.set(id, { ...thisPlayer, omp: mpSum / subMap.size, ogp: gwpSum / subMap.size });
 		}
-		players = [...newPlayers].map((m) => m[1]);
-		players.sort((a, b) => {
+		players.set(id, { id, gwp: total_gp / total_games, mp: total_mp, mwp: won_matches / subMap.size });
+	}
+	for (const [id, subMap] of scoresMap) {
+		let thisPlayer = players.get(id)!;
+		let gwpSum = 0;
+		let mpSum = 0;
+		for (const [subId, subScore] of subMap) {
+			gwpSum = gwpSum + (players.get(subId)?.gwp ?? 0);
+			mpSum = mpSum + (players.get(subId)?.mwp ?? 0);
+		}
+		players.set(id, { ...thisPlayer, omp: mpSum / subMap.size, ogp: gwpSum / subMap.size });
+	}
+	$: selectedPlayer = '';
+</script>
+
+<div class="container">
+	{#if draft.meta.tag !== 'anti' && draft.meta.tag}
+		<div class="tag-bump">
+			{#if draft.meta.tag === 'dps'}<Dps />{/if}
+			{#if draft.meta.tag === 'ptm'}<Ptm />{/if}
+		</div>
+	{/if}
+	<div>
+		<h1 class="display-text">{draft.meta.title}</h1>
+		<p class="statistic-text date-text" title={DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_FULL)}>
+			{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATE_FULL)}
+		</p>
+		<div class="subtitle-text">{draft.meta.description ?? ''}</div>
+	</div>
+	<div class="table">
+		{#each [...players.entries()].toSorted(([, a], [, b]) => {
 			if (a.mp > b.mp) return -1;
 			if (a.mp < b.mp) return 1;
 			if (a.gwp > b.gwp) return -1;
 			if (a.gwp < b.gwp) return 1;
-			if (a.omp! > b.omp!) return -1;
-			if (a.omp! < b.omp!) return 1;
-			if (a.ogp! > b.ogp!) return -1;
-			if (a.ogp! < b.ogp!) return 1;
+			if ((a.omp ?? 0) > (b.omp ?? 0)) return -1;
+			if ((a.omp ?? 0) < (b.omp ?? 0)) return 1;
+			if ((a.ogp ?? 0) > (b.ogp ?? 0)) return -1;
+			if ((a.ogp ?? 0) < (b.ogp ?? 0)) return 1;
 			return 0;
-		});
-	});
-	$: selectedPlayer = '';
-	$: selectedPlayerStats = players.find((p) => p.id === selectedPlayer);
-</script>
-
-<div class="container">
-	<div>
-		<h1 class="display-text">{draft.meta.title}</h1>
-		<p class="statistic-text date-text">{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATE_FULL)}</p>
-		<div class="subtitle-text">{draft.meta.description ?? ''}</div>
-	</div>
-	<div class="table">
-		{#each players as player}
-			<button class="table-row username-text" on:click={() => (selectedPlayer !== player.id ? (selectedPlayer = player.id) : (selectedPlayer = ''))}>
-				{#await $player_access.get(player.id)}
-					Loading players...
+		}) as [id, player]}
+			<button class="table-row username-text" on:click={() => (selectedPlayer !== id ? (selectedPlayer = id) : (selectedPlayer = ''))}>
+				{#await $player_access.get(id)}
+					Loading player...
 				{:then res}
-					{res?.global_name ?? res?.username ?? 'Unknown Player'}
+					{res?.name ?? 'Unknown Player'}
 				{/await}
 				<span class="statistic-text">
 					{player.mp}
@@ -138,8 +140,8 @@
 			</button>
 		{/each}
 	</div>
-	{#each players as p}
-		{#if selectedPlayer === p.id}
+	{#each players.entries() as [id, player]}
+		{#if selectedPlayer === id}
 			<div class="bump-right" in:fly={{ x: -300 }} out:fly={{ x: -300 }}>
 				<div class="bump-right-heading display-text">
 					{#await $player_access.get(selectedPlayer)}
@@ -151,16 +153,16 @@
 					{/await}
 				</div>
 				<div class="bump-right-stats statistic-text">
-					<div><span>PTS:</span><span>{selectedPlayerStats?.mp}</span></div>
-					<div><span>GWP:</span><span>{selectedPlayerStats?.gwp.toFixed(2)}</span></div>
-					<div><span>OMW:</span><span>{selectedPlayerStats?.omp?.toFixed(2)}</span></div>
-					<div><span>OGP:</span><span>{selectedPlayerStats?.ogp?.toFixed(2)}</span></div>
+					<div title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
+					<div title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
+					<div title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
+					<div title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
 				</div>
 				<div class="bump-right-picture">
 					<img src="" alt="" />
 				</div>
 				<div class="bump-right-rounds">
-					{#each playerMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
+					{#each scoresMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
 						<div class="round">
 							<div class="statistic-text round-text">{m.rnd + 1}</div>
 							<span class="m-result statistic-text">
@@ -204,6 +206,18 @@
 		box-shadow: 0px 5px 15px black;
 		z-index: -1;
 	}
+	.tag-bump {
+		position: absolute;
+		border-radius: 0 0 15px 15px;
+		background: var(--primary);
+		display: grid;
+		place-items: center;
+		top: 0;
+		right: 5%;
+		padding-inline: 15px;
+		height: 24px;
+		--symbol-height: 25px;
+	}
 	.round-text {
 		position: absolute;
 		left: -23px;
@@ -213,7 +227,6 @@
 		width: 1.125rem;
 		text-align: right;
 		padding-right: 5px;
-		box-shadow: 0px 5px 15px black;
 	}
 	.subtitle-text {
 		text-align: start;
@@ -250,7 +263,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: end;
-		gap: 8px;
+		gap: 7.5px;
 	}
 	.table-row {
 		z-index: 0;
@@ -271,7 +284,7 @@
 		position: absolute;
 		display: flex;
 		flex-direction: column;
-		gap: 15px;
+		gap: 7.5px;
 		padding: 15px;
 		border-radius: 0 15px 15px 0;
 		top: 7.5%;
@@ -302,6 +315,11 @@
 	}
 	.bump-right-picture {
 		margin-top: auto;
+	}
+	.bump-right-rounds {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
 	}
 	.round {
 		display: flex;

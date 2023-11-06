@@ -11,7 +11,7 @@ export type DraftEvent = {
 		host?: string;
 		/** The CubeCobra ID of the cube played. */
 		cube_id?: string;
-		/** The set played. Use the first set of the block for a block draft. */
+		/** The set played. Use the first set of the block for a block draft. Chaos drafts don't fill this out. */
 		set_code?: string;
 	};
 	[k: `R_${number}`]: Array<Match>;
@@ -33,5 +33,5 @@ const Test: DraftEvent = {
 		title: '',
 		cube_id: 'fnf'
 	},
-	'R_0': [{ players: ['x', 'y'], games: [0, 1, 1] }, { players: ['z'] }]
+	R_0: [{ players: ['x', 'y'], games: [0, 1, 1] }, { players: ['z'] }]
 };

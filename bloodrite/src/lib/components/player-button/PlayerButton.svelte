@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Member } from '$lib/stores/PlayerStore';
 	import defaultAvatar from '$lib/images/base-discord.png';
+	import { getHighestRank } from '$lib/types/server-specific';
 
 	export let res: Member | undefined = undefined;
 	export let small: boolean = false;
@@ -13,10 +14,11 @@
 		<img
 			class="player-avatar"
 			class:lg={!small}
+			style={res.roles?.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res.roles ?? []).color};`}
 			src={res.avatar ? `https://cdn.discordapp.com/avatars/${res.id}/${res.avatar}.jpg` : defaultAvatar}
 			alt="avatar"
 		/>
-		<span class="username-text score-player" class:sm={small}>{res.global_name ?? res.username}</span>
+		<span class="username-text score-player" class:sm={small}>{res.name}</span>
 	{/if}
 </div>
 
@@ -32,9 +34,9 @@
 	}
 	.player-avatar {
 		border-radius: 50%;
-		height: 3.7cqh;
+		height: 100%;
 		aspect-ratio: 1 / 1;
-		box-shadow: 0 5px 15px black;
+		outline: 3px solid var(--rank-outline-color, var(--primary, black));
 		font-size: 12px;
 		text-align: center;
 		color: white;
@@ -43,8 +45,7 @@
 		height: 5cqh;
 	}
 	.score-player {
-		font-size: 1cqw;
-		width: 6.5cqw;
+		font-size: 16px;
 		margin: 0;
 		flex-shrink: 0;
 		text-overflow: ellipsis;
@@ -52,7 +53,6 @@
 		text-align: left;
 	}
 	.sm {
-		font-size: 0.5cqw;
-		width: 4.3cqw;
+		font-size: 12px;
 	}
 </style>
