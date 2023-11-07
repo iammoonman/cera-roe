@@ -6,16 +6,18 @@
 
 /**
  * DPS = Draft Progression Series
- * 
+ *
  * PTM = Prime Time
- * 
+ *
  * ANTI = Unaffiliated
  */
 export type Tag = 'dps' | 'ptm' | 'anti';
 
+export const Tags = ['ptm', 'anti', 'dps'] as const;
+
 export const ServerStartDate = 'May 19 2018';
 
-type Role = { color: string; label: string; value: number }
+type Role = { color: string; label: string; value: number };
 
 const roles = new Map<string, Role>([
 	['446847430302892032', { color: '#e91e63', label: 'Admin', value: 0 }],
@@ -28,7 +30,7 @@ const roles = new Map<string, Role>([
 ]);
 
 /**
- * 
+ *
  * @param role_ids List of role ids from Discord.
  * @returns An object containing a label and color hex for the highest valued role.
  */
@@ -46,4 +48,8 @@ export const getHighestRank = (role_ids: string[]): Role => {
 		}
 	}
 	return roles.get(highest)!;
+};
+
+export const isAdmin = (role_ids: string[]): boolean => {
+	return role_ids.includes('446847430302892032');
 };

@@ -6,6 +6,7 @@
 	import PlayerButton from '../player-button/PlayerButton.svelte';
 	import Dps from '$lib/components/icons/dps.svelte';
 	import Ptm from '$lib/components/icons/ptm_symbol.svelte';
+	import Pencil from '$lib/components/icons/pencil.svelte';
 
 	export let draft: DraftEvent;
 	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
@@ -100,6 +101,7 @@
 		players.set(id, { ...thisPlayer, omp: mpSum / subMap.size, ogp: gwpSum / subMap.size });
 	}
 	$: selectedPlayer = '';
+	$: editing = false;
 </script>
 
 <div class="container">
@@ -108,6 +110,12 @@
 			{#if draft.meta.tag === 'dps'}<Dps />{/if}
 			{#if draft.meta.tag === 'ptm'}<Ptm />{/if}
 		</div>
+	{/if}
+	{#if false}
+		<!-- Discord OAUTH2 -->
+		<button class="edit-bump" on:click={() => (editing = !editing)}>
+			<Pencil />
+		</button>
 	{/if}
 	<div>
 		<h1 class="display-text">{draft.meta.title}</h1>
@@ -140,6 +148,20 @@
 			</button>
 		{/each}
 	</div>
+	{#if editing}
+		<div class="bump-left" in:fly={{ x: 300 }} out:fly={{ x: 300 }}>
+			<label for="title" class="username-text">Title</label>
+			<input type="text" id="title" value={draft.meta.title} maxlength="45" />
+			<label for="tag" class="username-text">Tag</label>
+			<select id="tag">
+				<option value="dps">Draft Progression Series (2021)</option>
+				<option value="ptm">Prime Time</option>
+				<option value="anti">No tag</option>
+			</select>
+			<label for="desc" class="username-text">Description</label>
+			<textarea id="desc" value={draft.meta.description} maxlength="450" />
+		</div>
+	{/if}
 	{#each players.entries() as [id, player]}
 		{#if selectedPlayer === id}
 			<div class="bump-right" in:fly={{ x: -300 }} out:fly={{ x: -300 }}>
@@ -218,6 +240,31 @@
 		height: 24px;
 		--symbol-height: 25px;
 	}
+	.edit-bump {
+		appearance: none;
+		border: none;
+		cursor: pointer;
+		position: absolute;
+		border-radius: 0 0 15px 15px;
+		background: var(--primary);
+		display: grid;
+		place-items: center;
+		top: 0px;
+		right: 20%;
+		padding-inline: 15px;
+		height: 24px;
+		--symbol-height: 20px;
+		transform-origin: 50% 0;
+		scale: 1;
+		transition: scale 200ms ease-in-out, box-shadow 200ms ease-in-out;
+	}
+	.edit-bump:hover {
+		scale: 1.1;
+		box-shadow: 0 5px 3px 0 black;
+	}
+	.edit-bump:active {
+		scale: 0.9;
+	}
 	.round-text {
 		position: absolute;
 		left: -23px;
@@ -280,6 +327,22 @@
 		cursor: pointer;
 		position: relative;
 	}
+	.bump-left {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		gap: 7.5px;
+		padding: 15px;
+		border-radius: 15px 0 0 15px;
+		top: 7.5%;
+		height: 80%;
+		background-color: var(--background);
+		right: 100%;
+		width: 15rem;
+		z-index: -2;
+		box-shadow: 0px 4px 10px black;
+		overflow: clip;
+	}
 	.bump-right {
 		position: absolute;
 		display: flex;
@@ -332,5 +395,9 @@
 	}
 	.m-result {
 		font-size: 40px;
+	}
+	textarea {
+		resize: none;
+		height: 50%;
 	}
 </style>
