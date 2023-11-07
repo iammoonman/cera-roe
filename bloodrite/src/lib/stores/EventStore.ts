@@ -23,7 +23,6 @@ class EventStore {
 		const endDate = DateTime.fromObject({ weekYear: year, weekNumber: week }).endOf('week');
 		for (let [id, ev] of this.events) {
 			if (ev.meta.date === undefined) continue;
-			console.log(ev.meta);
 			const thisDate = DateTime.fromISO(ev.meta.date);
 			if (thisDate.diff(startDate).milliseconds >= 0 && thisDate.diff(endDate).milliseconds <= 0) output.push(ev)
 		}

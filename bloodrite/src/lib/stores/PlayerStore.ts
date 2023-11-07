@@ -1,23 +1,17 @@
 import { readable, readonly } from 'svelte/store';
 
+export type Member = {
+	id: string;
+	nick?: string;
+	roles?: string[];
+	joined_at?: string;
+	name: string;
+	avatar: string | null;
+	accent_color: string | null;
+};
+
 class PlayerStore {
-	private players = new Map<
-		string,
-		{
-			id: string;
-			username: string;
-			avatar: string;
-			discriminator: string;
-			public_flags: number;
-			premium_type: number;
-			flags: number;
-			banner: null;
-			accent_color: null;
-			global_name: string;
-			avatar_decoration_data: null;
-			banner_color: null;
-		}
-	>();
+	private players = new Map<string, Member>();
 	private playerPromises = new Map<string, Promise<any>>();
 	async get(playerId: string) {
 		if (this.players.get(playerId) === undefined) {
@@ -26,7 +20,9 @@ class PlayerStore {
 					playerId,
 					fetch(`/users/${playerId}`)
 						.then((v) => v.json())
-						.then((v) => this.players.set(playerId, v))
+						.then((v) => {
+							if (Object.hasOwn(v, 'id')) this.players.set(playerId, v);
+						})
 				);
 			await this.playerPromises.get(playerId);
 		}
