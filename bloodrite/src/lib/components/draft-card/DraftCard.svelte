@@ -175,12 +175,13 @@
 					{/await}
 				</div>
 				<div class="bump-right-stats statistic-text">
-					<div title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
-					<div title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
-					<div title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
-					<div title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
+					<div class="stat-row" title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
+					<div class="stat-row" title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
+					<div class="stat-row" title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
+					<div class="stat-row" title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
 				</div>
 				<div class="bump-right-picture">
+					<!-- Will be a deckpic. Not sure about image hosting. -->
 					<img src="" alt="" />
 				</div>
 				<div class="bump-right-rounds">
@@ -285,11 +286,12 @@
 	.date-text {
 		margin: 0;
 		font-size: small;
-		width: fit-content;
 		white-space: nowrap;
 		position: relative;
 		z-index: 0;
 	}
+	.date-text::after,
+	.stat-row::after,
 	.table-row::after {
 		position: absolute;
 		bottom: 0;
@@ -303,6 +305,8 @@
 		transition: height 200ms ease-in-out;
 		z-index: -1;
 	}
+	.date-text:hover::after,
+	.stat-row:hover::after,
 	.table-row:hover::after {
 		height: 50%;
 	}
