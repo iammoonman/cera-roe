@@ -9,18 +9,38 @@ class EventStore {
 		return {} as DraftEvent;
 	}
 	async getByWeek(year: number, week: number): Promise<DraftEvent[]> {
-		if (this.eventPromises.get(`${year}/${week}`) === undefined) {
+		if (this.eventPromises.get(`${year}/week/${week}`) === undefined) {
 			this.eventPromises.set(
-				`${year}/${week}`,
-				fetch(`/events/${year}/${week}`)
+				`${year}/week/${week}`,
+				fetch(`/events/${year}/week/${week}`)
 					.then((v) => v.json())
 					.then((v: DraftEvent[]) => v.map((e) => this.events.set(e.id, e)))
 			);
-			await this.eventPromises.get(`${year}/${week}`);
+			await this.eventPromises.get(`${year}/week/${week}`);
 		}
 		const output: DraftEvent[] = []
 		const startDate = DateTime.fromObject({ weekYear: year, weekNumber: week }).startOf('week');
 		const endDate = DateTime.fromObject({ weekYear: year, weekNumber: week }).endOf('week');
+		for (let [id, ev] of this.events) {
+			if (ev.meta.date === undefined) continue;
+			const thisDate = DateTime.fromISO(ev.meta.date);
+			if (thisDate.diff(startDate).milliseconds >= 0 && thisDate.diff(endDate).milliseconds <= 0) output.push(ev)
+		}
+		return output;
+	}
+	async getByMonth(year: number, month: number): Promise<DraftEvent[]> {
+		if (this.eventPromises.get(`${year}/month/${month}`) === undefined) {
+			this.eventPromises.set(
+				`${year}/month/${month}`,
+				fetch(`/events/${year}/month/${month}`)
+					.then((v) => v.json())
+					.then((v: DraftEvent[]) => v.map((e) => this.events.set(e.id, e)))
+			);
+			await this.eventPromises.get(`${year}/month/${month}`);
+		}
+		const output: DraftEvent[] = []
+		const startDate = DateTime.fromObject({ year: year, month: month }).startOf('month');
+		const endDate = DateTime.fromObject({ year: year, month: month }).endOf('month');
 		for (let [id, ev] of this.events) {
 			if (ev.meta.date === undefined) continue;
 			const thisDate = DateTime.fromISO(ev.meta.date);

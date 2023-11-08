@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
 import { DateTime } from 'luxon';
 import prisma from '$lib/prisma';
-import draft_0 from '../../../../../static/event-data/1162893035823190087.json';
-import draft_1 from '../../../../../static/event-data/1144819777760665661.json';
-import draft_2 from '../../../../../static/event-data/1145133824834031726.json';
-import draft_3 from '../../../../../static/event-data/1157820229766889493.json';
-import draft_4 from '../../../../../static/event-data/1160355391763386579.json';
+import draft_0 from '../../../../../../static/event-data/1162893035823190087.json';
+import draft_1 from '../../../../../../static/event-data/1144819777760665661.json';
+import draft_2 from '../../../../../../static/event-data/1145133824834031726.json';
+import draft_3 from '../../../../../../static/event-data/1157820229766889493.json';
+import draft_4 from '../../../../../../static/event-data/1160355391763386579.json';
 
 export async function GET({ params: { year, week } }) {
 	const startDate = DateTime.fromObject({ weekYear: parseInt(year), weekNumber: parseInt(week) }).startOf('week');
