@@ -1,25 +1,26 @@
 <script lang="ts">
-	import type { Member } from '$lib/stores/PlayerStore';
+	import { player_access } from '$lib/stores/PlayerStore';
 	import defaultAvatar from '$lib/images/base-discord.png';
 	import { getHighestRank } from '$lib/types/server-specific';
 
-	export let res: Member | undefined = undefined;
+	export let user_id: string;
 	export let small: boolean = false;
 </script>
 
 <div>
-	{#if res === undefined}
+	{#await $player_access.get(user_id)}
 		<img class="player-avatar" class:lg={!small} src={defaultAvatar} alt="avatar" />
-	{:else}
+		<span class="username-text score-player" class:sm={small}>Loading...</span>
+	{:then res}
 		<img
 			class="player-avatar"
 			class:lg={!small}
-			style={res.roles?.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res.roles ?? []).color};`}
-			src={res.avatar ? `https://cdn.discordapp.com/avatars/${res.id}/${res.avatar}.jpg` : defaultAvatar}
+			style={res?.roles.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res?.roles ?? []).color};`}
+			src={res?.avatar ? `https://cdn.discordapp.com/avatars/${res?.id}/${res?.avatar}.jpg` : defaultAvatar}
 			alt="avatar"
 		/>
-		<span class="username-text score-player" class:sm={small}>{res.name}</span>
-	{/if}
+		<span class="username-text score-player" class:sm={small}>{res?.name ?? ''}</span>
+	{/await}
 </div>
 
 <style>
