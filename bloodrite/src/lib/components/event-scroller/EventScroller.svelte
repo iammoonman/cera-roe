@@ -73,9 +73,11 @@
 		width: 50%;
 	}
 	.week-num {
-		max-height: calc(100% - 5px);
+		height: calc(100% - 5px);
 		fill: var(--primary, black);
 		opacity: 0.65;
+		flex-shrink: 0;
+		position: absolute;
 	}
 	.buttons-block {
 		display: flex;
@@ -90,7 +92,7 @@
 		position: relative;
 	}
 	.full-date-text {
-		position: absolute;
+		position: relative;
 		left: 10px;
 	}
 </style>
