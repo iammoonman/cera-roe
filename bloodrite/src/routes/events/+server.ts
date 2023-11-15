@@ -5,6 +5,9 @@ export async function POST(request) {
 	try {
 		const body = await request.request.json();
 		body.meta.date = DateTime.fromISO(body.meta.date).toJSDate();
+		if (!body.R_0) body.R_0 = [];
+		if (!body.R_1) body.R_1 = [];
+		if (!body.R_2) body.R_2 = [];
 		// console.log(body.id, body.meta.date);
 		// return new Response();
 		// const { data } = EventCreateOneSchema.parse(body);

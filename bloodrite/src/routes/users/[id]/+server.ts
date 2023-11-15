@@ -14,8 +14,8 @@ export async function POST(requestEvent: RequestEvent) {
 }
 export async function GET(requestEvent: RequestEvent) {
 	if (requestEvent.params['id'] === '') return json({}, { headers: { 'cache-control': 'max-age=86400' } });
-	const rest = new REST({ version: '10' }).setToken(TOKEN);
 	// Check the redis cache for the user
+	const rest = new REST({ version: '10' }).setToken(TOKEN);
 	let memb_json: Member | null = null;
 	try {
 		// throw 'Member Route Sucks';
@@ -35,6 +35,7 @@ export async function GET(requestEvent: RequestEvent) {
 		// @ts-ignore
 		name: user.global_name ?? user.username,
 		accent_color: `#${user.accent_color}` ?? '#000000',
+		roles: [],
 		...(memb_json ?? {}),
 		avatar: user.avatar,
 		id: user.id,

@@ -122,7 +122,9 @@
 		<p class="statistic-text date-text" title={DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_FULL)}>
 			{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATE_FULL)}
 		</p>
-		<div class="subtitle-text">{draft.meta.description ?? ''}</div>
+		<div class="description-text subtitle-text">
+			{draft.meta.description?.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, '') ?? ''}
+		</div>
 	</div>
 	<div class="table">
 		{#each [...players.entries()].toSorted(([, a], [, b]) => {
@@ -166,13 +168,7 @@
 		{#if selectedPlayer === id}
 			<div class="bump-right" in:fly={{ x: -300 }} out:fly={{ x: -300 }}>
 				<div class="bump-right-heading display-text">
-					{#await $player_access.get(selectedPlayer)}
-						Loading...
-					{:then res}
-						{#if res !== undefined}
-							<PlayerButton {res} />
-						{/if}
-					{/await}
+					<PlayerButton user_id={selectedPlayer} />
 				</div>
 				<div class="bump-right-stats statistic-text">
 					<div class="stat-row" title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
@@ -192,11 +188,9 @@
 								{#if id.startsWith('BYE')}BYE{:else}{m.gw}-{m.gl}{/if}
 							</span>
 							{#if id.startsWith('BYE')}
-								<PlayerButton small={true} />
+								<PlayerButton user_id={''} small={true} />
 							{:else}
-								{#await $player_access.get(id.replace('REMATCH_', '')) then res}
-									<PlayerButton {res} small={true} />
-								{/await}
+								<PlayerButton user_id={id.replace('REMATCH_', '')} small={true} />
 							{/if}
 						</div>
 					{/each}
@@ -276,12 +270,12 @@
 		text-align: right;
 		padding-right: 5px;
 	}
-	.subtitle-text {
-		text-align: start;
-	}
 	.display-text {
 		margin: 0;
 		font-size: 3.4em;
+	}
+	.description-text {
+		max-height: 50%;
 	}
 	.date-text {
 		margin: 0;

@@ -2,8 +2,7 @@ import { readable, readonly } from 'svelte/store';
 
 export type Member = {
 	id: string;
-	nick?: string;
-	roles?: string[];
+	roles: string[];
 	joined_at?: string;
 	name: string;
 	avatar: string | null;
@@ -11,7 +10,7 @@ export type Member = {
 };
 
 class PlayerStore {
-	private players = new Map<string, Member>();
+	private players = new Map<string, Member>([['', { accent_color: '#000000', avatar: null, id: '', name: '', roles: [] }]]);
 	private playerPromises = new Map<string, Promise<any>>();
 	async get(playerId: string) {
 		if (this.players.get(playerId) === undefined) {
