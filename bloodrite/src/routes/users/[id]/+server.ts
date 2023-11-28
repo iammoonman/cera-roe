@@ -1,7 +1,7 @@
 import { GuildMember, REST, Routes, User } from 'discord.js';
 import { GUILD, TOKEN } from '$env/static/private';
 import { json, type RequestEvent } from '@sveltejs/kit';
-import type { Member } from '$lib/stores/PlayerStore';
+import type { Member } from '$lib/stores/MemberStore';
 export async function POST(requestEvent: RequestEvent) {
 	const { userlist } = await requestEvent.request.json();
 	const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -14,6 +14,7 @@ export async function POST(requestEvent: RequestEvent) {
 }
 export async function GET(requestEvent: RequestEvent) {
 	if (requestEvent.params['id'] === '') return json({}, { headers: { 'cache-control': 'max-age=86400' } });
+	if (typeof requestEvent.params['id'] !== 'string') console.log(requestEvent.params);
 	// Check the redis cache for the user
 	const rest = new REST({ version: '10' }).setToken(TOKEN);
 	let memb_json: Member | null = null;

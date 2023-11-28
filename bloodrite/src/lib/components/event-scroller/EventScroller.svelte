@@ -40,11 +40,11 @@
 		position: relative;
 		height: var(--max-event-height, 500px);
 		overflow-x: clip;
+		background-color: var(--background);
 	}
 	.week-block {
 		height: 100px;
 		position: relative;
-		background-color: var(--background);
 		display: flex;
 		flex-direction: row;
 		align-items: center;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { DraftEvent } from '$lib/types/event';
-	import { player_access } from '$lib/stores/PlayerStore';
+	import { getMember } from '$lib/stores/MemberStore';
 	import { DateTime } from 'luxon';
 	import { fly } from 'svelte/transition';
 	import PlayerButton from '../player-button/PlayerButton.svelte';
@@ -139,7 +139,7 @@
 			return 0;
 		}) as [id, player]}
 			<button class="table-row username-text" on:click={() => (selectedPlayer !== id ? (selectedPlayer = id) : (selectedPlayer = ''))}>
-				{#await $player_access.get(id)}
+				{#await getMember(id)}
 					Loading player...
 				{:then res}
 					{res?.name ?? 'Unknown Player'}
