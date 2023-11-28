@@ -13,6 +13,7 @@ OperativePacksToPass = 0
 DebounceSkipping = nil
 TrackerTag = ''
 ThisColor = self.getGMNotes()
+SpreadedCards = {}
 
 function onNumberTyped(player_color, number)
     return true
@@ -119,7 +120,8 @@ end
 function onObjectEnterZone(zone, obj)
     if ThisColor ~= zone.getValue() then return end
     if zone.type == 'Hand' and obj.type == 'Card' then
-        if (obj.hasTag(TrackerTag)) then
+        if (obj.hasTag(TrackerTag)) or (indexOf(SpreadedCards, obj) ~= nil) then
+            obj.addTag(TrackerTag)
             TakenCount = TakenCount - 1
             if TakenCount < 0 then TakenCount = 0 end
             self.editButton({ index = 1, label = TakenCount .. " cards picked" })
@@ -155,8 +157,7 @@ function onObjectEnterZone(zone, obj)
             print(self.getGMNotes() .. ", take the deck of cards out of your hand before proceeding.")
             return
         end
-        obj.setLuaScript("function onObjectLeaveContainer(container, leave_object) leave_object.addTag('"..TrackerTag.."') end")
-        Wait.frames(function() obj.spread() end, 5)
+        SpreadedCards = obj.spread()
         -- Start the pick timer.
         if (DebouncePickTimer ~= nil) then Wait.stop(DebouncePickTimer) DebouncePickTimer = nil end
         -- Count seconds
