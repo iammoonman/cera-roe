@@ -115,7 +115,7 @@ function onChat(msg, player)
     end
 end
 
-function onload(s)
+function onLoad(s)
     --Loads the tracking for if the game has started yet
     owner = self.getDescription()
     ref_type = self.getName():gsub('%s.+', '')
@@ -125,7 +125,7 @@ function onload(s)
     if s ~= '' then
         local ld = JSON.decode(s); count = ld.c; subs = ld.subs
     else
-        count = 0; subs = { White = owner == 'White' or owner == 'Blue', Blue = owner == 'White' or owner == 'Blue', Red = owner == 'Red' or owner == 'Green', Purple = owner == 'Purple' or owner == 'Pink', Pink = owner == 'Purple' or owner == 'Pink', Green = owner == 'Red' or owner == 'Green', Orange = owner == 'Orange' or owner == 'Yellow', Yellow = owner == 'Orange' or owner == 'Yellow', Teal = owner == 'Teal' or owner == 'Brown', Brown = owner == 'Teal' or owner == 'Brown' }
+        count = 20; subs = { White = owner == 'White' or owner == 'Blue', Blue = owner == 'White' or owner == 'Blue', Red = owner == 'Red' or owner == 'Green', Purple = owner == 'Purple' or owner == 'Pink', Pink = owner == 'Purple' or owner == 'Pink', Green = owner == 'Red' or owner == 'Green', Orange = owner == 'Orange' or owner == 'Yellow', Yellow = owner == 'Orange' or owner == 'Yellow', Teal = owner == 'Teal' or owner == 'Brown', Brown = owner == 'Teal' or owner == 'Brown' }
     end
     self.createButton({
         tooltip = 'Click to increase\nRight click to decrease',
