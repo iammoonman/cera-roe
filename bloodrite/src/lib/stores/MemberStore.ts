@@ -1,4 +1,4 @@
-import { readable, readonly, writable } from 'svelte/store';
+import { readonly, writable } from 'svelte/store';
 
 export type Member = {
 	id: string;
@@ -12,7 +12,8 @@ export type Member = {
 class MemberStore {
 	private members = new Map<string, Member>();
 	private memberPromises = new Map<string, Promise<any>>();
-	async get(memberId: string) {
+	async get(memberId: string | undefined) {
+		if (memberId === undefined) return undefined;
 		if (this.members.get(memberId) === undefined) {
 			if (this.memberPromises.get(memberId) === undefined)
 				this.memberPromises.set(

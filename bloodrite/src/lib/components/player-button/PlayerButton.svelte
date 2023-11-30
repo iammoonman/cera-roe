@@ -16,7 +16,7 @@
 			class="player-avatar"
 			class:lg={!small}
 			style={res?.roles.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res?.roles ?? []).color};`}
-			src={res?.avatar ? `https://cdn.discordapp.com/avatars/${res?.id}/${res?.avatar}.jpg` : defaultAvatar}
+			src={res?.avatar ? res.avatar : defaultAvatar}
 			alt="avatar"
 		/>
 		<span class="username-text score-player" class:sm={small}>{res?.name ?? ''}</span>

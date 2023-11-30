@@ -7,6 +7,8 @@
 	import Dps from '$lib/components/icons/dps.svelte';
 	import Ptm from '$lib/components/icons/ptm_symbol.svelte';
 	import Pencil from '$lib/components/icons/pencil.svelte';
+	import { Auth } from '$lib/stores/AuthStore';
+	import { isAdmin } from '$lib/types/server-specific';
 
 	export let draft: DraftEvent;
 	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
@@ -111,12 +113,13 @@
 			{#if draft.meta.tag === 'ptm'}<Ptm />{/if}
 		</div>
 	{/if}
-	{#if false}
-		<!-- Discord OAUTH2 -->
-		<button class="edit-bump" on:click={() => (editing = !editing)}>
-			<Pencil />
-		</button>
-	{/if}
+	{#await getMember($Auth.user?.id) then member}
+		{#if isAdmin(member?.roles ?? []) || member?.id === draft.meta.host}
+			<button class="edit-bump" on:click={() => (editing = !editing)}>
+				<Pencil />
+			</button>
+		{/if}
+	{/await}
 	<div>
 		<h1 class="display-text">{draft.meta.title}</h1>
 		<p class="statistic-text date-text" title={DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_FULL)}>
