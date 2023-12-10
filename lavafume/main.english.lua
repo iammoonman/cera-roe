@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 1.09
+mod_name, version = 'Lavafume', 1.10
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
@@ -23,7 +23,7 @@ end
 
 function GetFreshScript(wr)
     if wr == nil then return end
-    local v = wr.text:match('mod_name, version = \'Lavafume\', (%d+%p%d+)')
+    local v = wr.text:match('mod_name,version=\'Lavafume\',(%d+%p%d+);') -- mod_name,version='Lavafume',1.09;
     log('GITHUB Version ' .. v)
     if v then v = tonumber(v) else v = version end
     if version < v then
@@ -344,7 +344,8 @@ function layt(player, value, button_id)
         if lastCard ~= nil then
             -- Handles the leftover card
             lastCard.setPosition(pos_local)
-            if lastCard.is_face_down then lastCard.flip() end
+            local rot = lastCard.getRotation()
+            lastCard.setRotation({x=rot.x, y=rot.y, z=0})
             break
         end
         if lastCard == nil then
