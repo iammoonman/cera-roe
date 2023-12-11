@@ -7,7 +7,7 @@
 	import Dps from '$lib/components/icons/dps.svelte';
 	import Ptm from '$lib/components/icons/ptm_symbol.svelte';
 	import Pencil from '$lib/components/icons/pencil.svelte';
-	import { Auth } from '$lib/stores/AuthStore';
+	import { page } from '$app/stores';
 	import { isAdmin } from '$lib/types/server-specific';
 
 	export let draft: DraftEvent;
@@ -113,7 +113,7 @@
 			{#if draft.meta.tag === 'ptm'}<Ptm />{/if}
 		</div>
 	{/if}
-	{#await getMember($Auth.user?.id) then member}
+	{#await getMember($page.data?.session?.user?.email ?? undefined) then member}
 		{#if isAdmin(member?.roles ?? []) || member?.id === draft.meta.host}
 			<button class="edit-bump" on:click={() => (editing = !editing)}>
 				<Pencil />

@@ -18,11 +18,12 @@ export async function GET(requestEvent: RequestEvent) {
 	if (typeof requestEvent.params['id'] !== 'string') console.log(requestEvent.params);
 	// Check the redis cache for the user
 	let memb_json: Member | null = null;
+	// return json({}, { headers: { 'cache-control': 'max-age=86400' } });
 	try {
-		const guild = await DiscordClient.guilds.fetch(GUILD)
+		const guild = await DiscordClient.guilds.fetch(GUILD);
 		// @ts-ignore
-		const member = await guild.members.fetch(requestEvent.params['id'])
-		if (member === undefined) throw new Error("BIG PROBLEM");
+		const member = await guild.members.fetch(requestEvent.params['id']);
+		if (member === undefined) throw new Error('BIG PROBLEM');
 		// throw 'Member Route Sucks';
 		memb_json = {
 			accent_color: member.displayHexColor,
@@ -30,7 +31,7 @@ export async function GET(requestEvent: RequestEvent) {
 			id: member.id,
 			name: member.nickname ?? member.user.globalName ?? member.user.username,
 			joined_at: member.joinedAt?.toISOString() ?? undefined,
-			roles: member.roles.valueOf().map(v => v.id)
+			roles: member.roles.valueOf().map((v) => v.id)
 		};
 	} catch {
 		const user: any = await DiscordClient.rest.get(Routes.user(requestEvent.params['id']));

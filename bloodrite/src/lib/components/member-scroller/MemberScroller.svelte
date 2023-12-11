@@ -12,11 +12,11 @@
 <style>
 	.scroll-root {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15%, 330px));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
 		position: relative;
 		height: var(--max-event-height, 500px);
-		overflow-x: clip;
 		overflow: scroll;
+		overflow-x: clip;
 		background-color: var(--background);
 	}
 </style>

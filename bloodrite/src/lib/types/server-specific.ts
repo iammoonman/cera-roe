@@ -46,7 +46,7 @@ export const getHighestRank = (role_ids: string[]): Role => {
 	for (let rank of role_ids) {
 		const r = roles.get(rank);
 		if (r === undefined) {
-			return { color: '', label: '', value: 9 };
+			continue
 		}
 		if (r.value < val) {
 			val = r.value;

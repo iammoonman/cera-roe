@@ -1,26 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import { Auth, generateRandomString, makeHREF } from '$lib/stores/AuthStore';
-	import { onMount } from 'svelte';
-
-	Auth.subscribe((v) => {
-		if (!browser) return;
-		if (v.access_token === '') {
-			let access_token = localStorage.getItem('access_token') ?? $page.url.href.match('(?<=access_token=)[^&]+')?.at(0) ?? generateRandomString();
-			Auth.set({ access_token, href: makeHREF(access_token), user: undefined });
-			localStorage.setItem('access_token', access_token);
-		}
-	});
-	onMount(() => {
-		fetch('https://discord.com/api/users/@me', {
-			headers: {
-				authorization: `Bearer ${$Auth.access_token}`
-			}
-		})
-			.then((r) => r.json())
-			.then((r) => Auth.update((old) => ({ ...old, user: r })));
-	});
 </script>
 
 <svelte:head>
@@ -42,6 +20,7 @@
 		width: 100vw;
 		overflow: clip;
 		margin: -8px;
+		background-color: var(--background, black);
 	}
 	:global(.display-text) {
 		font-family: 'Righteous', sans-serif;
