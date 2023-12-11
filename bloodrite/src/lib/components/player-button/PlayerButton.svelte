@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { player_access } from '$lib/stores/PlayerStore';
+	import { getMember } from '$lib/stores/MemberStore';
 	import defaultAvatar from '$lib/images/base-discord.png';
 	import { getHighestRank } from '$lib/types/server-specific';
 
@@ -8,7 +8,7 @@
 </script>
 
 <div>
-	{#await $player_access.get(user_id)}
+	{#await getMember(user_id)}
 		<img class="player-avatar" class:lg={!small} src={defaultAvatar} alt="avatar" />
 		<span class="username-text score-player" class:sm={small}>Loading...</span>
 	{:then res}
@@ -16,7 +16,7 @@
 			class="player-avatar"
 			class:lg={!small}
 			style={res?.roles.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res?.roles ?? []).color};`}
-			src={res?.avatar ? `https://cdn.discordapp.com/avatars/${res?.id}/${res?.avatar}.jpg` : defaultAvatar}
+			src={res?.avatar ? res.avatar : defaultAvatar}
 			alt="avatar"
 		/>
 		<span class="username-text score-player" class:sm={small}>{res?.name ?? ''}</span>
@@ -29,7 +29,7 @@
 		flex-direction: row;
 		align-items: center;
 		gap: 7px;
-		padding: 0;
+		padding: 3px;
 		position: relative;
 		height: 100%;
 	}
@@ -38,6 +38,7 @@
 		height: 100%;
 		aspect-ratio: 1 / 1;
 		outline: 3px solid var(--rank-outline-color, var(--primary, black));
+		background-color: black;
 		font-size: 12px;
 		text-align: center;
 		color: white;

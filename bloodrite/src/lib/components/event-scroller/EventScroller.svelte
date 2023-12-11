@@ -40,11 +40,11 @@
 		position: relative;
 		height: var(--max-event-height, 500px);
 		overflow-x: clip;
+		background-color: var(--background);
 	}
 	.week-block {
-		height: 100px;
+		height: 140px;
 		position: relative;
-		background-color: var(--background);
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -84,15 +84,18 @@
 		margin-left: auto;
 		flex-grow: 0;
 		min-width: 50%;
+		max-width: 100%;
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: space-evenly;
 		align-items: center;
 		flex-wrap: wrap;
 		right: 0;
 		position: relative;
 	}
 	.full-date-text {
-		position: relative;
+		position: absolute;
 		left: 10px;
+		top: 10px;
+		margin: 0;
 	}
 </style>

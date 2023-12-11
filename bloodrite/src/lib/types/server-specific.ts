@@ -4,6 +4,8 @@
  * Other types and such should be generic.
  */
 
+import type { EloRatingRecord } from "./player";
+
 /**
  * DPS = Draft Progression Series
  *
@@ -12,6 +14,10 @@
  * ANTI = Unaffiliated
  */
 export type Tag = 'dps' | 'ptm' | 'anti';
+
+export type TagData = {
+	dps?: EloRatingRecord[];
+}
 
 export const Tags = ['ptm', 'anti', 'dps'] as const;
 
@@ -40,7 +46,7 @@ export const getHighestRank = (role_ids: string[]): Role => {
 	for (let rank of role_ids) {
 		const r = roles.get(rank);
 		if (r === undefined) {
-			return { color: '', label: '', value: 9 };
+			continue
 		}
 		if (r.value < val) {
 			val = r.value;

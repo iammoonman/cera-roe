@@ -1,3 +1,6 @@
+<script lang="ts">
+</script>
+
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
@@ -17,6 +20,7 @@
 		width: 100vw;
 		overflow: clip;
 		margin: -8px;
+		background-color: var(--background, black);
 	}
 	:global(.display-text) {
 		font-family: 'Righteous', sans-serif;

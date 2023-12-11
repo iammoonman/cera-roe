@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { DraftEvent } from '$lib/types/event';
-	import { player_access } from '$lib/stores/PlayerStore';
+	import { getMember } from '$lib/stores/MemberStore';
 	import { DateTime } from 'luxon';
 	import { fly } from 'svelte/transition';
 	import PlayerButton from '../player-button/PlayerButton.svelte';
 	import Dps from '$lib/components/icons/dps.svelte';
 	import Ptm from '$lib/components/icons/ptm_symbol.svelte';
 	import Pencil from '$lib/components/icons/pencil.svelte';
+	import { page } from '$app/stores';
+	import { isAdmin } from '$lib/types/server-specific';
 
 	export let draft: DraftEvent;
 	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
@@ -111,12 +113,13 @@
 			{#if draft.meta.tag === 'ptm'}<Ptm />{/if}
 		</div>
 	{/if}
-	{#if false}
-		<!-- Discord OAUTH2 -->
-		<button class="edit-bump" on:click={() => (editing = !editing)}>
-			<Pencil />
-		</button>
-	{/if}
+	{#await getMember($page.data?.session?.user?.email ?? undefined) then member}
+		{#if isAdmin(member?.roles ?? []) || member?.id === draft.meta.host}
+			<button class="edit-bump" on:click={() => (editing = !editing)}>
+				<Pencil />
+			</button>
+		{/if}
+	{/await}
 	<div>
 		<h1 class="display-text">{draft.meta.title}</h1>
 		<p class="statistic-text date-text" title={DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_FULL)}>
@@ -139,7 +142,7 @@
 			return 0;
 		}) as [id, player]}
 			<button class="table-row username-text" on:click={() => (selectedPlayer !== id ? (selectedPlayer = id) : (selectedPlayer = ''))}>
-				{#await $player_access.get(id)}
+				{#await getMember(id)}
 					Loading player...
 				{:then res}
 					{res?.name ?? 'Unknown Player'}
