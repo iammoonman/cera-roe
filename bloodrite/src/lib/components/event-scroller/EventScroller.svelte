@@ -8,17 +8,17 @@
 	onMount(() => {
 		let newDates = [];
 		for (let i = 0; i > Math.floor(DateTime.fromFormat(ServerStartDate, 'LLLL dd yyyy').startOf('month').diffNow('month').months) - 2; i--) {
-			let date = DateTime.now().startOf('month').plus({ months: i + 2 });
+			let date = DateTime.now()
+				.startOf('month')
+				.plus({ months: i + 2 });
 			newDates.push({ id: i, date });
 		}
 		allDates = newDates;
 	});
-	import VirtualScroll from 'svelte-virtual-scroll-list';
-	let list: VirtualScroll;
 </script>
 
 <div class="scroll-root">
-	<VirtualScroll data={allDates} bind:this={list} key="id" let:data>
+	{#each allDates as data}
 		<div class="week-block">
 			<p class="statistic-text full-date-text">{data.date.toFormat('LLLL yyyy')}</p>
 			<svg class="week-num display-text" viewBox="0 0 30 12">
@@ -32,14 +32,16 @@
 				{/await}
 			</div>
 		</div>
-	</VirtualScroll>
+	{/each}
 </div>
 
 <style>
 	.scroll-root {
 		position: relative;
 		height: var(--max-event-height, 500px);
+		width: 100%;
 		overflow-x: clip;
+		overflow-y: scroll;
 		background-color: var(--background);
 	}
 	.week-block {
@@ -78,13 +80,13 @@
 		opacity: 0.65;
 		flex-shrink: 0;
 		position: absolute;
+		cursor: default;
+		user-select: none;
 	}
 	.buttons-block {
 		display: flex;
 		margin-left: auto;
-		flex-grow: 0;
-		min-width: 50%;
-		max-width: 100%;
+		flex-grow: 1;
 		flex-direction: row;
 		justify-content: space-evenly;
 		align-items: center;

@@ -25,12 +25,14 @@
 		align-items: center;
 		transition: scale 50ms ease-in-out, box-shadow 50ms ease-in-out;
 		perspective: 100px;
-		transform-origin: 50% 50%;
+		transform-origin: center center;
+		outline: 1px solid #00000044;
 	}
 	.button:hover {
 		scale: 1.07;
 		box-shadow: 0 2.5px 5px black;
 		/* , inset 0 -20px 0 -15px var(--accent); */
+		outline: none;
 	}
 	.button:active {
 		scale: 0.95;
