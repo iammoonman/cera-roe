@@ -1,6 +1,6 @@
 import type { Tag, TagData } from '$lib/types/server-specific';
 
-export type EloRatingRecord = { event: string; newrating: number; date: string };
+export type EloRatingRecord = { event: string; newrating: number; date?: string };
 
 export type DisplayCard = { id: string; scryfall_id: string; description: string; title: string };
 

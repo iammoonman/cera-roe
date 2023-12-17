@@ -4,7 +4,8 @@ import type { Player } from '$lib/types/player';
 class PlayerStore {
 	private players = new Map<string, Player>([['', { id: '', tag_data: { dps: [] } }]]);
 	private playerPromises = new Map<string, Promise<any>>();
-	async get(playerId: string): Promise<Player> {
+	async get(playerId: string): Promise<Player | undefined> {
+		if (playerId.length === 0) return undefined;
 		if (this.players.get(playerId) === undefined) {
 			if (this.playerPromises.get(playerId) === undefined)
 				this.playerPromises.set(

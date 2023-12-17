@@ -35,3 +35,18 @@ model Event {
   id_  String    @id @default(auto()) @map("_id") @db.ObjectId
   meta EventMeta
 }
+
+type RatingRecord {
+  event     String
+  newrating Float
+}
+
+type TagData {
+  dps RatingRecord[]
+}
+
+model Player {
+  id       String
+  id_      String  @id @default(auto()) @map("_id") @db.ObjectId
+  tag_data TagData
+}

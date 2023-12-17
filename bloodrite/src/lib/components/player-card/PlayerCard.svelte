@@ -1,8 +1,33 @@
+<script lang="ts">
+	import { getMember, type Member } from '$lib/stores/MemberStore';
+	import defaultAvatar from '$lib/images/base-discord.png';
+	import { getHighestRank } from '$lib/types/server-specific';
+	import { onMount } from 'svelte';
+	import type { Player } from '$lib/types/player';
+	import { player_access } from '$lib/stores/PlayerStore';
+	import DpsChart from './DPSChart.svelte';
+	export let user_id: string;
+	let user: Member | undefined;
+	let player: Player | undefined;
+	onMount(async () => {
+		user = await getMember(user_id);
+		player = await $player_access.get(user_id);
+	});
+</script>
+
 <div class="container">
-	<div>
-		<h1 class="display-text">name</h1>
-		<p class="statistic-text date-text">P</p>
-		<div class="description-text subtitle-text">H</div>
+	<div class="description-text subtitle-text player-blob">
+		<img
+			class="player-avatar"
+			style={user?.roles.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(user?.roles ?? []).color};`}
+			src={user?.avatar ? user.avatar : defaultAvatar}
+			alt="avatar"
+		/>
+		<span class="display-text score-player">{user?.name ?? ''}</span>
+	</div>
+	<div class="content-section">
+		<!-- For each of the user's card options, -->
+		{#if player && player.tag_data.dps}<DpsChart {player} />{/if}
 	</div>
 	<div class="bump-right">
 		<div class="bump-right-heading display-text">N</div>
@@ -15,7 +40,8 @@
 		padding: 15px;
 		display: grid;
 		grid-template-columns: auto;
-		grid-template-rows: auto auto;
+		grid-template-rows: 5rem auto;
+		place-items: start;
 		gap: 5px;
 		position: relative;
 		height: 35rem;
@@ -32,35 +58,11 @@
 		box-shadow: 0px 5px 15px black;
 		z-index: -1;
 	}
-	.display-text {
-		margin: 0;
-		font-size: 3.4em;
-	}
-	.description-text {
-		max-height: 50%;
-	}
-	.date-text {
-		margin: 0;
-		font-size: small;
-		white-space: nowrap;
-		position: relative;
-		z-index: 0;
-	}
-	.date-text::after {
-		position: absolute;
-		bottom: 0;
-		left: -15px;
-		width: calc(100% + 30px);
-		height: 0px;
-		content: '';
-		background-color: var(--accent);
-		opacity: 0.75;
-		transform-origin: 50% 100%;
-		transition: height 200ms ease-in-out;
-		z-index: -1;
-	}
-	.date-text:hover::after {
-		height: 50%;
+	.content-section {
+		display: flex;
+		flex-direction: row;
+		height: 100%;
+		width: 100%;
 	}
 
 	.bump-right {
@@ -78,8 +80,37 @@
 		z-index: -2;
 		box-shadow: 0px 4px 10px black;
 		overflow: clip;
+		display: none;
 	}
 	.bump-right-heading {
 		height: 80px;
+	}
+	.player-blob {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 7px;
+		padding: 3px;
+		position: relative;
+		height: 100%;
+		overflow-x: hidden;
+	}
+	.player-avatar {
+		border-radius: 50%;
+		height: 4rem;
+		aspect-ratio: 1 / 1;
+		outline: 3px solid var(--rank-outline-color, var(--primary, black));
+		background-color: black;
+		font-size: 12px;
+		text-align: center;
+		color: white;
+	}
+	.score-player {
+		margin: 0;
+		font-size: 2rem;
+		flex-shrink: 0;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		text-align: left;
 	}
 </style>

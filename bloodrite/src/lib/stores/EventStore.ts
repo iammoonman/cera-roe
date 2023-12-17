@@ -5,8 +5,18 @@ import { readable, readonly } from 'svelte/store';
 class EventStore {
 	private events = new Map<string, DraftEvent>();
 	private eventPromises = new Map<string, Promise<any>>();
-	async get(eventId: string): Promise<DraftEvent> {
-		return {} as DraftEvent;
+	async get(eventId: string | undefined): Promise<DraftEvent> {
+		if (eventId === undefined) return {} as DraftEvent;
+		if (this.eventPromises.get(`id/${eventId}`) === undefined) {
+			this.eventPromises.set(
+				`id/${eventId}`,
+				fetch(`events/id/${eventId}`)
+					.then((v) => v.json())
+					.then((v: DraftEvent) => this.events.set(v.id, v))
+			);
+			await this.eventPromises.get(`id/${eventId}`);
+		}
+		return this.events.get(eventId) ?? {} as DraftEvent;
 	}
 	async getByWeek(year: number, week: number): Promise<DraftEvent[]> {
 		if (this.eventPromises.get(`${year}/week/${week}`) === undefined) {
