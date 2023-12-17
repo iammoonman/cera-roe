@@ -45,5 +45,6 @@
 		--primary: #525252;
 		--secondary: #e3e3e3;
 		--accent: #bd1300;
+		--accent-light: #b74235;
 	}
 </style>

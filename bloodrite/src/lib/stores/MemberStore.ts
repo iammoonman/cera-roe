@@ -13,7 +13,7 @@ class MemberStore {
 	private members = new Map<string, Member>();
 	private memberPromises = new Map<string, Promise<any>>();
 	async get(memberId: string | undefined) {
-		if (memberId === undefined) return undefined;
+		if (memberId === undefined || memberId.length === 0) return undefined;
 		if (this.members.get(memberId) === undefined) {
 			if (this.memberPromises.get(memberId) === undefined)
 				this.memberPromises.set(
@@ -32,9 +32,14 @@ class MemberStore {
 	getAll() {
 		return this.members.values();
 	}
+	getByName(name: string): Member[] {
+		if (name.length < 2) return [];
+		return [...this.members.values()].filter((v) => v.name.includes(name));
+	}
 }
 
 const member_access = new MemberStore();
 export const getMember = member_access.get.bind(member_access);
+export const getByName = member_access.getByName.bind(member_access);
 const member_access_list_internal = writable(member_access.getAll());
 export const member_access_list = readonly(member_access_list_internal);

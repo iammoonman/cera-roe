@@ -9,6 +9,7 @@
 	import Pencil from '$lib/components/icons/pencil.svelte';
 	import { page } from '$app/stores';
 	import { isAdmin } from '$lib/types/server-specific';
+	import { player_access } from '$lib/stores/PlayerStore';
 
 	export let draft: DraftEvent;
 	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
@@ -178,6 +179,23 @@
 					<div class="stat-row" title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
 					<div class="stat-row" title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
 					<div class="stat-row" title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
+					{#if draft.meta.tag === 'dps'}
+						<div class="stat-row" title="New ELO Rating">
+							<span>RTG:</span>
+							<span>
+								{#await $player_access.get(id)}
+									Loading...
+								{:then res}
+									{@const ratings = [
+										res?.tag_data.dps?.find((v) => parseInt(v.event ?? '1') === parseInt(draft.id) - 1)?.newrating ?? 1000,
+										res?.tag_data.dps?.find((v) => v.event === draft.id)?.newrating ?? 1000
+									]}
+									<span class:plus={ratings[0] <= ratings[1]} class:minus={ratings[0] > ratings[1]}>{(ratings[1] - ratings[0]).toFixed(2)}</span>
+									{ratings[1]}
+								{/await}
+							</span>
+						</div>
+					{/if}
 				</div>
 				<div class="bump-right-picture">
 					<!-- Will be a deckpic. Not sure about image hosting. -->
@@ -400,5 +418,14 @@
 	textarea {
 		resize: none;
 		height: 50%;
+	}
+	.plus {
+		color: #00a000;
+	}
+	.plus::before {
+		content: '+';
+	}
+	.minus {
+		color: var(--accent-light);
 	}
 </style>

@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Dialog from '$lib/components/dialog/Dialog.svelte';
 	import EventScroller from '$lib/components/event-scroller/EventScroller.svelte';
+	import PlayerCard from '$lib/components/player-card/PlayerCard.svelte';
+	import { getByName } from '$lib/stores/MemberStore';
+	let searchtext: string = '';
+	$: search_users = getByName(searchtext);
+	let selected_user: string | undefined;
+	let open = false;
 </script>
 
 <div class="auth">
@@ -8,7 +15,7 @@
 	{#if $page.data.session}
 		<p>
 			{#if $page.data.session.user?.image}
-				<img src={`${$page.data.session.user.image}`} alt="avatar"/>
+				<img src={`${$page.data.session.user.image}`} alt="avatar" />
 			{/if}
 			<span class="signedInText">
 				<small>Signed in as</small>
@@ -22,6 +29,30 @@
 			<a href="/auth/signin" data-sveltekit-preload-data="off">Sign in with Discord</a>
 		</p>
 	{/if}
+	<input
+		type="search"
+		autocomplete="username"
+		class="search-bar"
+		bind:value={searchtext}
+		list="user-list"
+		placeholder="Search for a username..."
+		on:keypress={(e) => {
+			if (e.key === 'Enter' && search_users.length !== 0) {
+				selected_user = search_users[0].id;
+				open = true;
+			}
+		}}
+	/>
+	<datalist id="user-list">
+		{#each search_users as u}
+			<option value={u.name} />
+		{/each}
+	</datalist>
+	<Dialog bind:open>
+		{#if selected_user}
+			<PlayerCard user_id={selected_user} />
+		{/if}
+	</Dialog>
 </div>
 <div class="griddy">
 	<EventScroller />
