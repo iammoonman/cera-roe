@@ -1,6 +1,6 @@
 import prisma from '$lib/prisma';
+import { DraftEventSchema } from '$lib/types/event';
 import { DateTime } from 'luxon';
-import { EventCreateOneSchema } from '../../../prisma/generated/schemas/createOneEvent.schema';
 export async function POST(request) {
 	try {
 		const body = await request.request.json();
@@ -10,7 +10,7 @@ export async function POST(request) {
 		if (!body.R_2) body.R_2 = [];
 		// console.log(body.id, body.meta.date);
 		// return new Response();
-		const { data } = EventCreateOneSchema.parse(body);
+		let data = DraftEventSchema.parse(body);
 		const possibleFind = await prisma.event.findFirst({ where: { id: data.id } });
 		if (possibleFind !== null) {
 			// return new Response();

@@ -39,6 +39,6 @@
     "discord.js": "^14.13.0",
     "luxon": "^3.4.3",
     "prisma": "^5.5.2",
-    "prisma-zod-generator": "^0.8.13"
+    "zod": "^3.22.4"
   }
 }

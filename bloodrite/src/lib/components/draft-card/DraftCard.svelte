@@ -21,7 +21,7 @@
 	// Get all opponents, calculate OGP
 	for (const prop in draft) {
 		if (prop.startsWith('R_')) {
-			for (const match of draft[prop as `R_${number}`]) {
+			for (const match of draft[prop as ('R_0' | 'R_1' | 'R_2')] ?? []) {
 				if (match.players.length === 1) {
 					scoresMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE', rnd: parseInt(prop.at(-1)!) });
 				} else {

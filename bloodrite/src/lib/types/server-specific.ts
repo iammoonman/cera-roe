@@ -4,7 +4,16 @@
  * Other types and such should be generic.
  */
 
-import type { EloRatingRecord } from "./player";
+import { z } from 'zod';
+import type { EloRatingRecord } from './player';
+
+export type TagData = {
+	dps?: EloRatingRecord[];
+};
+
+export const Tags = ['ptm', 'anti', 'dps'] as const;
+
+export const ZodTags = z.union([z.literal('dps'), z.literal('ptm'), z.literal('anti')]);
 
 /**
  * DPS = Draft Progression Series
@@ -13,13 +22,7 @@ import type { EloRatingRecord } from "./player";
  *
  * ANTI = Unaffiliated
  */
-export type Tag = 'dps' | 'ptm' | 'anti';
-
-export type TagData = {
-	dps?: EloRatingRecord[];
-}
-
-export const Tags = ['ptm', 'anti', 'dps'] as const;
+export type Tag = z.infer<typeof ZodTags>;
 
 export const ServerStartDate = 'May 19 2018';
 
@@ -49,7 +52,7 @@ export const getHighestRank = (role_ids: string[]): Role => {
 	for (let rank of role_ids) {
 		const r = roles.get(rank);
 		if (r === undefined) {
-			continue
+			continue;
 		}
 		if (r.value > val) {
 			val = r.value;
