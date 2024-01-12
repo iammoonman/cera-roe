@@ -10,7 +10,7 @@
 	import { page } from '$app/stores';
 	import { isAdmin } from '$lib/types/server-specific';
 	import { player_access } from '$lib/stores/PlayerStore';
-
+	
 	export let draft: DraftEvent;
 	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
 	let scoresMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE'; rnd: number }>>();
@@ -97,7 +97,7 @@
 		let thisPlayer = players.get(id)!;
 		let gwpSum = 0;
 		let mpSum = 0;
-		for (const [subId, subScore] of subMap) {
+		for (const [subId] of subMap) {
 			gwpSum = gwpSum + (players.get(subId)?.gwp ?? 0);
 			mpSum = mpSum + (players.get(subId)?.mwp ?? 0);
 		}
@@ -169,55 +169,54 @@
 		</div>
 	{/if}
 	{#each players.entries() as [id, player]}
-		{#if selectedPlayer === id}
-			<div class="bump-right" in:fly={{ x: -300 }} out:fly={{ x: -300 }}>
-				<div class="bump-right-heading display-text">
-					<PlayerButton user_id={selectedPlayer} />
-				</div>
-				<div class="bump-right-stats statistic-text">
-					<div class="stat-row" title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
-					<div class="stat-row" title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
-					<div class="stat-row" title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
-					<div class="stat-row" title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
-					{#if draft.meta.tag === 'dps'}
-						<div class="stat-row" title="New ELO Rating">
-							<span>RTG:</span>
-							<span>
-								{#await $player_access.get(id)}
-									Loading...
-								{:then res}
-									{@const ratings = [
-										res?.tag_data.dps?.find((v) => parseInt(v.event ?? '1') === parseInt(draft.id) - 1)?.newrating ?? 1000,
-										res?.tag_data.dps?.find((v) => v.event === draft.id)?.newrating ?? 1000
-									]}
-									<span class:plus={ratings[0] <= ratings[1]} class:minus={ratings[0] > ratings[1]}>{(ratings[1] - ratings[0]).toFixed(2)}</span>
-									{ratings[1]}
-								{/await}
-							</span>
-						</div>
-					{/if}
-				</div>
-				<div class="bump-right-picture">
-					<!-- Will be a deckpic. Not sure about image hosting. -->
-					<img src="" alt="" />
-				</div>
-				<div class="bump-right-rounds">
-					{#each scoresMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
-						<div class="round">
-							<div class="statistic-text round-text">{m.rnd + 1}</div>
-							<span class="m-result statistic-text">
-								{#if id.startsWith('BYE')}BYE{:else}{m.gw}-{m.gl}{/if}
-							</span>
-							{#if id.startsWith('BYE')}
-								<PlayerButton user_id={''} small={true} />
-							{:else}
-								<PlayerButton user_id={id.replace('REMATCH_', '')} small={true} />
-							{/if}
-						</div>
-					{/each}
-				</div>
+		<div class="bump-right" class:selected={selectedPlayer === id}>
+			<button class="bump-right-close-button" on:click={() => selectedPlayer = ''}>X</button>
+			<div class="bump-right-heading display-text">
+				<PlayerButton user_id={selectedPlayer} />
 			</div>
-		{/if}
+			<div class="bump-right-stats statistic-text">
+				<div class="stat-row" title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
+				<div class="stat-row" title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
+				<div class="stat-row" title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
+				<div class="stat-row" title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
+				{#if draft.meta.tag === 'dps'}
+					<div class="stat-row" title="New ELO Rating">
+						<span>RTG:</span>
+						<span>
+							{#await $player_access.get(id)}
+								Loading...
+							{:then res}
+								{@const ratings = [
+									res?.tag_data.dps?.find((v) => parseInt(v.event ?? '1') === parseInt(draft.id) - 1)?.newrating ?? 1000,
+									res?.tag_data.dps?.find((v) => v.event === draft.id)?.newrating ?? 1000
+								]}
+								<span class:plus={ratings[0] <= ratings[1]} class:minus={ratings[0] > ratings[1]}>{(ratings[1] - ratings[0]).toFixed(2)}</span>
+								{ratings[1]}
+							{/await}
+						</span>
+					</div>
+				{/if}
+			</div>
+			<div class="bump-right-picture">
+				<!-- Will be a deckpic. Not sure about image hosting. -->
+				<img src="" alt="" />
+			</div>
+			<div class="bump-right-rounds">
+				{#each scoresMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
+					<div class="round">
+						<div class="statistic-text round-text">{m.rnd + 1}</div>
+						<span class="m-result statistic-text">
+							{#if id.startsWith('BYE')}BYE{:else}{m.gw}-{m.gl}{/if}
+						</span>
+						{#if id.startsWith('BYE')}
+							<PlayerButton user_id={''} small={true} />
+						{:else}
+							<PlayerButton user_id={id.replace('REMATCH_', '')} small={true} />
+						{/if}
+					</div>
+				{/each}
+			</div>
+		</div>
 	{/each}
 </div>
 
@@ -230,8 +229,8 @@
 		grid-template-rows: auto auto;
 		gap: 5px;
 		position: relative;
-		height: 35rem;
-		width: 25rem;
+		height: clamp(300px, 80vh, 35rem);
+		width: clamp(300px, 50vw, 25rem);
 		border-radius: 15px;
 	}
 	.container::before {
@@ -310,8 +309,8 @@
 	.table-row::after {
 		position: absolute;
 		bottom: 0;
-		left: -15px;
-		width: calc(100% + 30px);
+		left: 0;
+		width: 100%;
 		height: 0px;
 		content: '';
 		background-color: var(--accent);
@@ -330,10 +329,14 @@
 		flex-direction: column;
 		justify-content: end;
 		gap: 7.5px;
+		position: absolute;
+		width: 100%;
+		bottom: 15px;
 	}
 	.table-row {
 		z-index: 0;
 		margin: 0;
+		gap: 15px;
 		font-size: large;
 		display: flex;
 		flex-direction: row;
@@ -342,9 +345,30 @@
 		appearance: none;
 		border: none;
 		background-color: transparent;
-		padding: 0;
+		padding: 0 15px;
 		cursor: pointer;
 		position: relative;
+	}
+	@media (max-height: 35rem) {
+		.display-text {
+			font-size: larger;
+		}
+		.table {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.table-row {
+			width: min-content;
+			white-space: nowrap;
+			height: min-content;
+			outline: 1px solid #00000044;
+		}
+		.table-row > span {
+			height: 0;
+		}
+		.table-row::after {
+			content: none;
+		}
 	}
 	.bump-left {
 		position: absolute;
@@ -370,13 +394,39 @@
 		padding: 15px;
 		border-radius: 0 15px 15px 0;
 		top: 7.5%;
+		right: 0;
 		height: 80%;
 		background-color: var(--background);
-		left: 100%;
 		width: 15rem;
 		z-index: -2;
 		box-shadow: 0px 4px 10px black;
 		overflow: clip;
+		transition: transform ease-in-out 200ms;
+	}
+	.bump-right.selected {
+		transform: translateX(100%);
+	}
+	@media (max-width: 1000px) {
+		.bump-right.selected {
+			z-index: 1;
+			transform: none;
+			border-radius: 15px 0 0 15px;
+			box-shadow: -3px 4px 10px black;
+		}
+		.bump-right {
+			overflow-y: scroll;
+		}
+	}
+	.bump-right-close-button {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	@media (max-width: 1000px) {
+		.bump-right-close-button {
+			display: block;
+		}
 	}
 	.bump-right-heading {
 		height: 80px;

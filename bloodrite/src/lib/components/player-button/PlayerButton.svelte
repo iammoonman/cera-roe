@@ -44,7 +44,7 @@
 		color: white;
 	}
 	.lg {
-		height: 5cqh;
+		height: 65px;
 	}
 	.score-player {
 		font-size: 16px;

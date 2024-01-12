@@ -33,7 +33,7 @@ export async function POST(requestEvent: RequestEvent) {
 					id: user_response.id
 				};
 			}
-			kv.set(user, kv_user, { ex: 604800 + Math.random() * 604800 });
+			kv.set(user, kv_user, { ex: Math.floor(Math.random() * 604800) });
 		}
 		returnList.push(kv_user);
 	}
@@ -73,7 +73,7 @@ export async function GET(requestEvent: RequestEvent) {
 				id: user.id
 			};
 		}
-		kv.set(user_id, kv_user, { ex: 604800 + Math.random() * 604800 });
+		kv.set(user_id, kv_user, { ex: Math.floor(Math.random() * 604800) });
 	}
 	return json(kv_user, { headers: { 'cache-control': 'max-age=86400' } });
 }
