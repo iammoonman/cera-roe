@@ -10,7 +10,7 @@
 	import { page } from '$app/stores';
 	import { isAdmin } from '$lib/types/server-specific';
 	import { player_access } from '$lib/stores/PlayerStore';
-
+	
 	export let draft: DraftEvent;
 	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
 	let scoresMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE'; rnd: number }>>();
@@ -21,7 +21,7 @@
 	// Get all opponents, calculate OGP
 	for (const prop in draft) {
 		if (prop.startsWith('R_')) {
-			for (const match of draft[prop as `R_${number}`]) {
+			for (const match of draft[prop as ('R_0' | 'R_1' | 'R_2')] ?? []) {
 				if (match.players.length === 1) {
 					scoresMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE', rnd: parseInt(prop.at(-1)!) });
 				} else {
@@ -97,7 +97,7 @@
 		let thisPlayer = players.get(id)!;
 		let gwpSum = 0;
 		let mpSum = 0;
-		for (const [subId, subScore] of subMap) {
+		for (const [subId] of subMap) {
 			gwpSum = gwpSum + (players.get(subId)?.gwp ?? 0);
 			mpSum = mpSum + (players.get(subId)?.mwp ?? 0);
 		}
@@ -121,7 +121,7 @@
 			</button>
 		{/if}
 	{/await}
-	<div>
+	<div class="info-box">
 		<h1 class="display-text">{draft.meta.title}</h1>
 		<p class="statistic-text date-text" title={DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_FULL)}>
 			{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATE_FULL)}
@@ -169,69 +169,68 @@
 		</div>
 	{/if}
 	{#each players.entries() as [id, player]}
-		{#if selectedPlayer === id}
-			<div class="bump-right" in:fly={{ x: -300 }} out:fly={{ x: -300 }}>
-				<div class="bump-right-heading display-text">
-					<PlayerButton user_id={selectedPlayer} />
-				</div>
-				<div class="bump-right-stats statistic-text">
-					<div class="stat-row" title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
-					<div class="stat-row" title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
-					<div class="stat-row" title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
-					<div class="stat-row" title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
-					{#if draft.meta.tag === 'dps'}
-						<div class="stat-row" title="New ELO Rating">
-							<span>RTG:</span>
-							<span>
-								{#await $player_access.get(id)}
-									Loading...
-								{:then res}
-									{@const ratings = [
-										res?.tag_data.dps?.find((v) => parseInt(v.event ?? '1') === parseInt(draft.id) - 1)?.newrating ?? 1000,
-										res?.tag_data.dps?.find((v) => v.event === draft.id)?.newrating ?? 1000
-									]}
-									<span class:plus={ratings[0] <= ratings[1]} class:minus={ratings[0] > ratings[1]}>{(ratings[1] - ratings[0]).toFixed(2)}</span>
-									{ratings[1]}
-								{/await}
-							</span>
-						</div>
-					{/if}
-				</div>
-				<div class="bump-right-picture">
-					<!-- Will be a deckpic. Not sure about image hosting. -->
-					<img src="" alt="" />
-				</div>
-				<div class="bump-right-rounds">
-					{#each scoresMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
-						<div class="round">
-							<div class="statistic-text round-text">{m.rnd + 1}</div>
-							<span class="m-result statistic-text">
-								{#if id.startsWith('BYE')}BYE{:else}{m.gw}-{m.gl}{/if}
-							</span>
-							{#if id.startsWith('BYE')}
-								<PlayerButton user_id={''} small={true} />
-							{:else}
-								<PlayerButton user_id={id.replace('REMATCH_', '')} small={true} />
-							{/if}
-						</div>
-					{/each}
-				</div>
+		<div class="bump-right" class:selected={selectedPlayer === id}>
+			<button class="bump-right-close-button" on:click={() => selectedPlayer = ''}>X</button>
+			<div class="bump-right-heading display-text">
+				<PlayerButton user_id={selectedPlayer} />
 			</div>
-		{/if}
+			<div class="bump-right-stats statistic-text">
+				<div class="stat-row" title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
+				<div class="stat-row" title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
+				<div class="stat-row" title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
+				<div class="stat-row" title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
+				{#if draft.meta.tag === 'dps'}
+					<div class="stat-row" title="New ELO Rating">
+						<span>RTG:</span>
+						<span>
+							{#await $player_access.get(id)}
+								Loading...
+							{:then res}
+								{@const ratings = [
+									res?.tag_data.dps?.find((v) => parseInt(v.event ?? '1') === parseInt(draft.id) - 1)?.newrating ?? 1000,
+									res?.tag_data.dps?.find((v) => v.event === draft.id)?.newrating ?? 1000
+								]}
+								<span class:plus={ratings[0] <= ratings[1]} class:minus={ratings[0] > ratings[1]}>{(ratings[1] - ratings[0]).toFixed(2)}</span>
+								{ratings[1]}
+							{/await}
+						</span>
+					</div>
+				{/if}
+			</div>
+			<div class="bump-right-picture">
+				<!-- Will be a deckpic. Not sure about image hosting. -->
+				<img src="" alt="" />
+			</div>
+			<div class="bump-right-rounds">
+				{#each scoresMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
+					<div class="round">
+						<div class="statistic-text round-text">{m.rnd + 1}</div>
+						<span class="m-result statistic-text">
+							{#if id.startsWith('BYE')}BYE{:else}{m.gw}-{m.gl}{/if}
+						</span>
+						{#if id.startsWith('BYE')}
+							<PlayerButton user_id={''} small={true} />
+						{:else}
+							<PlayerButton user_id={id.replace('REMATCH_', '')} small={true} />
+						{/if}
+					</div>
+				{/each}
+			</div>
+		</div>
 	{/each}
 </div>
 
 <style>
 	.container {
+		--padding-inline: 15px;
 		background: var(--background);
-		padding: 15px;
 		display: grid;
 		grid-template-columns: auto;
 		grid-template-rows: auto auto;
 		gap: 5px;
 		position: relative;
-		height: 35rem;
-		width: 25rem;
+		height: clamp(300px, 80vh, 35rem);
+		width: clamp(300px, 50vw, 25rem);
 		border-radius: 15px;
 	}
 	.container::before {
@@ -244,6 +243,9 @@
 		box-shadow: 0px 5px 15px black;
 		z-index: -1;
 	}
+	.info-box {
+		position: relative;
+	}
 	.tag-bump {
 		position: absolute;
 		border-radius: 0 0 15px 15px;
@@ -252,7 +254,7 @@
 		place-items: center;
 		top: 0;
 		right: 5%;
-		padding-inline: 15px;
+		padding-inline: var(--padding-inline, 15px);
 		height: 24px;
 		--symbol-height: 25px;
 	}
@@ -267,7 +269,7 @@
 		place-items: center;
 		top: 0px;
 		right: 20%;
-		padding-inline: 15px;
+		padding-inline: var(--padding-inline, 15px);
 		height: 24px;
 		--symbol-height: 20px;
 		transform-origin: 50% 0;
@@ -281,37 +283,30 @@
 	.edit-bump:active {
 		scale: 0.9;
 	}
-	.round-text {
-		position: absolute;
-		left: -23px;
-		background-color: var(--primary);
-		color: var(--secondary);
-		border-radius: 0 50% 50% 0;
-		width: 1.125rem;
-		text-align: right;
-		padding-right: 5px;
-	}
 	.display-text {
 		margin: 0;
 		font-size: 3.4em;
+		padding-inline: var(--padding-inline, 15px);
 	}
 	.description-text {
 		max-height: 50%;
+		padding-inline: var(--padding-inline, 15px);
 	}
 	.date-text {
 		margin: 0;
 		font-size: small;
 		white-space: nowrap;
-		position: relative;
 		z-index: 0;
+		padding-inline: var(--padding-inline, 15px);
+		position: relative;
 	}
 	.date-text::after,
 	.stat-row::after,
 	.table-row::after {
 		position: absolute;
 		bottom: 0;
-		left: -15px;
-		width: calc(100% + 30px);
+		left: 0;
+		width: 100%;
 		height: 0px;
 		content: '';
 		background-color: var(--accent);
@@ -323,17 +318,21 @@
 	.date-text:hover::after,
 	.stat-row:hover::after,
 	.table-row:hover::after {
-		height: 50%;
+		height: 40%;
 	}
 	.table {
 		display: flex;
 		flex-direction: column;
 		justify-content: end;
 		gap: 7.5px;
+		position: absolute;
+		width: 100%;
+		bottom: 15px;
 	}
 	.table-row {
 		z-index: 0;
 		margin: 0;
+		gap: 15px;
 		font-size: large;
 		display: flex;
 		flex-direction: row;
@@ -342,16 +341,37 @@
 		appearance: none;
 		border: none;
 		background-color: transparent;
-		padding: 0;
+		padding: 0 var(--padding-inline, 15px);
 		cursor: pointer;
 		position: relative;
+	}
+	@media (max-height: 35rem) {
+		.display-text {
+			font-size: larger;
+		}
+		.table {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.table-row {
+			width: min-content;
+			white-space: nowrap;
+			height: min-content;
+			outline: 1px solid #00000044;
+		}
+		.table-row > span {
+			height: 0;
+		}
+		.table-row::after {
+			content: none;
+		}
 	}
 	.bump-left {
 		position: absolute;
 		display: flex;
 		flex-direction: column;
 		gap: 7.5px;
-		padding: 15px;
+		padding: var(--padding-inline, 15px);
 		border-radius: 15px 0 0 15px;
 		top: 7.5%;
 		height: 80%;
@@ -367,16 +387,43 @@
 		display: flex;
 		flex-direction: column;
 		gap: 7.5px;
-		padding: 15px;
+		padding-top: var(--padding-inline, 15px);
+		padding-bottom: var(--padding-inline, 15px);
 		border-radius: 0 15px 15px 0;
 		top: 7.5%;
+		right: 0;
 		height: 80%;
 		background-color: var(--background);
-		left: 100%;
 		width: 15rem;
 		z-index: -2;
 		box-shadow: 0px 4px 10px black;
 		overflow: clip;
+		transition: transform ease-in-out 200ms;
+	}
+	.bump-right.selected {
+		transform: translateX(100%);
+	}
+	@media (max-width: 1000px) {
+		.bump-right.selected {
+			z-index: 1;
+			transform: none;
+			border-radius: 15px 0 0 15px;
+			box-shadow: -3px 4px 10px black;
+		}
+		.bump-right {
+			overflow-y: scroll;
+		}
+	}
+	.bump-right-close-button {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	@media (max-width: 1000px) {
+		.bump-right-close-button {
+			display: block;
+		}
 	}
 	.bump-right-heading {
 		height: 80px;
@@ -389,6 +436,9 @@
 	.bump-right-stats > div > span:nth-child(2n) {
 		text-align: right;
 	}
+	.stat-row {
+		padding-inline: var(--padding-inline, 15px);
+	}
 	.bump-right-stats > div {
 		display: flex;
 		flex-direction: row;
@@ -397,6 +447,7 @@
 	}
 	.bump-right-picture {
 		margin-top: auto;
+		padding-inline: var(--padding-inline, 15px);
 	}
 	.bump-right-rounds {
 		display: flex;
@@ -408,9 +459,19 @@
 		flex-direction: row;
 		flex-wrap: nowrap;
 		align-items: center;
-		gap: 15px;
 		position: relative;
 		max-height: 54px;
+		padding-left: var(--padding-inline, 15px);
+	}
+	.round-text {
+		position: absolute;
+		left: -5px;
+		background-color: var(--primary);
+		color: var(--secondary);
+		border-radius: 0 50% 50% 0;
+		width: 1.125rem;
+		text-align: right;
+		padding-right: 5px;
 	}
 	.m-result {
 		font-size: 40px;

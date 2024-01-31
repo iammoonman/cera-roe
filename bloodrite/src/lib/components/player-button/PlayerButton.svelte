@@ -32,6 +32,7 @@
 		padding: 3px;
 		position: relative;
 		height: 100%;
+		flex: 1 1 50%;
 	}
 	.player-avatar {
 		border-radius: 50%;
@@ -44,15 +45,15 @@
 		color: white;
 	}
 	.lg {
-		height: 5cqh;
+		height: 65px;
 	}
 	.score-player {
 		font-size: 16px;
 		margin: 0;
-		flex-shrink: 0;
+		text-align: left;
+		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		text-align: left;
 	}
 	.sm {
 		font-size: 12px;

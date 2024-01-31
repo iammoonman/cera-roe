@@ -8,6 +8,12 @@
 	$: search_users = getByName(searchtext);
 	let selected_user: string | undefined;
 	let open = false;
+	$: {
+		if (open === false) {
+			selected_user = undefined;
+			searchtext = '';
+		}
+	}
 </script>
 
 <div class="auth">

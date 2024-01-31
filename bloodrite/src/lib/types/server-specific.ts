@@ -4,7 +4,16 @@
  * Other types and such should be generic.
  */
 
-import type { EloRatingRecord } from "./player";
+import { z } from 'zod';
+import type { EloRatingRecord } from './player';
+
+export type TagData = {
+	dps?: EloRatingRecord[];
+};
+
+export const Tags = ['ptm', 'anti', 'dps'] as const;
+
+export const ZodTags = z.union([z.literal('dps'), z.literal('ptm'), z.literal('anti')]);
 
 /**
  * DPS = Draft Progression Series
@@ -13,26 +22,23 @@ import type { EloRatingRecord } from "./player";
  *
  * ANTI = Unaffiliated
  */
-export type Tag = 'dps' | 'ptm' | 'anti';
-
-export type TagData = {
-	dps?: EloRatingRecord[];
-}
-
-export const Tags = ['ptm', 'anti', 'dps'] as const;
+export type Tag = z.infer<typeof ZodTags>;
 
 export const ServerStartDate = 'May 19 2018';
 
 type Role = { color: string; label: string; value: number };
 
 const roles = new Map<string, Role>([
-	['446847430302892032', { color: '#e91e63', label: 'Admin', value: 0 }],
-	['640076640428359681', { color: '#9b59b6', label: 'Rat Catcher', value: 1 }],
-	['640077115102068738', { color: '#c27c0e', label: 'Pack Rat', value: 2 }],
-	['782052670026285066', { color: '#3498db', label: 'The Rat Signal', value: 3 }],
-	['1077278556431851552', { color: '#a84300', label: 'Script Nibbler', value: 4 }],
-	['1127261848887111681', { color: '', label: 'Server Booster', value: 6 }],
-	['', { color: 'invalid', label: '', value: 5 }]
+	['446847430302892032', { color: '#e91e63', label: 'Admin', value: 5 }],
+	['640076640428359681', { color: '#9b59b6', label: 'Rat Catcher', value: 4 }],
+	['782052670026285066', { color: '#3498db', label: 'The Rat Signal', value: 1 }],
+	['1077278556431851552', { color: '#a84300', label: 'Script Nibbler', value: 0 }],
+	['1127261848887111681', { color: '', label: 'Server Booster', value: 0 }],
+	['1184712941484908545', { color: '#d05484', label: 'Western Rat', value: 2 }],
+	['1184713291646390302', { color: '#875635', label: 'Eastern Rat', value: 2 }],
+	['1184713471212912681', { color: '#97f5e5', label: 'Aussie Rat', value: 2 }],
+	['1184715938667438180', { color: '', label: 'Pick Up Game Rat', value: 0 }],
+	['', { color: 'invalid', label: '', value: 0 }]
 ]);
 
 /**
@@ -42,13 +48,13 @@ const roles = new Map<string, Role>([
  */
 export const getHighestRank = (role_ids: string[]): Role => {
 	let highest = '';
-	let val = 5;
+	let val = 0;
 	for (let rank of role_ids) {
 		const r = roles.get(rank);
 		if (r === undefined) {
-			continue
+			continue;
 		}
-		if (r.value < val) {
+		if (r.value > val) {
 			val = r.value;
 			highest = rank;
 		}

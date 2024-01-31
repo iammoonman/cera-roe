@@ -20,7 +20,11 @@ You can preview the production build with `npm run preview`.
 
 ## .env
 
-This project needs three string environment variables.  
+This project needs several string environment variables.  
 `TOKEN` is a Discord bot token.  
+`SECRET` is a Discord OAuth2 client secret.  
 `GUILD` is the Discord guild ID from Limited Perspective.  
-`MONGO` is the connection string for the Mongo Atlas instance. If you don't have this, some dummy data will be loaded.
+`CLIENT` is the Discord bot's user ID.  
+`MONGO` is the connection string for the Mongo Atlas instance. If you don't have this, some dummy data will be loaded.  
+`AUTH_SECRET` is the encryption string for the authentication.  
+There are also some KV variables for the Vercel KV store.
