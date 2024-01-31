@@ -121,7 +121,7 @@
 			</button>
 		{/if}
 	{/await}
-	<div>
+	<div class="info-box">
 		<h1 class="display-text">{draft.meta.title}</h1>
 		<p class="statistic-text date-text" title={DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_FULL)}>
 			{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATE_FULL)}
@@ -222,8 +222,8 @@
 
 <style>
 	.container {
+		--padding-inline: 15px;
 		background: var(--background);
-		padding: 15px;
 		display: grid;
 		grid-template-columns: auto;
 		grid-template-rows: auto auto;
@@ -243,6 +243,9 @@
 		box-shadow: 0px 5px 15px black;
 		z-index: -1;
 	}
+	.info-box {
+		position: relative;
+	}
 	.tag-bump {
 		position: absolute;
 		border-radius: 0 0 15px 15px;
@@ -251,7 +254,7 @@
 		place-items: center;
 		top: 0;
 		right: 5%;
-		padding-inline: 15px;
+		padding-inline: var(--padding-inline, 15px);
 		height: 24px;
 		--symbol-height: 25px;
 	}
@@ -266,7 +269,7 @@
 		place-items: center;
 		top: 0px;
 		right: 20%;
-		padding-inline: 15px;
+		padding-inline: var(--padding-inline, 15px);
 		height: 24px;
 		--symbol-height: 20px;
 		transform-origin: 50% 0;
@@ -280,29 +283,22 @@
 	.edit-bump:active {
 		scale: 0.9;
 	}
-	.round-text {
-		position: absolute;
-		left: -23px;
-		background-color: var(--primary);
-		color: var(--secondary);
-		border-radius: 0 50% 50% 0;
-		width: 1.125rem;
-		text-align: right;
-		padding-right: 5px;
-	}
 	.display-text {
 		margin: 0;
 		font-size: 3.4em;
+		padding-inline: var(--padding-inline, 15px);
 	}
 	.description-text {
 		max-height: 50%;
+		padding-inline: var(--padding-inline, 15px);
 	}
 	.date-text {
 		margin: 0;
 		font-size: small;
 		white-space: nowrap;
-		position: relative;
 		z-index: 0;
+		padding-inline: var(--padding-inline, 15px);
+		position: relative;
 	}
 	.date-text::after,
 	.stat-row::after,
@@ -322,7 +318,7 @@
 	.date-text:hover::after,
 	.stat-row:hover::after,
 	.table-row:hover::after {
-		height: 50%;
+		height: 40%;
 	}
 	.table {
 		display: flex;
@@ -345,7 +341,7 @@
 		appearance: none;
 		border: none;
 		background-color: transparent;
-		padding: 0 15px;
+		padding: 0 var(--padding-inline, 15px);
 		cursor: pointer;
 		position: relative;
 	}
@@ -375,7 +371,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 7.5px;
-		padding: 15px;
+		padding: var(--padding-inline, 15px);
 		border-radius: 15px 0 0 15px;
 		top: 7.5%;
 		height: 80%;
@@ -391,7 +387,8 @@
 		display: flex;
 		flex-direction: column;
 		gap: 7.5px;
-		padding: 15px;
+		padding-top: var(--padding-inline, 15px);
+		padding-bottom: var(--padding-inline, 15px);
 		border-radius: 0 15px 15px 0;
 		top: 7.5%;
 		right: 0;
@@ -439,6 +436,9 @@
 	.bump-right-stats > div > span:nth-child(2n) {
 		text-align: right;
 	}
+	.stat-row {
+		padding-inline: var(--padding-inline, 15px);
+	}
 	.bump-right-stats > div {
 		display: flex;
 		flex-direction: row;
@@ -447,6 +447,7 @@
 	}
 	.bump-right-picture {
 		margin-top: auto;
+		padding-inline: var(--padding-inline, 15px);
 	}
 	.bump-right-rounds {
 		display: flex;
@@ -458,9 +459,19 @@
 		flex-direction: row;
 		flex-wrap: nowrap;
 		align-items: center;
-		gap: 15px;
 		position: relative;
 		max-height: 54px;
+		padding-left: var(--padding-inline, 15px);
+	}
+	.round-text {
+		position: absolute;
+		left: -5px;
+		background-color: var(--primary);
+		color: var(--secondary);
+		border-radius: 0 50% 50% 0;
+		width: 1.125rem;
+		text-align: right;
+		padding-right: 5px;
 	}
 	.m-result {
 		font-size: 40px;
