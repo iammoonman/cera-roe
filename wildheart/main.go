@@ -3,11 +3,11 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"strings"
-
-	// "net/http"
 
 	scryfall "github.com/BlueMonday/go-scryfall"
 	// "github.com/gin-gonic/gin"
@@ -32,7 +32,6 @@ type Card struct {
 	NumWidth     int    `json:"NumWidth"`
 	NumHeight    int    `json:"NumHeight"`
 	BackIsHidden bool   `json:"BackIsHidden"`
-	UniqueBack   bool   `json:"UniqueBack"`
 }
 
 type TTSCard struct {
@@ -81,7 +80,7 @@ func RarityTexter(s string) string {
 func NewDeck(TTSCards []TTSCard) TTSDeck {
 	var w = TTSDeck{Name: "Deck", Transform: Transform{ScaleX: 1.0, ScaleY: 1.0, ScaleZ: 1.0}, DeckIDs: []int{}, ContainedObjects: TTSCards}
 	for i := 0; i < len(TTSCards); i++ {
-		w.DeckIDs = append(w.DeckIDs, 100)
+		w.DeckIDs = append(w.DeckIDs, TTSCards[i].CardID)
 	}
 	return w
 }
@@ -105,12 +104,12 @@ func NewCard(c scryfall.Card, i int) TTSCard {
 		Name:        "Card",
 		Transform:   Transform{ScaleX: 1.0, ScaleY: 1.0, ScaleZ: 1.0},
 		CardID:      hundred,
-		Nickname:    "",
-		Description: "",
-		Memo:        "",
+		Nickname:    "A Magic Card",
+		Description: "Something went wrong with the parsing of the card data in this request, so now you're stuck with this description. Sorry about that. Contact Moon.",
+		Memo:        "d3e7bc24-c2b0-4be3-b9d9-8a8d23b93bc7",
 		LuaScript:   "",
 		CustomDeck: map[string]Card{
-			s_one: {FaceURL: "", BackURL: "https://i.imgur.com/TyC0LWj.jpg", NumWidth: 1, NumHeight: 1, BackIsHidden: true, UniqueBack: false},
+			s_one: {FaceURL: "https://cards.scryfall.io/normal/front/8/6/8625b50d-474d-46dd-af84-0b267ed5fab3.jpg?1616041637", BackURL: "https://i.imgur.com/TyC0LWj.jpg", NumWidth: 1, NumHeight: 1, BackIsHidden: true},
 		},
 		States: map[string]TTSCard{},
 	}
@@ -189,7 +188,6 @@ func NewCard(c scryfall.Card, i int) TTSCard {
 					NumWidth:     1,
 					NumHeight:    1,
 					BackIsHidden: true,
-					UniqueBack:   false,
 				},
 			},
 		}
@@ -244,7 +242,6 @@ func NewCard(c scryfall.Card, i int) TTSCard {
 					NumWidth:     1,
 					NumHeight:    1,
 					BackIsHidden: true,
-					UniqueBack:   false,
 				},
 			},
 		}
@@ -332,4 +329,27 @@ func main() {
 	// router.GET("/playground", getStuff) // There's also a JSON representation for stuff here.
 	// router.GET("/simulator", getStuff)  // Returns full JSON string for spawning an object. Pass directly into spawnObjectData.
 	// router.Run("localhost:8080")
+}
+
+func decodeStream(r io.Reader) ([]scryfall.Card, error) {
+	dec := json.NewDecoder(r)
+	_, err := dec.Token()
+	if err != nil {
+		log.Fatal(err)
+	}
+	// fmt.Printf("%T: %v\n", t, t)
+	for dec.More() {
+		var m scryfall.Card
+		err := dec.Decode(&m)
+		if err != nil {
+			return []scryfall.Card{}, err
+		}
+		fmt.Printf("%v: %v\n", m.Name, m.OracleID)
+	}
+	_, err = dec.Token()
+	if err != nil {
+		log.Fatal(err)
+	}
+	// fmt.Printf("%T: %v\n", t, t)
+	return []scryfall.Card{}, nil
 }
