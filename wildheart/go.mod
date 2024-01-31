@@ -3,7 +3,7 @@ module wildheart
 go 1.21.5
 
 require (
-	github.com/BlueMonday/go-scryfall v0.3.0
+	github.com/BlueMonday/go-scryfall v0.4.0
 	github.com/gin-gonic/gin v1.9.1
 )
 

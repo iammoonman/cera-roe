@@ -17,41 +17,41 @@ const RotatedViewAngleScript = "function onLoad()self.alt_view_angle=Vector(180,
 const FlippedViewAngleScript = "function onLoad()self.alt_view_angle=Vector(180,0,180)end"
 
 type Objects struct {
-	ObjectStates []TTSCard
+	ObjectStates []TTSCard `json:"ObjectStates"`
 }
 
 type Transform struct {
-	scaleX float32
-	scaleY float32
-	scaleZ float32
+	ScaleX float32 `json:"scaleX"`
+	ScaleY float32 `json:"scaleY"`
+	ScaleZ float32 `json:"scaleZ"`
 }
 
 type Card struct {
-	FaceURL      string
-	BackURL      string
-	NumWidth     int
-	NumHeight    int
-	BackIsHidden bool
-	UniqueBack   bool
+	FaceURL      string `json:"FaceURL"`
+	BackURL      string `json:"BackURL"`
+	NumWidth     int    `json:"NumWidth"`
+	NumHeight    int    `json:"NumHeight"`
+	BackIsHidden bool   `json:"BackIsHidden"`
+	UniqueBack   bool   `json:"UniqueBack"`
 }
 
 type TTSCard struct {
-	Name        string
-	Transform   Transform
-	CardID      int
-	Nickname    string
-	Description string
-	Memo        string
-	LuaScript   string `json:"LuaScript,omitempty"`
-	CustomDeck  map[string]Card
-	States      map[string]TTSCard
+	Name        string             `json:"Name"`
+	Transform   Transform          `json:"Transform"`
+	CardID      int                `json:"CardID"`
+	Nickname    string             `json:"Nickname"`
+	Description string             `json:"Description"`
+	Memo        string             `json:"Memo"`
+	LuaScript   string             `json:"LuaScript,omitempty"`
+	CustomDeck  map[string]Card    `json:"CustomDeck"`
+	States      map[string]TTSCard `json:"States"`
 }
 
 type TTSDeck struct {
-	Name             string
-	Transform        Transform
-	DeckIDs          []int
-	ContainedObjects []TTSCard
+	Name             string    `json:"Name"`
+	Transform        Transform `json:"Transform"`
+	DeckIDs          []int     `json:"DeckIDs"`
+	ContainedObjects []TTSCard `json:"ContainedObjects"`
 }
 
 func OracleTexter(s string) string {
@@ -79,7 +79,7 @@ func RarityTexter(s string) string {
 }
 
 func NewDeck(TTSCards []TTSCard) TTSDeck {
-	var w = TTSDeck{Name: "Deck", Transform: Transform{scaleX: 1.0, scaleY: 1.0, scaleZ: 1.0}, DeckIDs: []int{}, ContainedObjects: TTSCards}
+	var w = TTSDeck{Name: "Deck", Transform: Transform{ScaleX: 1.0, ScaleY: 1.0, ScaleZ: 1.0}, DeckIDs: []int{}, ContainedObjects: TTSCards}
 	for i := 0; i < len(TTSCards); i++ {
 		w.DeckIDs = append(w.DeckIDs, 100)
 	}
@@ -98,26 +98,28 @@ func (d *TTSDeck) AddCards(TTSCards []TTSCard) {
 	}
 }
 
-func NewCard(c scryfall.Card) TTSCard {
+func NewCard(c scryfall.Card, i int) TTSCard {
+	var hundred = i * 100
+	var s_one = fmt.Sprintf("%d", i)
 	var ttscard = TTSCard{
 		Name:        "Card",
-		Transform:   Transform{scaleX: 1.0, scaleY: 1.0, scaleZ: 1.0},
-		CardID:      100,
+		Transform:   Transform{ScaleX: 1.0, ScaleY: 1.0, ScaleZ: 1.0},
+		CardID:      hundred,
 		Nickname:    "",
 		Description: "",
 		Memo:        "",
 		LuaScript:   "",
 		CustomDeck: map[string]Card{
-			"100": {FaceURL: "", BackURL: "https://i.imgur.com/TyC0LWj.jpg", NumWidth: 1, NumHeight: 1, BackIsHidden: true, UniqueBack: false},
+			s_one: {FaceURL: "", BackURL: "https://i.imgur.com/TyC0LWj.jpg", NumWidth: 1, NumHeight: 1, BackIsHidden: true, UniqueBack: false},
 		},
 		States: map[string]TTSCard{},
 	}
-	// if len(c.OracleID) == 0 {
-	// 	ttscard.Memo = c.CardFaces[0].OracleID
-	// } else {
-	ttscard.Memo = c.OracleID
-	// }
-	if c.Layout == scryfall.LayoutNormal || c.Layout == scryfall.LayoutLeveler || c.Layout == scryfall.LayoutMeld || c.Layout == scryfall.LayoutSaga || c.Layout == scryfall.LayoutToken || c.Layout == scryfall.LayoutHost || c.Layout == scryfall.LayoutAugment || c.Layout == scryfall.LayoutEmblem {
+	if len(c.OracleID) == 0 {
+		ttscard.Memo = *c.CardFaces[0].OracleID
+	} else {
+		ttscard.Memo = c.OracleID
+	}
+	if c.Layout == scryfall.LayoutNormal || c.Layout == scryfall.LayoutLeveler || c.Layout == scryfall.LayoutMeld || c.Layout == scryfall.LayoutSaga || c.Layout == scryfall.LayoutToken || c.Layout == scryfall.LayoutHost || c.Layout == scryfall.LayoutAugment || c.Layout == scryfall.LayoutEmblem || c.Layout == scryfall.LayoutPrototype || c.Layout == scryfall.LayoutMutate || c.Layout == scryfall.LayoutCase || c.Layout == scryfall.LayoutClass {
 		var descriptionbuffer bytes.Buffer
 		descriptionbuffer.WriteString(fmt.Sprintf("[b]%s %s[/b]\n%s %s\n%s", c.Name, c.ManaCost, c.TypeLine, RarityTexter(c.Rarity), OracleTexter(c.OracleText)))
 		if c.Power != nil {
@@ -130,9 +132,9 @@ func NewCard(c scryfall.Card) TTSCard {
 		var namebuffer bytes.Buffer
 		namebuffer.WriteString(fmt.Sprintf("%s\n%s %dMV", c.Name, c.TypeLine, uint8(c.CMC)))
 		ttscard.Nickname = namebuffer.String()
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 	}
 	if c.Layout == scryfall.LayoutSplit {
@@ -144,9 +146,9 @@ func NewCard(c scryfall.Card) TTSCard {
 		namebuffer.WriteString(fmt.Sprintf("%s\n%s %dMV", c.Name, c.TypeLine, uint8(c.CMC)))
 		ttscard.LuaScript = RotatedViewAngleScript
 		ttscard.Nickname = namebuffer.String()
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 	}
 	if c.Layout == scryfall.LayoutFlip {
@@ -166,14 +168,15 @@ func NewCard(c scryfall.Card) TTSCard {
 		if strings.Contains(c.CardFaces[0].TypeLine, "Battle") {
 			ttscard.LuaScript = RotatedViewAngleScript
 		}
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 		ttscard.Description = fmt.Sprintf("%s\n[6E6E6E]%s[-]", frontdescriptionbuffer.String(), backdescriptionbuffer.String())
+		// The States indices are mutually exclusive to the outer deck. It's safe to use 100.
 		ttscard.States["2"] = TTSCard{
 			Name:        "Card",
-			Transform:   Transform{scaleX: 1.0, scaleY: 1.0, scaleZ: 1.0},
+			Transform:   Transform{ScaleX: 1.0, ScaleY: 1.0, ScaleZ: 1.0},
 			CardID:      100,
 			Nickname:    namebuffer.String(),
 			Description: fmt.Sprintf("[6E6E6E]%s[-]\n%s", frontdescriptionbuffer.String(), backdescriptionbuffer.String()),
@@ -191,7 +194,7 @@ func NewCard(c scryfall.Card) TTSCard {
 			},
 		}
 	}
-	if c.Layout == scryfall.LayoutTransform || c.Layout == scryfall.LayoutDoubleFacedToken || c.Layout == scryfall.LayoutModalDFC {
+	if c.Layout == scryfall.LayoutTransform || c.Layout == scryfall.LayoutDoubleFacedToken || c.Layout == scryfall.LayoutModalDFC || c.Layout == scryfall.LayoutReversible || c.Layout == scryfall.LayoutArtSeries {
 		var frontdescriptionbuffer bytes.Buffer
 		frontdescriptionbuffer.WriteString(fmt.Sprintf("[b]%s %s[/b]\n%s %s\n%s", c.CardFaces[0].Name, c.CardFaces[0].ManaCost, c.CardFaces[0].TypeLine, RarityTexter(c.Rarity), OracleTexter(*c.CardFaces[0].OracleText)))
 		if c.CardFaces[0].Power != nil && c.CardFaces[0].Toughness != nil {
@@ -200,9 +203,9 @@ func NewCard(c scryfall.Card) TTSCard {
 		if c.CardFaces[0].Loyalty != nil {
 			frontdescriptionbuffer.WriteString(fmt.Sprintf("\nLoyalty: %s", *c.CardFaces[0].Loyalty))
 		}
-		// if c.CardFaces[0].Defense != nil {
-		// 	frontdescriptionbuffer.WriteString(fmt.Sprintf("\nDefense: %s", *c.CardFaces[0].Defense))
-		// }
+		if c.CardFaces[0].Defense != nil {
+			frontdescriptionbuffer.WriteString(fmt.Sprintf("\nDefense: %s", *c.CardFaces[0].Defense))
+		}
 		var backdescriptionbuffer bytes.Buffer
 		backdescriptionbuffer.WriteString(fmt.Sprintf("[b]%s %s[/b]\n%s %s\n%s", c.CardFaces[1].Name, c.CardFaces[1].ManaCost, c.CardFaces[1].TypeLine, RarityTexter(c.Rarity), OracleTexter(*c.CardFaces[1].OracleText)))
 		if c.CardFaces[1].Power != nil && c.CardFaces[1].Toughness != nil {
@@ -211,23 +214,24 @@ func NewCard(c scryfall.Card) TTSCard {
 		if c.CardFaces[1].Loyalty != nil {
 			backdescriptionbuffer.WriteString(fmt.Sprintf("\nLoyalty: %s", *c.CardFaces[1].Loyalty))
 		}
-		// if c.CardFaces[0].Defense != nil {
-		// 	frontdescriptionbuffer.WriteString(fmt.Sprintf("\nDefense: %s", *c.CardFaces[0].Defense))
-		// }
+		if c.CardFaces[0].Defense != nil {
+			frontdescriptionbuffer.WriteString(fmt.Sprintf("\nDefense: %s", *c.CardFaces[0].Defense))
+		}
 		var namebuffer bytes.Buffer
 		namebuffer.WriteString(fmt.Sprintf("%s\n%s %dMV", c.Name, c.TypeLine, uint8(c.CMC)))
 		ttscard.Nickname = namebuffer.String()
 		if strings.Contains(c.CardFaces[0].TypeLine, "Battle") {
 			ttscard.LuaScript = RotatedViewAngleScript
 		}
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.CardFaces[0].ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 		ttscard.Description = fmt.Sprintf("%s\n[6E6E6E]%s[-]", frontdescriptionbuffer.String(), backdescriptionbuffer.String())
+		// The States indices are mutually exclusive to the outer deck. It's safe to use 100.
 		ttscard.States["2"] = TTSCard{
 			Name:        "Card",
-			Transform:   Transform{scaleX: 1.0, scaleY: 1.0, scaleZ: 1.0},
+			Transform:   Transform{ScaleX: 1.0, ScaleY: 1.0, ScaleZ: 1.0},
 			CardID:      100,
 			Nickname:    namebuffer.String(),
 			Description: fmt.Sprintf("[6E6E6E]%s[-]\n%s", frontdescriptionbuffer.String(), backdescriptionbuffer.String()),
@@ -256,16 +260,14 @@ func NewCard(c scryfall.Card) TTSCard {
 		var namebuffer bytes.Buffer
 		namebuffer.WriteString(fmt.Sprintf("%s\n%s %dMV", c.Name, c.TypeLine, uint8(c.CMC)))
 		ttscard.Nickname = namebuffer.String()
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 	}
-	// if c.Layout == scryfall.LayoutClass {}
-	// if c.Layout == scryfall.LayoutCase {}
-	// if c.Layout == scryfall.LayoutMutate {}
-	// if c.Layout == scryfall.LayoutPrototype {}
-	// if c.Layout == scryfall.LayoutBattle {}
+	if c.Layout == scryfall.LayoutBattle {
+		// No cards exist with this layout.
+	}
 	if c.Layout == scryfall.LayoutPlanar {
 		var descriptionbuffer bytes.Buffer
 		descriptionbuffer.WriteString(fmt.Sprintf("[b]%s %s[/b]\n%s %s\n%s", c.Name, c.ManaCost, c.TypeLine, RarityTexter(c.Rarity), OracleTexter(c.OracleText)))
@@ -274,9 +276,9 @@ func NewCard(c scryfall.Card) TTSCard {
 		namebuffer.WriteString(fmt.Sprintf("%s\n%s %dMV", c.Name, c.TypeLine, uint8(c.CMC)))
 		ttscard.Nickname = namebuffer.String()
 		ttscard.LuaScript = RotatedViewAngleScript
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 	}
 	if c.Layout == scryfall.LayoutScheme {
@@ -286,9 +288,9 @@ func NewCard(c scryfall.Card) TTSCard {
 		var namebuffer bytes.Buffer
 		namebuffer.WriteString(fmt.Sprintf("%s\n%s %dMV", c.Name, c.TypeLine, uint8(c.CMC)))
 		ttscard.Nickname = namebuffer.String()
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 	}
 	if c.Layout == scryfall.LayoutVanguard {
@@ -299,14 +301,11 @@ func NewCard(c scryfall.Card) TTSCard {
 		var namebuffer bytes.Buffer
 		namebuffer.WriteString(fmt.Sprintf("%s\n%s %dMV", c.Name, c.TypeLine, uint8(c.CMC)))
 		ttscard.Nickname = namebuffer.String()
-		if entry, ok := ttscard.CustomDeck["100"]; ok {
+		if entry, ok := ttscard.CustomDeck[s_one]; ok {
 			entry.FaceURL = c.ImageURIs.Normal
-			ttscard.CustomDeck["100"] = entry
+			ttscard.CustomDeck[s_one] = entry
 		}
 	}
-	if c.Layout == scryfall.LayoutArtSeries {
-	}
-	// if c.Layout == scryfall.LayoutReversible {}
 	return ttscard
 }
 
@@ -326,7 +325,7 @@ func main() {
 		log.Fatal(err)
 	}
 	for i := 0; i < len(result.Cards); i++ {
-		log.Printf("%s", NewCard(*&result.Cards[i]).Description)
+		log.Printf("%s", NewCard(*&result.Cards[i], i).Description)
 	}
 	// router := gin.Default()
 	// router.GET("/", getStuff)

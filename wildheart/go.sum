@@ -1,5 +1,7 @@
 github.com/BlueMonday/go-scryfall v0.3.0 h1:v4luv1n0yl04EFH+bBMdysRNLRzbvMv/NL5cPQDjV00=
 github.com/BlueMonday/go-scryfall v0.3.0/go.mod h1:AeWgBeoGJZzKR8f+0yArnQ8ZVcC/DkGpA+jZVTDlRsw=
+github.com/BlueMonday/go-scryfall v0.4.0 h1:OA5m3mFtCfOANyKFBbH1GWBpysZXODviBOUC4ZKBW+Q=
+github.com/BlueMonday/go-scryfall v0.4.0/go.mod h1:SmNHnIHD64n9Az3xFwOhNxR/ZfX4eQDiZaclbaVV7o8=
 github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 h1:MzBOUgng9orim59UnfUTLRjMpd09C5uEVQ6RPGeCaVI=
 github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129/go.mod h1:rFgpPQZYZ8vdbc+48xibu8ALc3yeyd64IhHS+PU6Yyg=
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=
