@@ -41,7 +41,7 @@ const Test = {
 export const DraftEventSchema = z.object({
 	id: z.string(),
 	meta: z.object({
-		date: z.string().datetime(),
+		date: z.coerce.date(),
 		title: z.string(),
 		description: z.optional(z.string()),
 		tag: z.optional(ZodTags),

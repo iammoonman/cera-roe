@@ -11,9 +11,9 @@ export type TagData = {
 	dps?: EloRatingRecord[];
 };
 
-export const Tags = ['ptm', 'anti', 'dps'] as const;
+export const Tags = ['ptm', 'anti', 'dps', 'deb'] as const;
 
-export const ZodTags = z.union([z.literal('dps'), z.literal('ptm'), z.literal('anti')]);
+export const ZodTags = z.union([z.literal('dps'), z.literal('ptm'), z.literal('anti'), z.literal('deb')]);
 
 /**
  * DPS = Draft Progression Series
