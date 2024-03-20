@@ -84,8 +84,6 @@
 	}
 	.griddy {
 		position: relative;
-		flex: 1 1;
-		--max-event-height: calc(100vh - 4rem);
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
