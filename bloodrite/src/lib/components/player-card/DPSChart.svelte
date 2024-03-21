@@ -75,13 +75,13 @@
 		position: absolute;
 	}
 	.plus {
-		color: #00a000;
+		color: var(--pico-ins-color);
 	}
 	.plus::before {
 		content: '+';
 	}
 	.minus {
-		color: var(--accent-light);
+		color: var(--pico-del-color);
 	}
     .ttle {
         display: flex;

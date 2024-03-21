@@ -36,7 +36,7 @@
 
 <style>
 	.container {
-		background: var(--background);
+		background: var(--pico-background-color);
 		padding: 15px;
 		display: grid;
 		grid-template-columns: auto;
@@ -99,8 +99,8 @@
 		border-radius: 50%;
 		height: 4rem;
 		aspect-ratio: 1 / 1;
-		outline: 3px solid var(--rank-outline-color, var(--primary, black));
-		background-color: black;
+		outline: 3px solid var(--rank-outline-color, var(--pico-contrast));
+		background-color: var(--pico-primary-background);
 		font-size: 12px;
 		text-align: center;
 		color: white;

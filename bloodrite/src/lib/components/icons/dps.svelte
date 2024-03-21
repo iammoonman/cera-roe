@@ -17,5 +17,6 @@
 		border-radius: 50%;
 		margin: 0;
 		flex-grow: 1;
+		height: var(--symbol-height, auto);
 	}
 </style>

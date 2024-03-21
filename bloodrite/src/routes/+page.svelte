@@ -16,7 +16,7 @@
 	}
 </script>
 
-<div class="auth">
+<header>
 	<h2>The Rat Zone</h2>
 	{#if $page.data.session}
 		<p>
@@ -31,7 +31,7 @@
 		</p>
 	{:else}
 		<p>
-			<span class="notSignedInText" data-sveltekit-preload-data="off">You are not signed in</span>
+			<span class="notSignedInText" data-sveltekit-preload-data="off">You are not signed in.</span>
 			<a href="/auth/signin" data-sveltekit-preload-data="off">Sign in with Discord</a>
 		</p>
 	{/if}
@@ -59,20 +59,11 @@
 			<PlayerCard user_id={selected_user} />
 		{/if}
 	</Dialog>
-</div>
-<div class="griddy">
+</header>
+<main>
 	<EventScroller />
-</div>
-
+</main>
 <style>
-	.auth {
-		height: 4rem;
-		color: white;
-		display: flex;
-		flex-direction: row;
-		align-items: baseline;
-		gap: 15px;
-	}
 	.signedInText {
 		white-space: nowrap;
 	}
@@ -81,11 +72,5 @@
 		width: 1.4em;
 		border-radius: 50%;
 		transform: translateY(25%);
-	}
-	.griddy {
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
 	}
 </style>
