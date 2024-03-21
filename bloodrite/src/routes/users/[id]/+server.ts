@@ -1,6 +1,6 @@
 import { kv } from '@vercel/kv';
 import { REST, Routes } from 'discord.js';
-import { TOKEN } from '$env/static/private';
+import { TOKEN, GUILD } from '$env/static/private';
 import { json, type RequestEvent } from '@sveltejs/kit';
 export async function POST(requestEvent: RequestEvent) {
 	const { userlist } = await requestEvent.request.json();
@@ -27,7 +27,7 @@ export async function POST(requestEvent: RequestEvent) {
 				const user_response: UserResponse = await rest.get(Routes.user(user_id));
 				kv_user = {
 					name: user_response.global_name ?? user_response.username,
-					accent_color: `#${user_response.accent_color}` ?? '#000000',
+					accent_color: `#${user_response.accent_color ?? 'ffffff'}`,
 					roles: [],
 					avatar: user_response.avatar ? `https://cdn.discordapp.com/avatars/${user_response.id}/${user_response.avatar}.jpg` : null,
 					id: user_response.id
@@ -52,7 +52,7 @@ export async function GET(requestEvent: RequestEvent) {
 		const rest = new REST({ version: '10' }).setToken(TOKEN);
 		try {
 			// @ts-expect-error
-			const member: GuildMemberResponse = await rest.get(Routes.guildMember(user_id));
+			const member: GuildMemberResponse = await rest.get(Routes.guildMember(GUILD, user_id));
 			if (member === undefined) throw new Error('BIG PROBLEM');
 			kv_user = {
 				accent_color: `#${member.user.accent_color ?? '000000'}`,
@@ -67,7 +67,7 @@ export async function GET(requestEvent: RequestEvent) {
 			const user: UserResponse = await rest.get(Routes.user(user_id));
 			kv_user = {
 				name: user.global_name ?? user.username,
-				accent_color: `#${user.accent_color}` ?? '#000000',
+				accent_color: `#${user.accent_color ?? '000000'}`,
 				roles: [],
 				avatar: user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.jpg` : null,
 				id: user.id

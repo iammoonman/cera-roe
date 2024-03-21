@@ -13,7 +13,7 @@
 {:then res}
 	<img
 		class="player-avatar"
-		style={res?.roles.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res?.roles ?? []).color};`}
+		style={`--rank-outline-color: ${getHighestRank(res?.roles ?? []).color};`}
 		src={res?.avatar ? res.avatar : defaultAvatar}
 		alt="missing avatar"
 	/>

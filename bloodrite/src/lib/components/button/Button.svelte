@@ -15,7 +15,8 @@
 	}
 	button {
 		display: flex;
-		align-items: center;
+		place-content: center;
+		place-items: center;
 		gap: 1ch;
 	}
 </style>
