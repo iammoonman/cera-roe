@@ -17,6 +17,7 @@
 		cursor: pointer;
 		border-radius: 50%;
 		margin: 0;
+		height: var(--symbol-height, auto);
 	}
 	svg:hover {
 		box-shadow: 0 0 4px 4px var(--primary);

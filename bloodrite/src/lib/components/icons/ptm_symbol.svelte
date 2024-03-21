@@ -18,5 +18,6 @@
 		fill: var(--text);
 		border-radius: 50%;
 		margin: 0;
+		height: var(--symbol-height, auto);
 	}
 </style>

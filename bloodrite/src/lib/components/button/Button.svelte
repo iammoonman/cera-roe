@@ -3,9 +3,6 @@
 	export let set_symbol: string = '';
 </script>
 
-<svelte:head>
-	<link href="//cdn.jsdelivr.net/npm/keyrune@latest/css/keyrune.css" rel="stylesheet" type="text/css" />
-</svelte:head>
 <button type="button" class={$$props.class} on:click>
 	{label}
 	{#if set_symbol}<i class={`ss ss-${set_symbol}`} />{/if}
@@ -14,5 +11,11 @@
 <style>
 	i {
 		font-size: 1.3rem;
+		line-height: 0;
+	}
+	button {
+		display: flex;
+		align-items: center;
+		gap: 1ch;
 	}
 </style>

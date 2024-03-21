@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DraftEvent } from '$lib/types/event';
+	import { getPlayersAndScores, type DraftEvent } from '$lib/types/event';
 	import { getMember } from '$lib/stores/MemberStore';
 	import { DateTime } from 'luxon';
 	import { fly } from 'svelte/transition';
@@ -12,97 +12,13 @@
 	import { player_access } from '$lib/stores/PlayerStore';
 
 	export let draft: DraftEvent;
-	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
-	let scoresMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE'; rnd: number }>>();
+
 	// Add each player to the map, with the opponents and their scores against that player.
 	// Calculate GWP
 	// Calculate MWP
 	// Get all opponents, calculate OMP
 	// Get all opponents, calculate OGP
-	for (const prop in draft) {
-		if (prop.startsWith('R_')) {
-			for (const match of draft[prop as 'R_0' | 'R_1' | 'R_2'] ?? []) {
-				if (match.players.length === 1) {
-					scoresMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE', rnd: parseInt(prop.at(-1)!) });
-				} else {
-					const p0_wins = match.games?.filter((v) => v === 0).length ?? match.scores?.at(0) ?? 0;
-					const p1_wins = match.games?.filter((v) => v === 1).length ?? match.scores?.at(1) ?? 0;
-					const ties = match.games?.filter((v) => v === -1).length ?? 0;
-					const p0_result = p0_wins === 2 || (p0_wins === 1 && p1_wins === 0) ? 'WIN' : p0_wins === p1_wins ? 'TIE' : 'LOSE';
-					const p1_result = p1_wins === 2 || (p1_wins === 1 && p0_wins === 0) ? 'WIN' : p1_wins === p0_wins ? 'TIE' : 'LOSE';
-					if (scoresMap.get(match.players[0])?.get(match.players[1])) {
-						scoresMap.get(match.players[0])?.set(`REMATCH_${match.players[1]}`, {
-							gw: p0_wins,
-							gt: ties,
-							gl: p1_wins,
-							r: p0_result,
-							rnd: parseInt(prop.at(-1)!)
-						});
-					} else if (
-						scoresMap.get(match.players[0])?.set(match.players[1], {
-							gw: p0_wins,
-							gt: ties,
-							gl: p1_wins,
-							r: p0_result,
-							rnd: parseInt(prop.at(-1)!)
-						}) === undefined
-					)
-						scoresMap.set(
-							match.players[0],
-							new Map([[match.players[1], { gw: p0_wins, gl: p1_wins, gt: ties, r: p0_result, rnd: parseInt(prop.at(-1)!) }]])
-						);
-					if (scoresMap.get(match.players[1])?.get(match.players[0])) {
-						scoresMap.get(match.players[1])?.set(`REMATCH_${match.players[0]}`, {
-							gw: p1_wins,
-							gt: ties,
-							gl: p0_wins,
-							r: p1_result,
-							rnd: parseInt(prop.at(-1)!)
-						});
-					} else if (
-						scoresMap.get(match.players[1])?.set(match.players[0], {
-							gw: p1_wins,
-							gt: ties,
-							gl: p0_wins,
-							r: p1_result,
-							rnd: parseInt(prop.at(-1)!)
-						}) === undefined
-					)
-						scoresMap.set(
-							match.players[1],
-							new Map([[match.players[0], { gw: p1_wins, gl: p0_wins, gt: ties, r: p1_result, rnd: parseInt(prop.at(-1)!) }]])
-						);
-				}
-			}
-		}
-	}
-	for (const [id, subMap] of scoresMap) {
-		let total_mp = 0;
-		let total_gp = 0;
-		let total_games = 0;
-		let won_matches = 0;
-		for (const [subId, subScore] of subMap) {
-			if (subId.startsWith('BYE_')) {
-				total_mp = total_mp + 3;
-			} else {
-				total_mp = total_mp + (subScore.r === 'WIN' || subScore.r === 'BYE' ? 3 : subScore.r === 'LOSE' ? 0 : 1);
-				total_gp = total_gp + subScore.gw;
-				total_games = total_games + subScore.gt + subScore.gw + subScore.gl;
-				won_matches = won_matches + (subScore.r === 'WIN' ? 1 : 0);
-			}
-		}
-		players.set(id, { id, gwp: total_gp / total_games, mp: total_mp, mwp: won_matches / subMap.size });
-	}
-	for (const [id, subMap] of scoresMap) {
-		let thisPlayer = players.get(id)!;
-		let gwpSum = 0;
-		let mpSum = 0;
-		for (const [subId] of subMap) {
-			gwpSum = gwpSum + (players.get(subId)?.gwp ?? 0);
-			mpSum = mpSum + (players.get(subId)?.mwp ?? 0);
-		}
-		players.set(id, { ...thisPlayer, omp: mpSum / subMap.size, ogp: gwpSum / subMap.size });
-	}
+	let { players, scoresMap } = getPlayersAndScores(draft);
 	$: selectedPlayer = '';
 	$: editing = false;
 </script>
@@ -258,7 +174,6 @@
 		right: 5%;
 		padding-inline: var(--padding-inline, 15px);
 		height: 24px;
-		--symbol-height: 25px;
 	}
 	.edit-bump {
 		appearance: none;
@@ -273,7 +188,6 @@
 		right: 20%;
 		padding-inline: var(--padding-inline, 15px);
 		height: 24px;
-		--symbol-height: 20px;
 		transform-origin: 50% 0;
 		scale: 1;
 		transition: scale 200ms ease-in-out, box-shadow 200ms ease-in-out;

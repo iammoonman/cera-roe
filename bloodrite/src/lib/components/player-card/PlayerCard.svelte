@@ -36,7 +36,7 @@
 
 <style>
 	.container {
-		background: var(--background);
+		background: var(--pico-background-color);
 		padding: 15px;
 		display: grid;
 		grid-template-columns: auto;

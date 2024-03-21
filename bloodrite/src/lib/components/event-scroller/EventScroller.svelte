@@ -7,8 +7,9 @@
 </script>
 
 <div class="scroll-root">
-	<h1 class="title">{date.monthLong}</h1>
 	<button on:click={() => month--}>{date.minus({ months: 1 }).monthLong}</button>
+	<h1 class="title">{date.monthLong}</h1>
+	<button on:click={() => month++}>{date.plus({ months: 1 }).monthLong}</button>
 	<div class="drafts">
 		{#await $event_store.getByMonth(date.year, date.month) then res}
 			{#each res as d}
@@ -16,7 +17,6 @@
 			{/each}
 		{/await}
 	</div>
-	<button on:click={() => month++}>{date.plus({ months: 1 }).monthLong}</button>
 </div>
 
 <style>
@@ -31,17 +31,18 @@
 		place-items: center;
 	}
 	.title {
-		grid-column: 1 / span 3;
 		height: min-content;
 		text-align: center;
 		color: white;
 	}
 	.drafts {
+		grid-column: 1 / span 3;
 		display: flex;
 		flex-direction: row;
 		gap: 2ch;
 		justify-content: center;
 		flex-wrap: wrap;
+		height: 100%;
 	}
 	button {
 		width: 15ch;
