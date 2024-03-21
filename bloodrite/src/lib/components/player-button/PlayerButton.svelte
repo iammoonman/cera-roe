@@ -7,55 +7,39 @@
 	export let small: boolean = false;
 </script>
 
-<div>
-	{#await getMember(user_id)}
-		<img class="player-avatar" class:lg={!small} src={defaultAvatar} alt="avatar" />
-		<span class="username-text score-player" class:sm={small}>Loading...</span>
-	{:then res}
-		<img
-			class="player-avatar"
-			class:lg={!small}
-			style={res?.roles.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res?.roles ?? []).color};`}
-			src={res?.avatar ? res.avatar : defaultAvatar}
-			alt="avatar"
-		/>
-		<span class="username-text score-player" class:sm={small}>{res?.name ?? ''}</span>
-	{/await}
-</div>
+{#await getMember(user_id)}
+	<img class="player-avatar" class:lg={!small} src={defaultAvatar} alt="avatar" />
+	<p class="username-text score-player" class:sm={small}>Loading...</p>
+{:then res}
+	<img
+		class="player-avatar"
+		style={res?.roles.length === 0 ? '' : `--rank-outline-color: ${getHighestRank(res?.roles ?? []).color};`}
+		src={res?.avatar ? res.avatar : defaultAvatar}
+		alt="missing avatar"
+	/>
+	<p class="username-text score-player" class:sm={small}>{res?.name ?? ''}</p>
+{/await}
 
 <style>
-	div {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: 7px;
-		padding: 3px;
-		position: relative;
-		height: 100%;
-		flex: 1 1 50%;
-	}
 	.player-avatar {
 		border-radius: 50%;
-		height: 100%;
+		height: clamp(0px, 100%, 4rem);
 		aspect-ratio: 1 / 1;
-		outline: 3px solid var(--rank-outline-color, var(--primary, black));
-		background-color: black;
-		font-size: 12px;
+		outline: 3px solid var(--rank-outline-color, var(--pico-secondary));
+		background-color: var(--pico-primary-background);
 		text-align: center;
-		color: white;
-	}
-	.lg {
-		height: 65px;
+		font-size: 0.5rem;
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
 	}
 	.score-player {
-		font-size: 16px;
-		margin: 0;
 		text-align: left;
-		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
+		overflow-wrap: normal;
 	}
-	.sm {
-		font-size: 12px;
+	p {
+		margin: 0;
 	}
 </style>

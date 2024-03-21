@@ -44,7 +44,6 @@
 		flex-wrap: wrap;
 	}
 	button {
-		height: 1.25rem;
 		width: 15ch;
 	}
 </style>

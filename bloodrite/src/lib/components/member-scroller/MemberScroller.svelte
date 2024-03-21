@@ -17,6 +17,6 @@
 		height: var(--max-event-height, 500px);
 		overflow: scroll;
 		overflow-x: clip;
-		background-color: var(--background);
+		background-color: var(--pico-background-color);
 	}
 </style>

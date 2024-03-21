@@ -10,7 +10,7 @@
 	import { page } from '$app/stores';
 	import { isAdmin } from '$lib/types/server-specific';
 	import { player_access } from '$lib/stores/PlayerStore';
-	
+
 	export let draft: DraftEvent;
 	let players: Map<string, { id: string; gwp: number; mp: number; omp?: number; ogp?: number; mwp?: number }> = new Map();
 	let scoresMap = new Map<string, Map<string, { gw: number; gl: number; gt: number; r: 'WIN' | 'LOSE' | 'TIE' | 'BYE'; rnd: number }>>();
@@ -21,7 +21,7 @@
 	// Get all opponents, calculate OGP
 	for (const prop in draft) {
 		if (prop.startsWith('R_')) {
-			for (const match of draft[prop as ('R_0' | 'R_1' | 'R_2')] ?? []) {
+			for (const match of draft[prop as 'R_0' | 'R_1' | 'R_2'] ?? []) {
 				if (match.players.length === 1) {
 					scoresMap.get(match.players[0])?.set(`BYE_${prop}`, { gt: 0, gl: 0, gw: 0, r: 'BYE', rnd: parseInt(prop.at(-1)!) });
 				} else {
@@ -121,15 +121,13 @@
 			</button>
 		{/if}
 	{/await}
-	<div class="info-box">
-		<h1 class="display-text">{draft.meta.title}</h1>
-		<p class="statistic-text date-text" title={DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATETIME_FULL)}>
-			{DateTime.fromISO(draft.meta.date).toLocaleString(DateTime.DATE_FULL)}
-		</p>
-		<div class="description-text subtitle-text">
-			{draft.meta.description?.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, '') ?? ''}
-		</div>
-	</div>
+	<hgroup>
+		<h1>{draft.meta.title}</h1>
+		<p>{DateTime.fromISO(draft.meta.date.toString()).toLocaleString(DateTime.DATETIME_FULL)}</p>
+	</hgroup>
+	<blockquote>
+		{draft.meta.description?.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, '') ?? ''}
+	</blockquote>
 	<div class="table">
 		{#each [...players.entries()].toSorted(([, a], [, b]) => {
 			if (a.mp > b.mp) return -1;
@@ -170,17 +168,17 @@
 	{/if}
 	{#each players.entries() as [id, player]}
 		<div class="bump-right" class:selected={selectedPlayer === id}>
-			<button class="bump-right-close-button" on:click={() => selectedPlayer = ''}>X</button>
-			<div class="bump-right-heading display-text">
-				<PlayerButton user_id={selectedPlayer} />
-			</div>
+			<button class="bump-right-close-button" on:click={() => (selectedPlayer = '')}>X</button>
+			<div class="player-button"><PlayerButton user_id={selectedPlayer} /></div>
 			<div class="bump-right-stats statistic-text">
-				<div class="stat-row" title="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
-				<div class="stat-row" title="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
-				<div class="stat-row" title="Opponent Match-win Percentage"><span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span></div>
-				<div class="stat-row" title="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
+				<div class="stat-row" data-tooltip="Match Points"><span>PTS:</span><span>{player.mp ?? 'Loading...'}</span></div>
+				<div class="stat-row" data-tooltip="Game Win Percentage"><span>GWP:</span><span>{player.gwp.toFixed(2) ?? 'Loading...'}</span></div>
+				<div class="stat-row" data-tooltip="Opponent Match-win Percentage">
+					<span>OMW:</span><span>{player.omp?.toFixed(2) ?? 'Loading...'}</span>
+				</div>
+				<div class="stat-row" data-tooltip="Opponent Game-win Percentage"><span>OGP:</span><span>{player.ogp?.toFixed(2) ?? 'Loading...'}</span></div>
 				{#if draft.meta.tag === 'dps'}
-					<div class="stat-row" title="New ELO Rating">
+					<div class="stat-row" data-tooltip="New ELO Rating">
 						<span>RTG:</span>
 						<span>
 							{#await $player_access.get(id)}
@@ -205,9 +203,9 @@
 				{#each scoresMap.get(selectedPlayer)?.entries() ?? [] as [id, m]}
 					<div class="round">
 						<div class="statistic-text round-text">{m.rnd + 1}</div>
-						<span class="m-result statistic-text">
+						<h2>
 							{#if id.startsWith('BYE')}BYE{:else}{m.gw}-{m.gl}{/if}
-						</span>
+						</h2>
 						{#if id.startsWith('BYE')}
 							<PlayerButton user_id={''} small={true} />
 						{:else}
@@ -223,10 +221,9 @@
 <style>
 	.container {
 		--padding-inline: 15px;
-		background: var(--background);
-		display: grid;
-		grid-template-columns: auto;
-		grid-template-rows: auto auto;
+		background: var(--pico-background-color);
+		display: flex;
+		flex-direction: column;
 		gap: 5px;
 		position: relative;
 		height: clamp(300px, 80vh, 35rem);
@@ -243,13 +240,18 @@
 		box-shadow: 0px 5px 15px black;
 		z-index: -1;
 	}
-	.info-box {
+	hgroup {
 		position: relative;
+		padding: var(--padding-inline);
+		margin-bottom: 0;
+	}
+	blockquote {
+		margin: 0;
 	}
 	.tag-bump {
 		position: absolute;
 		border-radius: 0 0 15px 15px;
-		background: var(--primary);
+		background: var(--pico-primary-background);
 		display: grid;
 		place-items: center;
 		top: 0;
@@ -264,7 +266,7 @@
 		cursor: pointer;
 		position: absolute;
 		border-radius: 0 0 15px 15px;
-		background: var(--primary);
+		background: var(--pico-primary-background);
 		display: grid;
 		place-items: center;
 		top: 0px;
@@ -283,25 +285,6 @@
 	.edit-bump:active {
 		scale: 0.9;
 	}
-	.display-text {
-		margin: 0;
-		font-size: 3.4em;
-		padding-inline: var(--padding-inline, 15px);
-	}
-	.description-text {
-		max-height: 50%;
-		padding-inline: var(--padding-inline, 15px);
-	}
-	.date-text {
-		margin: 0;
-		font-size: small;
-		white-space: nowrap;
-		z-index: 0;
-		padding-inline: var(--padding-inline, 15px);
-		position: relative;
-	}
-	.date-text::after,
-	.stat-row::after,
 	.table-row::after {
 		position: absolute;
 		bottom: 0;
@@ -309,14 +292,12 @@
 		width: 100%;
 		height: 0px;
 		content: '';
-		background-color: var(--accent);
+		background-color: var(--pico-primary-hover);
 		opacity: 0.75;
 		transform-origin: 50% 100%;
 		transition: height 200ms ease-in-out;
 		z-index: -1;
 	}
-	.date-text:hover::after,
-	.stat-row:hover::after,
 	.table-row:hover::after {
 		height: 40%;
 	}
@@ -325,9 +306,9 @@
 		flex-direction: column;
 		justify-content: end;
 		gap: 7.5px;
-		position: absolute;
 		width: 100%;
-		bottom: 15px;
+		margin-top: auto;
+		margin-bottom: 15px;
 	}
 	.table-row {
 		z-index: 0;
@@ -346,9 +327,6 @@
 		position: relative;
 	}
 	@media (max-height: 35rem) {
-		.display-text {
-			font-size: larger;
-		}
 		.table {
 			flex-direction: row;
 			flex-wrap: wrap;
@@ -375,7 +353,7 @@
 		border-radius: 15px 0 0 15px;
 		top: 7.5%;
 		height: 80%;
-		background-color: var(--background);
+		background: var(--pico-background-color);
 		right: 100%;
 		width: 15rem;
 		z-index: -2;
@@ -393,7 +371,7 @@
 		top: 7.5%;
 		right: 0;
 		height: 80%;
-		background-color: var(--background);
+		background: var(--pico-background-color);
 		width: 15rem;
 		z-index: -2;
 		box-shadow: 0px 4px 10px black;
@@ -402,6 +380,9 @@
 	}
 	.bump-right.selected {
 		transform: translateX(100%);
+	}
+	.bump-right:not(.selected) {
+		box-shadow: none;
 	}
 	@media (max-width: 1000px) {
 		.bump-right.selected {
@@ -425,9 +406,6 @@
 			display: block;
 		}
 	}
-	.bump-right-heading {
-		height: 80px;
-	}
 	.bump-right-stats {
 		display: grid;
 		grid-template-columns: 100%;
@@ -448,45 +426,53 @@
 	.bump-right-picture {
 		margin-top: auto;
 		padding-inline: var(--padding-inline, 15px);
+		flex-basis: 200%;
 	}
 	.bump-right-rounds {
 		display: flex;
 		flex-direction: column;
-		gap: 5px;
+		gap: 7px;
 	}
 	.round {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
+		display: grid;
+		grid-template-columns: 20px 60px 50px auto;
 		align-items: center;
 		position: relative;
 		max-height: 54px;
-		padding-left: var(--padding-inline, 15px);
+		column-gap: 4px;
 	}
 	.round-text {
-		position: absolute;
-		left: -5px;
-		background-color: var(--primary);
-		color: var(--secondary);
-		border-radius: 0 50% 50% 0;
+		background: var(--pico-primary-background);
+		color: var(--pico-color);
+		border-radius: 0 100% 100% 0;
 		width: 1.125rem;
-		text-align: right;
-		padding-right: 5px;
-	}
-	.m-result {
-		font-size: 40px;
+		text-align: center;
 	}
 	textarea {
 		resize: none;
 		height: 50%;
 	}
 	.plus {
-		color: #00a000;
+		color: var(--pico-ins-color);
 	}
 	.plus::before {
 		content: '+';
 	}
 	.minus {
-		color: var(--accent-light);
+		color: var(--pico-del-color);
+	}
+	h2 {
+		margin: 0;
+		margin-bottom: 8px;
+		white-space: nowrap;
+		text-align: center;
+	}
+	.player-button {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 5px;
+		padding: 5px;
+		min-height: 4rem;
 	}
 </style>
