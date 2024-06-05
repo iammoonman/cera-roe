@@ -33,7 +33,6 @@
 	.title {
 		height: min-content;
 		text-align: center;
-		color: white;
 	}
 	.drafts {
 		grid-column: 1 / span 3;

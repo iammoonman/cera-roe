@@ -56,7 +56,7 @@
 			if ((a.ogp ?? 0) < (b.ogp ?? 0)) return 1;
 			return 0;
 		}) as [id, player]}
-			<button class="table-row username-text" on:click={() => (selectedPlayer !== id ? (selectedPlayer = id) : (selectedPlayer = ''))}>
+			<button class="table-row" on:click={() => (selectedPlayer !== id ? (selectedPlayer = id) : (selectedPlayer = ''))}>
 				{#await getMember(id)}
 					Loading player...
 				{:then res}
@@ -239,6 +239,7 @@
 		padding: 0 var(--padding-inline, 15px);
 		cursor: pointer;
 		position: relative;
+		color: unset;
 	}
 	@media (max-height: 35rem) {
 		.table {
