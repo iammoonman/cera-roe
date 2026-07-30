@@ -22,6 +22,7 @@
         "broadcastToAll",
         "broadcastToColor",
         "getObjectByGUID",
-        "Physics"
+        "Physics",
+        "Global"
     ]
 }

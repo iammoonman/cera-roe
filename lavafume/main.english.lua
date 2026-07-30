@@ -1,32 +1,37 @@
-mod_name, version = 'Lavafume', 1.10
+mod_name, version_ = 'Lavafume', 1.11
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
 dyntState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
+toknState         = { [0] = "" }
 dayColor          = 'Yellow'
 nightColor        = 'Red'
 noColor           = ''
+version = 1.999
 
 function onLoad(s)
+    Global.setVar('Table', self)
+    registerModule()
     self.interactable = false;
     WebRequest.get(gh_script, self, 'GetFreshScript')
     if s ~= '' then
         local state = JSON.decode(s)
         mnrcState = state.mnrcState
         dyntState = state.dyntState
+        toknState = state.toknState
     end
 end
 
 function onSave()
-    return JSON.encode({mnrcState = mnrcState, dyntState = dyntState})
+    return JSON.encode({mnrcState = mnrcState, dyntState = dyntState, toknState = toknState})
 end
 
 function GetFreshScript(wr)
     if wr == nil then return end
-    local v = wr.text:match('mod_name,version=\'Lavafume\',(%d+%p%d+);') -- mod_name,version='Lavafume',1.09;
+    local v = wr.text:match('mod_name,version_=\'Lavafume\',(%d+%p%d+);')
     log('GITHUB Version ' .. v)
-    if v then v = tonumber(v) else v = version end
-    if version < v then
+    if v then v = tonumber(v) else v = version_ end
+    if version_ < v then
         self.setLuaScript(wr.text)
         self.reload()
     end
@@ -355,4 +360,114 @@ function layt(player, value, button_id)
             lastCard = deck.remainder
         end
     end
+end
+
+function registerModule()
+  enc=Global.getVar('Encoder')
+  if enc then
+    local prop={name="Card Importer",funcOwner=self}
+    prop.values={}
+    prop.visible=false
+    prop.propID="Card Importer"
+    prop.tags='tool,cardImporter,Amuzet'
+    enc.call('APIregisterProperty',prop)
+end end
+
+
+function Importer(qTbl)
+    -- Each card load adds its name pointing to tokens in a lookup table
+    -- Grab the name for the lookup table
+    if qTbl.full == "Reimporting Card" then
+        print("Reimporting cards is not supported.")
+        return
+    end
+    if toknState == nil then toknState = {} end
+    local tokn = toknState[qTbl.name]
+    if tokn == nil then
+        print("Tokens for %s not found.", qTbl.name)
+        return
+    end
+    for i=1,#tokn[2] do
+        if tokn[2][i][3] then
+            -- Spawn the card.
+            spawnObjectData({
+                data={
+                    Transform = { posX = 0, posY = 0, posZ = 0, rotX = 0, rotY = 0, rotZ = 0, scaleX = 1, scaleY = 1, scaleZ = 1 },
+                    Name="Card",
+                    Nickname=tokn[2][i][1],
+                    Description="",
+                    Memo=nil,
+                    CardID=100,
+                    CustomDeck={
+                        [1]={
+                            FaceURL=string.format("https://cera-lgn.stream/front/%s/%s/%s.webp", tokn[2][i][2]:sub(1,1), tokn[2][i][2]:sub(2,2), tokn[2][i][2]),
+                            BackURL="https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg",
+                            NumWidth=1,
+                            NumHeight=1,
+                            Type=0,
+                            BackIsHidden=true,
+                            UniqueBack=false
+                        }
+                    },
+                    States={
+                        [2]={
+                            Transform = { posX = 0, posY = 0, posZ = 0, rotX = 0, rotY = 0, rotZ = 0, scaleX = 1, scaleY = 1, scaleZ = 1 },
+                            Name="Card",
+                            Nickname=tokn[2][i][1],
+                            Description="",
+                            Memo=nil,
+                            CardID=200,
+                            CustomDeck={
+                                [2]={
+                                    FaceURL=string.format("https://cera-lgn.stream/back/%s/%s/%s.webp", tokn[2][i][2]:sub(1,1), tokn[2][i][2]:sub(2,2), tokn[2][i][2]),
+                                    BackURL="https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg",
+                                    NumWidth=1,
+                                    NumHeight=1,
+                                    Type=0,
+                                    BackIsHidden=true,
+                                    UniqueBack=false
+                                }
+                            },
+                        },
+                    }
+                },
+                position=qTbl.position
+            })
+        else
+            -- Spawn the card.
+            spawnObjectData({
+                data={
+                    Transform = { posX = 0, posY = 0, posZ = 0, rotX = 0, rotY = 0, rotZ = 0, scaleX = 1, scaleY = 1, scaleZ = 1 },
+                    Name="Card",
+                    Nickname=tokn[2][i][1],
+                    Description="",
+                    Memo=nil,
+                    CardID=100,
+                    CustomDeck={
+                        [1]={
+                            FaceURL=string.format("https://cera-lgn.stream/front/%s/%s/%s.webp", tokn[2][i][2]:sub(1,1), tokn[2][i][2]:sub(2,2), tokn[2][i][2]),
+                            BackURL="https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg",
+                            NumWidth=1,
+                            NumHeight=1,
+                            Type=0,
+                            BackIsHidden=true,
+                            UniqueBack=false
+                        }
+                    }
+                },
+                position=qTbl.position
+            })
+        end
+    end
+end
+
+function addToTable(rTbl)
+    -- On each card.
+    -- function onLoad()
+    --     tbl=Global.getVar('Table')
+    --     if tbl ~= nil then tbl.call("addToTable", {"Base Cardname", {{"Token Name", "Token ID", is_dfc}}}) end
+    --     self.setLuaScript("")
+    -- end
+    if toknState == nil then toknState = {} end
+    toknState[rTbl[1]] = rTbl
 end
