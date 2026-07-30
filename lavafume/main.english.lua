@@ -1,4 +1,4 @@
-mod_name, version_ = 'Lavafume', 1.11
+mod_name, version = 'Lavafume', 1.11
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
@@ -28,10 +28,10 @@ end
 
 function GetFreshScript(wr)
     if wr == nil then return end
-    local v = wr.text:match('mod_name,version_=\'Lavafume\',(%d+%p%d+);')
+    local v = wr.text:match('mod_name,version=\'Lavafume\',(%d+%p%d+);')
     log('GITHUB Version ' .. v)
-    if v then v = tonumber(v) else v = version_ end
-    if version_ < v then
+    if v then v = tonumber(v) else v = version end
+    if version < v then
         self.setLuaScript(wr.text)
         self.reload()
     end
