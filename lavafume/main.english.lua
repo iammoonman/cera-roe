@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 1.11
+mod_name, version = 'Lavafume', 2.11
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
@@ -7,7 +7,6 @@ toknState         = { [0] = "" }
 dayColor          = 'Yellow'
 nightColor        = 'Red'
 noColor           = ''
-version = 1.999
 
 function onLoad(s)
     Global.setVar('Table', self)
