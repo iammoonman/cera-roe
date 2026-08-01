@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 2.12
+mod_name, version = 'Lavafume', 2.13
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
@@ -383,7 +383,7 @@ function Importer(qTbl)
     if toknState == nil then toknState = {} end
     local tokn = toknState[qTbl.name]
     if tokn == nil then
-        print("Tokens for %s not found.", qTbl.name)
+        print(string.format("Tokens for %s not found.", qTbl.name))
         return
     end
     for i=1,#tokn[2] do
