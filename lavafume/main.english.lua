@@ -1,4 +1,4 @@
-mod_name, version = 'Lavafume', 2.13
+mod_name, version = 'Lavafume', 2.14
 gh_script, gh_ui  = 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/main.lua', 'https://raw.githubusercontent.com/iammoonman/cera-roe/main/lavafume/ui.xml'
 IDToColor         = { ['k'] = 'Pink', ['w'] = 'White', ['b'] = 'Brown', ['r'] = 'Red', ['o'] = 'Orange', ['y'] = 'Yellow', ['g'] = 'Green', ['t'] = 'Teal', ['u'] = 'Blue', ['p'] = 'Purple' }
 mnrcState         = { ['k'] = '', ['w'] = '', ['b'] = '', ['r'] = '', ['o'] = '', ['y'] = '', ['g'] = '', ['t'] = '', ['u'] = '', ['p'] = '' }
@@ -387,7 +387,7 @@ function Importer(qTbl)
         return
     end
     for i=1,#tokn[2] do
-        if tokn[2][i][3] then
+        if #tokn[2][i] == 3 then
             -- Spawn the card.
             spawnObjectData({
                 data={
@@ -399,7 +399,7 @@ function Importer(qTbl)
                     CardID=100,
                     CustomDeck={
                         [1]={
-                            FaceURL=string.format("https://cera-lgn.stream/front/%s/%s/%s.webp", tokn[2][i][2]:sub(1,1), tokn[2][i][2]:sub(2,2), tokn[2][i][2]),
+                            FaceURL=tokn[2][i][2],
                             BackURL="https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg",
                             NumWidth=1,
                             NumHeight=1,
@@ -418,7 +418,7 @@ function Importer(qTbl)
                             CardID=200,
                             CustomDeck={
                                 [2]={
-                                    FaceURL=string.format("https://cera-lgn.stream/back/%s/%s/%s.webp", tokn[2][i][2]:sub(1,1), tokn[2][i][2]:sub(2,2), tokn[2][i][2]),
+                                    FaceURL=tokn[2][i][3],
                                     BackURL="https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg",
                                     NumWidth=1,
                                     NumHeight=1,
@@ -444,7 +444,7 @@ function Importer(qTbl)
                     CardID=100,
                     CustomDeck={
                         [1]={
-                            FaceURL=string.format("https://cera-lgn.stream/front/%s/%s/%s.webp", tokn[2][i][2]:sub(1,1), tokn[2][i][2]:sub(2,2), tokn[2][i][2]),
+                            FaceURL=tokn[2][i][2],
                             BackURL="https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg",
                             NumWidth=1,
                             NumHeight=1,
@@ -464,7 +464,7 @@ function addToTable(rTbl)
     -- On each card.
     -- function onLoad()
     --     tbl=Global.getVar('Table')
-    --     if tbl ~= nil then tbl.call("addToTable", {"Base Cardname", {{"Token Name", "Token ID", is_dfc}}}) end
+    --     if tbl ~= nil then tbl.call("addToTable", {"Base Cardname", {{"Token Name", "Token front image", "Token back image"}}}) end
     --     self.setLuaScript("")
     -- end
     if toknState == nil then toknState = {} end
